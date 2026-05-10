@@ -8,7 +8,9 @@
 /.idea
 /.nova
 /.phpunit.cache
-/.vscode
+/.vscode/*
+!/.vscode/tasks.json
+!/.vscode/settings.json
 /.zed
 /bootstrap/ssr
 /node_modules
