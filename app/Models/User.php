@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
+
+    public function userCategories(): BelongsToMany
+    {
+        return $this->belongsToMany(UserCategory::class, 'category_user', 'user_id', 'user_category_id')->withTimestamps();
+    }
 }
