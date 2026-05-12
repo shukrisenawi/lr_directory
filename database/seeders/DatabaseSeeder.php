@@ -161,19 +161,15 @@ class DatabaseSeeder extends Seeder
             'company_type' => 'Distributor',
         ]);
 
-        $blueHarbour->categories()->attach([
-            $categories['Aquaculture']->id,
-            $categories['Fish Handling']->id,
-            $categories['Processing / Refrigeration']->id,
-        ]);
-        $oceanNav->categories()->attach([
-            $categories['Electronics / Communication']->id,
-            $categories['Vessel / Shipyard']->id,
-        ]);
-        $harvest->categories()->attach([
-            $categories['Fish Handling']->id,
-            $categories['Processing / Refrigeration']->id,
-        ]);
+        $blueHarbour->categories()->attach(
+            Category::whereIn('name', ['Filleting', 'Fish Oil', 'Blast Freezer', 'Packaging', 'Fish Trading'])->pluck('id')
+        );
+        $oceanNav->categories()->attach(
+            Category::whereIn('name', ['Navigation Equipment', 'Radar', 'Sonar Equipment', 'Fish Finding Equipment', 'Electronic Equipment', 'Marine Equipment'])->pluck('id')
+        );
+        $harvest->categories()->attach(
+            Category::whereIn('name', ['Cold Stores', 'Ice', 'Refrigeration', 'Refrigerated Transport', 'Ice Storage', 'Storage Equipment'])->pluck('id')
+        );
 
         Product::factory()->for($blueHarbour)->create([
             'name' => 'Premium Tuna Portions',
