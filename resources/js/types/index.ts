@@ -46,7 +46,7 @@ export interface Category {
     name: string;
     slug: string;
     description?: string | null;
-    children?: Category[];
+    children?: (Category & { companies_count?: number })[];
 }
 
 export interface Company {

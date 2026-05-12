@@ -178,7 +178,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                                 href={route('categories.show', child.slug)}
                                                 className="rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] px-3 py-2 text-xs font-medium text-[var(--idxi-abyss)] transition hover:border-amber-200 hover:bg-amber-50 hover:text-amber-700"
                                             >
-                                                {child.name}
+                                                {child.name} {child.companies_count !== undefined ? `- ${child.companies_count}` : ''}
                                             </Link>
                                         ))}
                                     </div>

@@ -14,7 +14,7 @@ class HomeController extends Controller
         return Inertia::render('welcome', [
             'featuredCategories' => Category::query()
                 ->whereNull('parent_id')
-                ->with(['children:id,parent_id,name,slug'])
+                ->with(['children' => fn ($q) => $q->withCount('companies')->orderBy('sort_order')])
                 ->orderBy('sort_order')
                 ->get(['id', 'name', 'slug']),
             'newListings' => Company::query()
