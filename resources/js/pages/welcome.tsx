@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { type Category, type Company, type SharedData } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { ArrowRight, ChevronDown, MapPin, Search, ShieldCheck, Users, Building2 } from 'lucide-react';
+import { ArrowRight, MapPin, Search, ShieldCheck, Users, Building2 } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
 interface WelcomeProps {
@@ -142,13 +142,8 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                             : 'border-[var(--idxi-shallows)] bg-white hover:border-amber-200 hover:shadow'
                                     }`}
                                 >
-                                    <div className="flex items-center justify-between gap-2">
-                                        <div className={`text-sm font-medium ${openCategory === category.id ? 'text-amber-700' : 'text-[var(--idxi-abyss)]'}`}>
-                                            {category.name}
-                                        </div>
-                                        <ChevronDown
-                                            className={`size-3.5 shrink-0 text-[var(--idxi-tide)] transition-transform duration-200 ${openCategory === category.id ? 'rotate-180' : ''}`}
-                                        />
+                                    <div className={`text-sm font-medium ${openCategory === category.id ? 'text-amber-700' : 'text-[var(--idxi-abyss)]'}`}>
+                                        {category.name}
                                     </div>
                                 </button>
                             ))}
