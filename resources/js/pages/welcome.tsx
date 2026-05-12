@@ -132,53 +132,64 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                             <p className="mt-2 text-sm text-[var(--idxi-tide)]">Find exactly what you need across our fishery network</p>
                         </div>
                         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                            {featuredCategories.map((category) => {
-                                const isOpen = openCategory === category.id;
-                                return (
-                                    <div key={category.id} className="relative">
-                                        <button
-                                            onClick={() => setOpenCategory(isOpen ? null : category.id)}
-                                            className="w-full rounded-xl border border-[var(--idxi-shallows)] bg-white p-5 text-left transition duration-200 hover:border-amber-200 hover:shadow-lg hover:shadow-amber-100/30"
-                                        >
-                                            <div className="flex items-center justify-between">
-                                                <div className="font-semibold text-[var(--idxi-abyss)]">{category.name}</div>
-                                                <ChevronDown
-                                                    className={`size-4 shrink-0 text-[var(--idxi-tide)] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                                                />
-                                            </div>
-                                            {!isOpen && category.children && category.children.length > 0 && (
-                                                <div className="mt-2 text-[11px] text-[var(--idxi-tide)]">{category.children.length} subcategories</div>
-                                            )}
-                                        </button>
-                                        {isOpen && category.children && category.children.length > 0 && (
-                                            <div className="mt-2 rounded-xl border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-3 shadow-lg">
-                                                <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--idxi-tide)]">
-                                                    Subcategories
-                                                </div>
-                                                <div className="flex flex-wrap gap-1.5">
-                                                    {category.children.map((child) => (
-                                                        <Link
-                                                            key={child.slug}
-                                                            href={route('categories.show', child.slug)}
-                                                            className="rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-[var(--idxi-abyss)] shadow-sm transition hover:bg-amber-50 hover:text-amber-700 hover:shadow"
-                                                        >
-                                                            {child.name}
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                                <Link
-                                                    href={route('categories.show', category.slug)}
-                                                    className="mt-3 flex items-center justify-center gap-1 rounded-lg bg-[var(--idxi-deep-ocean)] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[var(--idxi-current)]"
-                                                >
-                                                    Browse all {category.name}
-                                                    <ArrowRight className="size-3" />
-                                                </Link>
-                                            </div>
-                                        )}
+                            {featuredCategories.map((category) => (
+                                <button
+                                    key={category.id}
+                                    onClick={() => setOpenCategory(openCategory === category.id ? null : category.id)}
+                                    className={`w-full rounded-xl border p-5 text-left transition duration-200 ${
+                                        openCategory === category.id
+                                            ? 'border-amber-300 bg-amber-50 shadow-lg shadow-amber-100/30'
+                                            : 'border-[var(--idxi-shallows)] bg-white hover:border-amber-200 hover:shadow-lg hover:shadow-amber-100/30'
+                                    }`}
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div className={`font-semibold ${openCategory === category.id ? 'text-amber-700' : 'text-[var(--idxi-abyss)]'}`}>
+                                            {category.name}
+                                        </div>
+                                        <ChevronDown
+                                            className={`size-4 shrink-0 text-[var(--idxi-tide)] transition-transform duration-200 ${openCategory === category.id ? 'rotate-180' : ''}`}
+                                        />
                                     </div>
-                                );
-                            })}
+                                </button>
+                            ))}
                         </div>
+
+                        {openCategory && (() => {
+                            const cat = featuredCategories.find(c => c.id === openCategory);
+                            if (!cat || !cat.children || cat.children.length === 0) return null;
+                            return (
+                                <div className="mt-6 rounded-2xl border border-[var(--idxi-shallows)] bg-white p-6 shadow-lg">
+                                    <div className="flex items-center justify-between gap-4">
+                                        <div>
+                                            <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--idxi-tide)]">
+                                                {cat.name}
+                                            </span>
+                                            <h3 className="mt-1 text-2xl font-semibold tracking-tight text-[var(--idxi-abyss)]">
+                                                Subcategories
+                                            </h3>
+                                        </div>
+                                        <Link
+                                            href={route('categories.show', cat.slug)}
+                                            className="flex shrink-0 items-center gap-1.5 rounded-xl bg-[var(--idxi-deep-ocean)] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--idxi-current)]"
+                                        >
+                                            Browse all
+                                            <ArrowRight className="size-4" />
+                                        </Link>
+                                    </div>
+                                    <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+                                        {cat.children.map((child) => (
+                                            <Link
+                                                key={child.slug}
+                                                href={route('categories.show', child.slug)}
+                                                className="rounded-xl border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] px-4 py-3 text-sm font-medium text-[var(--idxi-abyss)] transition hover:border-amber-200 hover:bg-amber-50 hover:text-amber-700 hover:shadow"
+                                            >
+                                                {child.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })()}
                     </div>
                 </section>
 
