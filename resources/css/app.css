@@ -104,13 +104,13 @@
     --chart-5: 215 16% 47%;
     --radius: 0.625rem;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 215 75% 16%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 96%;
-    --sidebar-accent-foreground: 215 75% 16%;
-    --sidebar-border: 214 32% 91%;
+    --sidebar-background: 215 75% 10%;
+    --sidebar-foreground: 210 40% 92%;
+    --sidebar-primary: 38 92% 50%;
+    --sidebar-primary-foreground: 215 75% 10%;
+    --sidebar-accent: 215 50% 18%;
+    --sidebar-accent-foreground: 38 92% 50%;
+    --sidebar-border: 215 50% 16%;
     --sidebar-ring: 38 92% 50%;
 
     --idxi-admin-primary: #0a2647;
@@ -174,36 +174,57 @@
 
 [data-sidebar="menu-button"][data-active="true"] {
     position: relative;
-    background-color: #fef9ee;
+    background-color: hsl(215, 50%, 18%) !important;
 }
 
 [data-sidebar="menu-button"][data-active="true"]::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 4px;
-    bottom: 4px;
-    width: 2px;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
     background-color: #f59e0b;
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 3px 3px 0;
 }
 
 [data-sidebar="menu-button"][data-active="true"] svg {
-    color: #f59e0b;
+    color: #f59e0b !important;
 }
 
 [data-sidebar="menu-button"]:not([data-active="true"]):hover {
     position: relative;
+    background-color: hsl(215, 50%, 16%) !important;
 }
 
 [data-sidebar="menu-button"]:not([data-active="true"]):hover::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 4px;
-    bottom: 4px;
-    width: 2px;
-    background-color: #fcd34d;
-    border-radius: 0 2px 2px 0;
-    opacity: 0.5;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    background-color: #f59e0b;
+    border-radius: 0 3px 3px 0;
+    opacity: 0.4;
+}
+
+[data-sidebar="menu-button"]:not([data-active="true"]) svg {
+    color: hsl(215, 16%, 60%) !important;
+}
+
+[data-sidebar="menu-button"]:not([data-active="true"]) span {
+    color: hsl(210, 40%, 80%) !important;
+}
+
+[data-sidebar="menu-button"][data-active="true"] span {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+[data-sidebar="group-label"] {
+    color: hsl(38, 30%, 60%) !important;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.1em;
 }

@@ -1,10 +1,10 @@
 import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { BriefcaseBusiness } from 'lucide-react';
+import { BriefcaseBusiness, CheckCircle } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Companies', href: '/admin/companies' }];
 
@@ -12,13 +12,19 @@ export default function AdminCompaniesPage({ companies }: { companies: { data: A
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Admin Companies" />
-            <div className="p-4">
-                <div className="mb-6">
-                    <h1 className="flex items-center gap-2 text-2xl font-semibold tracking-tight text-[var(--idxi-abyss)]">
-                        <BriefcaseBusiness className="size-5 text-amber-500" />
-                        Company approvals
-                    </h1>
+            <div className="flex flex-col gap-6 p-6">
+                <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[var(--idxi-deep-ocean)] to-[#0D1F3C] p-6 shadow-xl">
+                    <div className="flex items-center gap-4">
+                        <div className="flex size-10 items-center justify-center rounded-lg bg-amber-500/20 ring-1 ring-amber-500/30">
+                            <BriefcaseBusiness className="size-5 text-amber-400" />
+                        </div>
+                        <div>
+                            <h1 className="text-xl font-semibold tracking-tight text-white">Company approvals</h1>
+                            <p className="mt-0.5 text-sm text-blue-200">Manage and approve company listings</p>
+                        </div>
+                    </div>
                 </div>
+
                 <Card className="border-[var(--idxi-shallows)] bg-white shadow-sm">
                     <CardContent className="p-0">
                         <Table>
@@ -36,14 +42,18 @@ export default function AdminCompaniesPage({ companies }: { companies: { data: A
                                         <TableCell className="font-medium text-[var(--idxi-abyss)]">{company.name}</TableCell>
                                         <TableCell className="text-[var(--idxi-tide)]">{company.owner?.name ?? 'Unclaimed'}</TableCell>
                                         <TableCell>
-                                            <span className="rounded-lg bg-amber-50 px-2.5 py-0.5 text-[11px] font-medium text-amber-600">{company.status}</span>
+                                            <span className="inline-flex items-center gap-1.5 rounded-lg bg-amber-50 px-2.5 py-1 text-[11px] font-medium text-amber-600">
+                                                <span className="size-1.5 rounded-full bg-amber-500" />
+                                                {company.status}
+                                            </span>
                                         </TableCell>
                                         <TableCell className="text-right">
                                             <Button
                                                 size="sm"
                                                 onClick={() => router.patch(route('admin.companies.update', company.id), { status: 'approved' })}
-                                                className="rounded-lg bg-amber-500 text-white shadow-sm hover:bg-amber-600"
+                                                className="rounded-lg bg-emerald-500 text-white shadow-sm hover:bg-emerald-600"
                                             >
+                                                <CheckCircle className="size-3.5" />
                                                 Approve
                                             </Button>
                                         </TableCell>
