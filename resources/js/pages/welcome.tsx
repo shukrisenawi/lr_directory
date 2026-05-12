@@ -146,19 +146,8 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                                     className={`size-4 shrink-0 text-[var(--idxi-tide)] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                                                 />
                                             </div>
-                                            {!isOpen && (
-                                                <div className="mt-2 flex flex-wrap gap-1.5">
-                                                    {category.children?.slice(0, 3).map((child) => (
-                                                        <span key={child.slug} className="rounded-md bg-[var(--idxi-foam)] px-2.5 py-1 text-[11px] font-medium text-[var(--idxi-tide)]">
-                                                            {child.name}
-                                                        </span>
-                                                    ))}
-                                                    {category.children && category.children.length > 3 && (
-                                                        <span className="rounded-md bg-amber-50 px-2.5 py-1 text-[11px] font-medium text-amber-600">
-                                                            +{category.children.length - 3}
-                                                        </span>
-                                                    )}
-                                                </div>
+                                            {!isOpen && category.children && category.children.length > 0 && (
+                                                <div className="mt-2 text-[11px] text-[var(--idxi-tide)]">{category.children.length} subcategories</div>
                                             )}
                                         </button>
                                         {isOpen && category.children && category.children.length > 0 && (
