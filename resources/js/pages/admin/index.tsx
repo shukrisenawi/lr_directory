@@ -3,6 +3,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { ShieldCheck } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Admin', href: '/admin' }];
 
@@ -17,24 +18,33 @@ export default function AdminIndex({
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Admin Console" />
             <div className="flex flex-col gap-6 p-4">
-                <div className="rounded-[8px] border border-slate-200 bg-white p-6">
-                    <div className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Clinical admin design</div>
-                    <h1 className="mt-3 text-3xl font-semibold text-[var(--idxi-admin-primary)]">IDXI master dashboard</h1>
-                    <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">Approve listings, track activity, and keep the directory clean.</p>
+                <div className="rounded-xl border border-[var(--idxi-shallows)] bg-white p-6 shadow-sm">
+                    <div className="flex items-center gap-3">
+                        <div className="flex size-10 items-center justify-center rounded-lg bg-amber-100">
+                            <ShieldCheck className="size-5 text-amber-600" />
+                        </div>
+                        <div>
+                            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--idxi-tide)]">Admin</span>
+                            <h1 className="mt-1 text-2xl font-semibold tracking-tight text-[var(--idxi-abyss)]">IDXI master dashboard</h1>
+                            <p className="mt-1 text-sm text-[var(--idxi-tide)]">Approve listings, track activity, and keep the directory clean.</p>
+                        </div>
+                    </div>
                 </div>
+
                 <div className="grid gap-4 md:grid-cols-4">
                     {Object.entries(stats).map(([key, value]) => (
-                        <Card key={key} className="rounded-[8px] border-slate-200 shadow-none">
-                            <CardHeader>
-                                <CardTitle className="text-sm font-medium capitalize text-slate-500">{key.replace(/([A-Z])/g, ' $1')}</CardTitle>
+                        <Card key={key} className="border-[var(--idxi-shallows)] bg-white shadow-sm">
+                            <CardHeader className="pb-2">
+                                <CardTitle className="text-sm font-medium capitalize text-[var(--idxi-tide)]">{key.replace(/([A-Z])/g, ' $1')}</CardTitle>
                             </CardHeader>
-                            <CardContent className="text-4xl font-semibold text-[var(--idxi-admin-primary)]">{value}</CardContent>
+                            <CardContent className="text-3xl font-semibold text-[var(--idxi-abyss)]">{value}</CardContent>
                         </Card>
                     ))}
                 </div>
-                <Card className="rounded-[8px] border-slate-200 shadow-none">
+
+                <Card className="border-[var(--idxi-shallows)] bg-white shadow-sm">
                     <CardHeader>
-                        <CardTitle>Recent claims</CardTitle>
+                        <CardTitle className="text-lg text-[var(--idxi-abyss)]">Recent claims</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -48,9 +58,11 @@ export default function AdminIndex({
                             <TableBody>
                                 {recentClaims.map((claim) => (
                                     <TableRow key={claim.id}>
-                                        <TableCell><Link href={route('admin.claims.index')}>{claim.company.name}</Link></TableCell>
+                                        <TableCell><Link href={route('admin.claims.index')} className="text-[var(--idxi-current)] hover:text-amber-600">{claim.company.name}</Link></TableCell>
                                         <TableCell>{claim.user.name}</TableCell>
-                                        <TableCell>{claim.status}</TableCell>
+                                        <TableCell>
+                                            <span className="rounded-lg bg-amber-50 px-2.5 py-0.5 text-[11px] font-medium text-amber-600">{claim.status}</span>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

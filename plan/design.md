@@ -1,111 +1,82 @@
 ---
-version: alpha
-name: Pharma Clean
-description: Hospital-white, FDA-blue, sterile hairlines.
+version: 2.0
+name: Ocean Current
+description: Professional ocean-blue theme for fishery directory. White+blue palette, Inter typography, subtle depth.
 colors:
-  primary: "#0B1E3A"
-  secondary: "#5E6F88"
-  tertiary: "#1976D2"
-  neutral: "#F5F8FC"
-  surface: "#FFFFFF"
-  on-primary: "#FFFFFF"
+  primary: "#0A2647"
+  secondary: "#1E5A8A"
+  accent: "#F59E0B"
+  accent-alt: "#06B6D4"
+  surface: "#F8FAFC"
+  card: "#FFFFFF"
+  muted: "#64748B"
+  border: "#E2E8F0"
+  text: "#0F172A"
 typography:
   display:
     fontFamily: Inter
     fontSize: 3.5rem
-    fontWeight: 500
+    fontWeight: 600
     letterSpacing: "-0.02em"
   h1:
     fontFamily: Inter
-    fontSize: 1.9rem
-    fontWeight: 500
+    fontSize: 2.25rem
+    fontWeight: 600
+  h2:
+    fontFamily: Inter
+    fontSize: 1.5rem
+    fontWeight: 600
+  h3:
+    fontFamily: Inter
+    fontSize: 1.25rem
+    fontWeight: 600
   body:
     fontFamily: Inter
-    fontSize: 0.95rem
+    fontSize: 0.9375rem
     lineHeight: 1.6
+  small:
+    fontFamily: Inter
+    fontSize: 0.8125rem
   label:
     fontFamily: Inter
-    fontSize: 0.72rem
+    fontSize: 0.6875rem
     fontWeight: 600
     letterSpacing: "0.08em"
 rounded:
-  sm: 2px
-  md: 4px
-  lg: 8px
+  sm: 6px
+  md: 10px
+  lg: 16px
+  xl: 24px
 spacing:
   sm: 8px
   md: 16px
-  lg: 32px
-components:
-  button-primary:
-    backgroundColor: "{colors.tertiary}"
-    textColor: "{colors.on-primary}"
-    rounded: "{rounded.md}"
-    padding: 12px 20px
-  card:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.primary}"
-    rounded: "{rounded.lg}"
-    padding: 24px
+  lg: 24px
+  xl: 32px
+shadows:
+  sm: "0 1px 2px rgba(10,38,71,0.05)"
+  md: "0 4px 12px rgba(10,38,71,0.08)"
+  lg: "0 8px 30px rgba(10,38,71,0.12)"
+  xl: "0 20px 60px rgba(10,38,71,0.15)"
 ---
 ## Overview
 
-A pharmaceutical-product palette: paper white, medical blue, strict hairline rules.
+Ocean Current — a professional, trustworthy design for the IDXI fishery directory. Deep ocean blues meet clean white surfaces, with amber accents as the single interaction driver.
 
-## Colors
+## Design Principles
 
-The palette is built around high-contrast neutrals and a single accent that drives interaction.
-
-- **Primary (`#0B1E3A`):** Headlines and core text.
-- **Secondary (`#5E6F88`):** Borders, captions, and metadata.
-- **Tertiary (`#1976D2`):** The sole driver for interaction. Reserve it.
-- **Neutral (`#F5F8FC`):** The page foundation.
-
-## Typography
-
-- **display:** Inter 3.5rem
-- **h1:** Inter 1.9rem
-- **body:** Inter 0.95rem
-- **label:** Inter 0.72rem
+1. **Professional & trustworthy** — Blue is the colour of reliability
+2. **Clean white foundations** — Let content breathe on white and near-white surfaces
+3. **Single warm accent** — Amber (#F59E0B) is the sole CTA driver; reserve it
+4. **Subtle depth** — Soft shadows and micro-interactions, never heavy gradients
+5. **Consistent radii** — 6/10/16/24px system, no more mixing of 2px and 28px
+6. **Typography-driven** — Inter at precise scales; letter-spacing tightened on headings
 
 ## Do's and Don'ts
 
-- **Do** use Tertiary for exactly one action per screen.
-- **Do** let Neutral carry the composition — negative space is a feature.
-- **Don't** introduce gradients. This system is flat on purpose.
-- **Don't** mix Tertiary with alternate accents; the single-accent rule is load-bearing.
-
-Tokens
-Colors
-primary
-#0B1E3A
-secondary
-#5E6F88
-tertiary
-#1976D2
-neutral
-#F5F8FC
-surface
-#FFFFFF
-onPrimary
-#FFFFFF
-Typography
-display
-Inter · 3.5rem
-h1
-Inter · 1.9rem
-body
-Inter · 0.95rem
-label
-Inter · 0.72rem
-Rounded & Spacing
-rounded
-sm: 2px
-md: 4px
-lg: 8px
-spacing
-sm: 8px
-md: 16px
-lg: 32px
-Related
-You might also 
+- **Do** use Amber (#F59E0B) for primary CTAs — one per screen
+- **Do** use Coral (#06B6D4) for badges, tags, and secondary indicators
+- **Do** let white/foam surfaces carry the composition
+- **Don't** mix multiple accent colours in a single view
+- **Don't** use cream/warm backgrounds on public pages
+- **Don't** exceed the radius system — no random 22px or 28px corners
+- **Don't** use heavy gradients; subtle shadows are preferred

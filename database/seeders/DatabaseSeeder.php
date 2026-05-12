@@ -38,14 +38,78 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $categories = collect([
-            'Aquaculture' => ['Fish Farming', 'Fish Feed', 'Aquaculture Services', 'Fish Pump'],
-            'Electronics / Communications' => ['Communications', 'Computers', 'Navigation Equipment', 'Radar'],
-            'Fishing Equipment' => ['Bait', 'Fishing Gear', 'Jigging Equipment', 'Nets'],
-            'Fish Handling' => ['Containers / Storage', 'Fish Trading', 'Fish Transportation', 'Refrigerated Transport'],
-            'Power / Propulsion' => ['Engines', 'Generators', 'Heat Pumps', 'Propellers'],
-            'Processing / Refrigeration' => ['Blast Freezer', 'Filleting', 'Packaging', 'Refrigeration'],
-            'Safety' => ['Clothing', 'Fire Fighting Equipment', 'Safety Equipment', 'Security Equipment'],
-            'Vessel / Shipyard' => ['Anchors', 'Cranes', 'Marine Equipment', 'Ship Repair / Conversion'],
+            'Aquaculture' => [
+                'Fish Farming', 'Fish Feed', 'Aquaculture Services', 'Fish Pump',
+            ],
+            'Electronics / Communication' => [
+                'Communications', 'Computer Software', 'Computers', 'Control Systems',
+                'Electronic Equipment', 'Electronic Logbooks', 'Electronics',
+                'Fish Finding Equipment', 'Navigation Equipment', 'Radar',
+                'Sonar Equipment', 'Telecommunications', 'Weather / Temperature',
+            ],
+            'Event' => [
+                'Event Management',
+            ],
+            'Fishing Equipment' => [
+                'Bait', 'Bobbins', 'Buoys', 'Cables', 'Chains', 'Fish Catching',
+                'Fishhooks', 'Fishing Gear', 'Jigging Equipment', 'Lights',
+                'Lines and Longlines', 'Longline Systems', 'Longlining / Jigging',
+                'Net and Rope Coatings', 'Net Rings', 'Nets', 'Purse Seine',
+                'Ropes', 'Seining', 'Trawl Doors', 'Trawl Gear', 'Trawl Makers',
+                'Trawls', 'Trawls / Nets / Ropes', 'Twines',
+                'Wire and Combination Rope', 'Yarns',
+            ],
+            'Fish Handling' => [
+                'Boxes / Baskets', 'Containers / Storage', 'Fish Auction',
+                'Fish Handling', 'Fish Market', 'Fish Market Support Services',
+                'Fish Trading', 'Fish Transportation', 'Ice Storage',
+                'Import / Export', 'Refrigerated Transport',
+                'Shipping / Forwarding / Air Freight', 'Storage Equipment',
+                'Tub Cleaning', 'Tub Solutions',
+            ],
+            'Organisation' => [
+                'Certification Bodies', 'Consultants', 'Education and Training',
+                'Environmental Organisations', 'Fishing Companies',
+                'Governmental Departments', 'Management Consultancy', 'Marketing',
+                'Port Authorities', 'Research Organisations', 'Ship Brokers',
+                'Trade Associations', 'NGOs',
+            ],
+            'Publication' => [
+                'Publication',
+            ],
+            'Power / Propulsion' => [
+                'Bow Thrusters / Bow Thrust Drives', 'Compressors', 'Engines',
+                'Generators', 'Heat Exchangers', 'Heat Pumps',
+                'Other Engine Room Equipment', 'Power',
+                'Propellers / Propeller Shafts / Nozzles', 'Propulsion',
+            ],
+            'Processing / Refrigeration' => [
+                'Blast Freezer', 'Bone Separators', 'Chilling Tanks', 'Chilling Units',
+                'Cold Stores', 'Conveyor Belts', 'Coolers', 'Cutlery / Knives / Steels',
+                'Cutting Machines', 'De-icing Equipment', 'De-scaling', 'Filleting',
+                'Fish Head Processing', 'Fish Oil', 'Fish Processing Equipment - Used',
+                'Grading', 'Gutting', 'Ice', 'IQ Freezing', 'Onboard Processing',
+                'Packaging', 'Packets', 'Plate Freezers', 'Processing Machinery',
+                'Refrigeration', 'RSW Systems', 'Scales', 'Skinning Machines',
+                'Slurry Ice', 'Smoking / Drying Equipment', 'Sorting',
+                'Thawing Equipment', 'Washing Machines',
+                'Weighing / Grading / Sorting', 'Weighing Equipment',
+            ],
+            'Safety' => [
+                'Clothing', 'Fire Fighting Equipment', 'Floats and Buoyancy Devices',
+                'Lighting', 'Man Overboard Recovery Systems', 'Protective Gloves',
+                'Safety Equipment', 'Security Equipment',
+            ],
+            'Vessel / Shipyard' => [
+                'Anchors', 'Chains and Fittings', 'Cleaning Equipment / Products',
+                'Coatings', 'Cranes', 'Deck Coverings', 'Deck Machinery',
+                'Fish Pumps', 'Galley Equipment',
+                'Heating, Venting and Air Conditioning (HVAC)', 'Hoists',
+                'Hydraulic Equipment', 'Maintenance', 'Marine Equipment',
+                'Net Drums', 'Ship Design', 'Ship Repair / Conversion',
+                'Shipbuilders', 'Shipyards', 'Vessel Builders',
+                'Vessel Building Materials', 'Vessels', 'Welding Equipment', 'Winches',
+            ],
         ])->map(function (array $children, string $parentName) {
             $parent = Category::query()->create([
                 'name' => $parentName,
@@ -55,10 +119,11 @@ class DatabaseSeeder extends Seeder
             ]);
 
             collect($children)->each(function (string $childName, int $index) use ($parent) {
+                $slug = str($parent->name.' '.$childName)->slug()->value();
                 Category::query()->create([
                     'parent_id' => $parent->id,
                     'name' => $childName,
-                    'slug' => str($childName)->slug()->value(),
+                    'slug' => $slug,
                     'description' => $childName.' category inside '.$parent->name.'.',
                     'sort_order' => $index + 1,
                 ]);
@@ -102,7 +167,7 @@ class DatabaseSeeder extends Seeder
             $categories['Processing / Refrigeration']->id,
         ]);
         $oceanNav->categories()->attach([
-            $categories['Electronics / Communications']->id,
+            $categories['Electronics / Communication']->id,
             $categories['Vessel / Shipyard']->id,
         ]);
         $harvest->categories()->attach([

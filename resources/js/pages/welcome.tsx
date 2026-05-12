@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { type Category, type Company, type SharedData } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { MapPin, Search } from 'lucide-react';
+import { ArrowRight, ChevronDown, MapPin, Search, ShieldCheck, Users, Building2 } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
 interface WelcomeProps {
@@ -18,10 +18,10 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
     const { auth } = usePage<SharedData>().props;
     const [query, setQuery] = useState('');
     const [location, setLocation] = useState('');
+    const [openCategory, setOpenCategory] = useState<number | null>(null);
 
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         router.get(route('directory.index'), { q: query, location }, { preserveState: true });
     };
 
@@ -29,32 +29,32 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
         <>
             <Head title="IDXI Directory" />
 
-            <div className="min-h-screen bg-[var(--idxi-cream)] text-slate-900">
-                <section className="relative isolate overflow-hidden">
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,18,30,0.35),rgba(12,18,30,0.75)),url('/assets/hero-market.jpg')] bg-cover bg-center" />
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,171,62,0.42),transparent_35%)]" />
+            <div className="min-h-screen bg-[var(--idxi-foam)] text-[var(--idxi-abyss)]">
+                <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#0A2647] to-[#1E3A5F]">
+                    <div className="pointer-events-none absolute inset-0 bg-[url('/assets/hero-market.jpg')] bg-cover bg-center opacity-20" />
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.12),transparent_60%)]" />
 
-                    <div className="relative mx-auto flex min-h-[38rem] max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-                        <header className="flex items-center justify-between text-white">
+                    <div className="relative mx-auto flex min-h-[36rem] max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+                        <header className="flex items-center justify-between">
                             <Link href={route('home')} className="flex items-center gap-3">
-                                <img src="/assets/idxi-fish-logo.png" alt="IDXI" className="size-11 rounded-full bg-white/10 p-1.5 backdrop-blur-sm" />
+                                <img src="/assets/idxi-fish-logo.png" alt="IDXI" className="size-11 rounded-xl bg-white/10 p-1.5 ring-1 ring-white/20 backdrop-blur-sm" />
                                 <div>
-                                    <div className="text-2xl font-semibold tracking-[0.22em]">IDXI</div>
-                                    <div className="text-xs tracking-[0.28em] text-white/70">INFOFISH DIRECTORY</div>
+                                    <div className="text-2xl font-semibold tracking-wider text-white">IDXI</div>
+                                    <div className="text-[10px] tracking-[0.3em] text-blue-200">INFOFISH DIRECTORY</div>
                                 </div>
                             </Link>
 
                             <div className="flex items-center gap-3">
                                 {auth.user ? (
-                                    <Button asChild className="bg-white text-slate-900 hover:bg-white/90">
+                                    <Button asChild className="bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600">
                                         <Link href={route('dashboard')}>Dashboard</Link>
                                     </Button>
                                 ) : (
                                     <>
-                                        <Button asChild variant="secondary" className="bg-white/10 text-white backdrop-blur hover:bg-white/20">
+                                        <Button asChild variant="ghost" className="text-white/80 hover:bg-white/10 hover:text-white">
                                             <Link href={route('login')}>Login</Link>
                                         </Button>
-                                        <Button asChild className="bg-white text-slate-900 hover:bg-white/90">
+                                        <Button asChild className="bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600">
                                             <Link href={route('register')}>Add Listing</Link>
                                         </Button>
                                     </>
@@ -62,114 +62,180 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                             </div>
                         </header>
 
-                        <div className="mx-auto mt-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center pb-12 text-center text-white">
-                            <img src="/assets/idxi-fish-logo.png" alt="IDXI fish icon" className="mb-5 size-28 rounded-full border border-white/30 bg-white/10 p-5 shadow-2xl shadow-black/25 backdrop-blur-sm" />
-                            <p className="text-sm tracking-[0.4em] text-white/70">INFOFISH DIRECTORY</p>
-                            <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[0.06em] sm:text-5xl">
-                                Find trusted fishery suppliers, processors, and service partners.
+                        <div className="mx-auto flex flex-1 flex-col items-center justify-center pb-16 text-center">
+                            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium tracking-wider text-blue-200 backdrop-blur-sm">
+                                <ShieldCheck className="size-3.5 text-amber-400" />
+                                TRUSTED FISHERY DIRECTORY
+                            </div>
+                            <h1 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+                                Find trusted fishery suppliers,{' '}
+                                <span className="text-amber-400">processors,</span>
+                                <br />
+                                and service partners.
                             </h1>
-                            <p className="mt-4 max-w-2xl text-sm leading-7 text-white/76 sm:text-base">
+                            <p className="mt-5 max-w-2xl text-base leading-relaxed text-blue-200">
                                 Public search for buyers. Claim, manage, and grow your listing once your team signs in.
                             </p>
 
-                            <form onSubmit={submit} className="mt-8 flex w-full max-w-5xl flex-col gap-3 rounded-[22px] bg-white p-3 text-left shadow-2xl shadow-black/20 md:flex-row">
+                            <form onSubmit={submit} className="mt-10 flex w-full max-w-4xl flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/20 backdrop-blur-md md:flex-row">
                                 <div className="flex-1">
-                                    <label className="mb-2 block px-1 text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">What</label>
-                                    <Input
-                                        value={query}
-                                        onChange={(event) => setQuery(event.target.value)}
-                                        placeholder="What: Seafood, Processor, Freezer or Service"
-                                        className="h-12 border-0 bg-slate-50 text-sm shadow-none focus-visible:ring-1 focus-visible:ring-[var(--idxi-accent)]"
-                                    />
-                                </div>
-                                <div className="flex-1">
-                                    <label className="mb-2 block px-1 text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Where</label>
+                                    <label className="mb-1.5 block px-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-blue-300">What</label>
                                     <div className="relative">
-                                        <MapPin className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-slate-400" />
+                                        <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-blue-400" />
                                         <Input
-                                            value={location}
-                                            onChange={(event) => setLocation(event.target.value)}
-                                            placeholder="Where: Port City"
-                                            className="h-12 border-0 bg-slate-50 pl-10 text-sm shadow-none focus-visible:ring-1 focus-visible:ring-[var(--idxi-accent)]"
+                                            value={query}
+                                            onChange={(event) => setQuery(event.target.value)}
+                                            placeholder="Seafood, Processor, Freezer or Service"
+                                            className="h-11 border-0 bg-white/10 pl-9 text-sm text-white placeholder:text-blue-300/60 focus-visible:ring-2 focus-visible:ring-amber-500"
                                         />
                                     </div>
                                 </div>
-                                <Button type="submit" className="h-12 rounded-[18px] px-6 md:mt-7">
-                                    <Search data-icon="inline-start" />
+                                <div className="flex-1">
+                                    <label className="mb-1.5 block px-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-blue-300">Where</label>
+                                    <div className="relative">
+                                        <MapPin className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-blue-400" />
+                                        <Input
+                                            value={location}
+                                            onChange={(event) => setLocation(event.target.value)}
+                                            placeholder="Port City or Region"
+                                            className="h-11 border-0 bg-white/10 pl-9 text-sm text-white placeholder:text-blue-300/60 focus-visible:ring-2 focus-visible:ring-amber-500"
+                                        />
+                                    </div>
+                                </div>
+                                <Button type="submit" className="mt-0 h-11 rounded-xl bg-amber-500 px-8 text-sm font-semibold text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600 md:mt-5">
+                                    <Search className="size-4" />
                                     Search
                                 </Button>
                             </form>
-                        </div>
-                    </div>
-                </section>
 
-                <section className="border-y border-slate-200 bg-white">
-                    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-                        <h2 className="text-2xl font-semibold text-slate-900">Browse categories...</h2>
-                        <div className="mt-5 flex flex-wrap gap-3 text-sm text-slate-700">
-                            {featuredCategories.map((category) => (
-                                <Link
-                                    key={category.id}
-                                    href={route('categories.show', category.slug)}
-                                    className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 transition hover:border-[var(--idxi-accent)] hover:text-[var(--idxi-accent)]"
-                                >
-                                    {category.name}
-                                </Link>
-                            ))}
-                        </div>
-                        <div className="mt-6 grid gap-3 border-t border-slate-200 pt-4 text-sm text-slate-600 md:grid-cols-4">
-                            {featuredCategories.slice(0, 4).map((category) => (
-                                <div key={category.id}>
-                                    <div className="font-medium text-slate-900">{category.name}</div>
-                                    <div className="mt-2 flex flex-wrap gap-2">
-                                        {category.children?.slice(0, 3).map((child) => (
-                                            <span key={child.slug} className="rounded-full bg-slate-100 px-3 py-1 text-xs">
-                                                {child.name}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-                    <div className="text-center">
-                        <h2 className="text-4xl font-semibold text-slate-900">Claim &amp; Get Started Today!</h2>
-                        <p className="mt-4 text-slate-500">Verify your listing, publish your profile, and start replying to real buyer conversations.</p>
-                    </div>
-                    <div className="mt-12 grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
-                        <div className="overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
-                            <img src="/assets/hero-reference.jpeg" alt="IDXI listing preview" className="h-full w-full object-cover" />
-                        </div>
-                        <div className="space-y-5">
-                            {steps.map((step, index) => (
-                                <Card key={step.title} className="border-slate-200 shadow-none">
-                                    <CardContent className="flex gap-4 p-5">
-                                        <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[var(--idxi-accent)]/10 text-sm font-semibold text-[var(--idxi-accent)]">
-                                            {index + 1}
-                                        </div>
-                                        <div>
-                                            <h3 className="text-lg font-semibold text-slate-900">{step.title}</h3>
-                                            <p className="mt-1 text-sm leading-6 text-slate-500">{step.copy}</p>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                <section className="bg-white py-18">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="flex items-end justify-between gap-6">
-                            <div>
-                                <h2 className="text-4xl font-semibold text-slate-900">New Listing</h2>
-                                <p className="mt-3 text-slate-500">Latest listing in our directory</p>
+                            <div className="mt-8 flex flex-wrap items-center gap-2 text-xs text-blue-300">
+                                <span>Popular:</span>
+                                {featuredCategories.slice(0, 4).map((category) => (
+                                    <Link
+                                        key={category.id}
+                                        href={route('categories.show', category.slug)}
+                                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-blue-200 transition hover:border-amber-400/30 hover:text-amber-400"
+                                    >
+                                        {category.name}
+                                    </Link>
+                                ))}
                             </div>
-                            <Button asChild variant="secondary" className="hidden md:inline-flex">
-                                <Link href={route('directory.index')}>View all listings</Link>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="border-b border-[var(--idxi-shallows)] bg-white py-16">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="text-center">
+                            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--idxi-tide)]">Categories</span>
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--idxi-abyss)]">Browse by category</h2>
+                            <p className="mt-2 text-sm text-[var(--idxi-tide)]">Find exactly what you need across our fishery network</p>
+                        </div>
+                        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                            {featuredCategories.map((category) => {
+                                const isOpen = openCategory === category.id;
+                                return (
+                                    <div key={category.id} className="relative">
+                                        <button
+                                            onClick={() => setOpenCategory(isOpen ? null : category.id)}
+                                            className="w-full rounded-xl border border-[var(--idxi-shallows)] bg-white p-5 text-left transition duration-200 hover:border-amber-200 hover:shadow-lg hover:shadow-amber-100/30"
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <div className="font-semibold text-[var(--idxi-abyss)]">{category.name}</div>
+                                                <ChevronDown
+                                                    className={`size-4 shrink-0 text-[var(--idxi-tide)] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                                                />
+                                            </div>
+                                            {!isOpen && (
+                                                <div className="mt-2 flex flex-wrap gap-1.5">
+                                                    {category.children?.slice(0, 3).map((child) => (
+                                                        <span key={child.slug} className="rounded-md bg-[var(--idxi-foam)] px-2.5 py-1 text-[11px] font-medium text-[var(--idxi-tide)]">
+                                                            {child.name}
+                                                        </span>
+                                                    ))}
+                                                    {category.children && category.children.length > 3 && (
+                                                        <span className="rounded-md bg-amber-50 px-2.5 py-1 text-[11px] font-medium text-amber-600">
+                                                            +{category.children.length - 3}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </button>
+                                        {isOpen && category.children && category.children.length > 0 && (
+                                            <div className="mt-2 rounded-xl border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-3 shadow-lg">
+                                                <div className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--idxi-tide)]">
+                                                    Subcategories
+                                                </div>
+                                                <div className="flex flex-wrap gap-1.5">
+                                                    {category.children.map((child) => (
+                                                        <Link
+                                                            key={child.slug}
+                                                            href={route('categories.show', child.slug)}
+                                                            className="rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-[var(--idxi-abyss)] shadow-sm transition hover:bg-amber-50 hover:text-amber-700 hover:shadow"
+                                                        >
+                                                            {child.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                                <Link
+                                                    href={route('categories.show', category.slug)}
+                                                    className="mt-3 flex items-center justify-center gap-1 rounded-lg bg-[var(--idxi-deep-ocean)] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[var(--idxi-current)]"
+                                                >
+                                                    Browse all {category.name}
+                                                    <ArrowRight className="size-3" />
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </section>
+
+                <section className="bg-white py-20">
+                    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                        <div className="text-center">
+                            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--idxi-tide)]">How it works</span>
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--idxi-abyss)]">Claim &amp; Get Started Today</h2>
+                            <p className="mt-2 text-sm text-[var(--idxi-tide)]">Verify your listing, publish your profile, and start replying to real buyer conversations.</p>
+                        </div>
+                        <div className="mt-12 grid gap-8 lg:grid-cols-2 lg:items-center">
+                            <div className="overflow-hidden rounded-2xl border border-[var(--idxi-shallows)] bg-gradient-to-br from-[var(--idxi-foam)] to-white shadow-lg shadow-[var(--idxi-deep-ocean)]/5">
+                                <img src="/assets/hero-reference.jpeg" alt="IDXI listing preview" className="h-full w-full object-cover" />
+                            </div>
+                            <div className="space-y-5">
+                                {steps.map((step, index) => (
+                                    <div key={step.title} className="rounded-xl border border-[var(--idxi-shallows)] bg-white p-5 transition duration-200 hover:shadow-md hover:shadow-[var(--idxi-deep-ocean)]/5">
+                                        <div className="flex gap-4">
+                                            <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--idxi-deep-ocean)] to-[var(--idxi-current)] text-sm font-semibold text-white shadow-sm">
+                                                {index + 1}
+                                            </div>
+                                            <div>
+                                                <h3 className="font-semibold text-[var(--idxi-abyss)]">{step.title}</h3>
+                                                <p className="mt-1 text-sm leading-6 text-[var(--idxi-tide)]">{step.copy}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="bg-[var(--idxi-foam)] py-20">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="flex flex-wrap items-end justify-between gap-6">
+                            <div>
+                                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--idxi-tide)]">Latest</span>
+                                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--idxi-abyss)]">New Listings</h2>
+                                <p className="mt-2 text-sm text-[var(--idxi-tide)]">Latest additions to our directory</p>
+                            </div>
+                            <Button asChild variant="outline" className="rounded-xl border-[var(--idxi-shallows)]">
+                                <Link href={route('directory.index')}>
+                                    View all listings
+                                    <ArrowRight className="ml-1.5 size-3.5" />
+                                </Link>
                             </Button>
                         </div>
 
@@ -177,56 +243,90 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                             {newListings.length > 0 ? (
                                 newListings.map((company) => (
                                     <Link key={company.id} href={route('directory.show', company.slug)} className="group">
-                                        <Card className="overflow-hidden border-slate-200 bg-white shadow-none transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/60">
-                                            <div className="aspect-[16/10] overflow-hidden bg-slate-100">
+                                        <Card className="overflow-hidden border-[var(--idxi-shallows)] bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[var(--idxi-deep-ocean)]/8">
+                                            <div className="aspect-[16/10] overflow-hidden bg-[var(--idxi-foam)]">
                                                 <img src={company.hero_image || '/assets/hero-market.jpg'} alt={company.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                                             </div>
                                             <CardContent className="space-y-3 p-5">
                                                 <div className="flex items-center justify-between gap-3">
-                                                    <h3 className="text-lg font-semibold text-slate-900">{company.name}</h3>
-                                                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">{company.company_type}</span>
+                                                    <h3 className="font-semibold text-[var(--idxi-abyss)]">{company.name}</h3>
+                                                    <span className="rounded-lg bg-[var(--idxi-coral)]/10 px-2.5 py-0.5 text-[11px] font-medium text-[var(--idxi-coral)]">{company.company_type}</span>
                                                 </div>
-                                                <p className="text-sm text-slate-500">{company.location}</p>
-                                                <p className="line-clamp-2 text-sm leading-6 text-slate-600">{company.summary}</p>
+                                                <p className="flex items-center gap-1.5 text-sm text-[var(--idxi-tide)]">
+                                                    <MapPin className="size-3.5 shrink-0" />
+                                                    {company.location}
+                                                </p>
+                                                <p className="line-clamp-2 text-sm leading-6 text-[var(--idxi-tide)]">{company.summary}</p>
                                             </CardContent>
                                         </Card>
                                     </Link>
                                 ))
                             ) : (
-                                <div className="rounded-[22px] border border-dashed border-slate-300 bg-slate-50 p-8 text-sm text-slate-500">No Listing Found</div>
+                                <div className="col-span-full rounded-2xl border border-dashed border-[var(--idxi-shallows)] bg-white p-12 text-center text-sm text-[var(--idxi-tide)]">
+                                    <Building2 className="mx-auto mb-3 size-8 text-[var(--idxi-shallows)]" />
+                                    No listings found
+                                </div>
                             )}
                         </div>
                     </div>
                 </section>
 
-                <section className="bg-[var(--idxi-surface-band)] py-18">
-                    <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:px-8">
-                        <div className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
+                <section className="bg-white py-20">
+                    <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
+                        <div className="overflow-hidden rounded-2xl border border-[var(--idxi-shallows)] bg-gradient-to-br from-[var(--idxi-foam)] to-white shadow-lg shadow-[var(--idxi-deep-ocean)]/5">
                             <img src="/assets/hero-reference.jpeg" alt="IDXI media reference" className="h-full w-full object-cover" />
                         </div>
                         <div className="flex flex-col justify-center">
-                            <h2 className="text-3xl font-semibold text-slate-900">People talking about us</h2>
-                            <blockquote className="mt-6 rounded-[24px] border border-slate-200 bg-white p-8 text-base leading-8 text-slate-600 shadow-sm">
-                                “{testimonial.quote}”
-                            </blockquote>
+                            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--idxi-tide)]">Testimonials</span>
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--idxi-abyss)]">People talking about us</h2>
+                            <div className="mt-6 rounded-2xl border border-[var(--idxi-shallows)] bg-gradient-to-br from-[var(--idxi-foam)] to-white p-8 shadow-sm">
+                                <svg className="mb-4 size-8 text-amber-400/40" fill="currentColor" viewBox="0 0 32 32">
+                                    <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2V8zm16 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2V8z" />
+                                </svg>
+                                <p className="text-base leading-8 text-[var(--idxi-tide)]">"{testimonial.quote}"</p>
+                            </div>
                             <div className="mt-6 flex items-center gap-4">
-                                <img src="/assets/idxi-fish-logo.png" alt="IDXI" className="size-12 rounded-full bg-white p-1 shadow-sm" />
+                                <div className="flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--idxi-deep-ocean)] to-[var(--idxi-current)] text-lg font-bold text-white shadow-sm">
+                                    {testimonial.author.charAt(0)}
+                                </div>
                                 <div>
-                                    <div className="font-semibold text-slate-900">{testimonial.author}</div>
-                                    <div className="text-sm text-slate-500">Directory launch and engagement note</div>
+                                    <div className="font-semibold text-[var(--idxi-abyss)]">{testimonial.author}</div>
+                                    <div className="text-sm text-[var(--idxi-tide)]">Directory partner</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <footer className="bg-slate-950 py-8 text-slate-300">
-                    <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-                        <p>Copyright © Infofish Mail • Wisma Unit, Jalan Pantai Baharu, Petaling Jaya</p>
-                        <div className="flex items-center gap-4 text-slate-400">
-                            {featuredCompanies.slice(0, 3).map((company) => (
-                                <span key={company.id}>{company.name}</span>
-                            ))}
+                <section className="bg-gradient-to-b from-[var(--idxi-deep-ocean)] to-[#0D1F3C] py-20">
+                    <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+                        <h2 className="text-3xl font-semibold tracking-tight text-white">Ready to grow your reach?</h2>
+                        <p className="mt-4 text-base text-blue-200">Join the leading fishery directory and connect with buyers across the region.</p>
+                        <div className="mt-8 flex flex-wrap justify-center gap-4">
+                            <Button asChild className="rounded-xl bg-amber-500 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600">
+                                <Link href={route('register')}>
+                                    <Users className="mr-2 size-4" />
+                                    Claim Your Listing
+                                </Link>
+                            </Button>
+                            <Button asChild variant="outline" className="rounded-xl border-white/20 bg-white/5 px-8 py-6 text-base text-white hover:bg-white/10">
+                                <Link href={route('directory.index')}>
+                                    Browse Directory
+                                </Link>
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+
+                <footer className="bg-[#060D18] py-12">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="flex flex-col items-center justify-between gap-6 text-sm text-blue-300/60 sm:flex-row">
+                            <p>&copy; {new Date().getFullYear()} Infofish Mail &bull; Wisma Unit, Jalan Pantai Baharu, Petaling Jaya</p>
+                            <div className="flex items-center gap-4">
+                                {featuredCompanies.slice(0, 3).map((company) => (
+                                    <span key={company.id} className="text-blue-300/40">{company.name}</span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </footer>

@@ -7,12 +7,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-    --radius-lg: var(--radius);
-    --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
 
     --color-background: var(--background);
     --color-foreground: var(--foreground);
@@ -58,14 +58,6 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
     *,
     ::after,
@@ -77,79 +69,89 @@
 }
 
 :root {
-    --idxi-admin-primary: #0b1e3a;
-    --idxi-admin-secondary: #5e6f88;
-    --idxi-admin-accent: #1976d2;
-    --idxi-cream: #f7f4ef;
-    --idxi-surface-band: #efefec;
-    --background: hsl(0, 0%, 100%);
-    --foreground: hsl(0, 0%, 3.9%);
-    --card: hsl(0, 0%, 100%);
-    --card-foreground: hsl(0, 0%, 3.9%);
-    --popover: hsl(0, 0%, 100%);
-    --popover-foreground: hsl(0, 0%, 3.9%);
-    --primary: 215 69% 14%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 210 25% 96%;
-    --secondary-foreground: 215 69% 14%;
-    --muted: 210 24% 96%;
-    --muted-foreground: 212 14% 43%;
-    --accent: 208 77% 46%;
+    --idxi-deep-ocean: #0a2647;
+    --idxi-current: #1e5a8a;
+    --idxi-sunrise: #f59e0b;
+    --idxi-coral: #06b6d4;
+    --idxi-foam: #f8fafc;
+    --idxi-tide: #64748b;
+    --idxi-shallows: #e2e8f0;
+    --idxi-abyss: #0f172a;
+
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 215 75% 16%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 215 75% 16%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 208 65% 33%;
     --accent-foreground: 0 0% 100%;
-    --destructive: hsl(0, 84.2%, 60.2%);
-    --destructive-foreground: hsl(0, 0%, 98%);
-    --border: 214 21% 89%;
-    --input: 214 21% 89%;
-    --ring: 208 77% 46%;
-    --chart-1: hsl(12, 76%, 61%);
-    --chart-2: hsl(173, 58%, 39%);
-    --chart-3: hsl(197, 37%, 24%);
-    --chart-4: hsl(43, 74%, 66%);
-    --chart-5: hsl(27, 87%, 67%);
-    --radius: 0.5rem;
-    --sidebar-background: 210 33% 99%;
-    --sidebar-foreground: 215 30% 22%;
-    --sidebar-primary: 215 69% 14%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 38 92% 50%;
+    --chart-1: 208 65% 33%;
+    --chart-2: 38 92% 50%;
+    --chart-3: 187 95% 43%;
+    --chart-4: 215 75% 16%;
+    --chart-5: 215 16% 47%;
+    --radius: 0.625rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 215 75% 16%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 28% 96%;
-    --sidebar-accent-foreground: 215 69% 14%;
-    --sidebar-border: 214 21% 89%;
-    --sidebar-ring: 208 77% 46%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 215 75% 16%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 38 92% 50%;
+
+    --idxi-admin-primary: #0a2647;
+    --idxi-admin-secondary: #1e5a8a;
+    --idxi-admin-accent: #f59e0b;
 }
 
 .dark {
-    --background: hsl(0, 0%, 3.9%);
-    --foreground: hsl(0, 0%, 98%);
-    --card: hsl(0, 0%, 3.9%);
-    --card-foreground: hsl(0, 0%, 98%);
-    --popover: hsl(0, 0%, 3.9%);
-    --popover-foreground: hsl(0, 0%, 98%);
-    --primary: hsl(0, 0%, 98%);
-    --primary-foreground: hsl(0, 0%, 9%);
-    --secondary: hsl(0, 0%, 14.9%);
-    --secondary-foreground: hsl(0, 0%, 98%);
-    --muted: hsl(0, 0%, 6.9%);
-    --muted-foreground: hsl(0, 0%, 63.9%);
-    --accent: hsl(0, 0%, 14.9%);
-    --accent-foreground: hsl(0, 0%, 98%);
-    --destructive: hsl(0, 84%, 60%);
-    --destructive-foreground: hsl(0, 0%, 98%);
-    --border: hsl(0, 0%, 14.9%);
-    --input: hsl(0, 0%, 14.9%);
-    --ring: hsl(0, 0%, 83.1%);
-    --chart-1: hsl(220, 70%, 50%);
-    --chart-2: hsl(160, 60%, 45%);
-    --chart-3: hsl(30, 80%, 55%);
-    --chart-4: hsl(280, 65%, 60%);
-    --chart-5: hsl(340, 75%, 55%);
-    --sidebar-background: hsl(0, 0%, 7%);
-    --sidebar-foreground: hsl(0, 0%, 80%);
-    --sidebar-primary: hsl(360, 100%, 100%);
-    --sidebar-primary-foreground: hsl(0, 0%, 100%);
-    --sidebar-accent: hsl(0, 0%, 15.9%);
-    --sidebar-accent-foreground: hsl(240, 4.8%, 95.9%);
-    --sidebar-border: hsl(0, 0%, 15.9%);
-    --sidebar-ring: hsl(217.2, 91.2%, 59.8%);
+    --background: 222 47% 8%;
+    --foreground: 210 40% 96%;
+    --card: 222 47% 10%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 47% 10%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 210 40% 96%;
+    --primary-foreground: 222 47% 8%;
+    --secondary: 215 30% 20%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 215 30% 15%;
+    --muted-foreground: 215 16% 60%;
+    --accent: 208 40% 25%;
+    --accent-foreground: 210 40% 96%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 40% 96%;
+    --border: 215 30% 20%;
+    --input: 215 30% 20%;
+    --ring: 38 92% 50%;
+    --chart-1: 208 65% 50%;
+    --chart-2: 38 92% 50%;
+    --chart-3: 187 95% 43%;
+    --chart-4: 215 40% 30%;
+    --chart-5: 215 16% 55%;
+
+    --sidebar-background: 222 47% 10%;
+    --sidebar-foreground: 210 40% 92%;
+    --sidebar-primary: 210 40% 96%;
+    --sidebar-primary-foreground: 222 47% 8%;
+    --sidebar-accent: 215 30% 18%;
+    --sidebar-accent-foreground: 210 40% 96%;
+    --sidebar-border: 215 30% 20%;
+    --sidebar-ring: 38 92% 50%;
 }
 
 @layer base {
@@ -159,23 +161,13 @@
 
     body {
         @apply bg-background text-foreground;
-        font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
     }
 
     h1,
     h2,
     h3,
     h4 {
-        letter-spacing: 0;
-    }
-
-    .admin-surface {
-        background: #ffffff;
-        border: 1px solid #dce2ea;
-        border-radius: 8px;
-    }
-
-    .admin-muted {
-        color: var(--idxi-admin-secondary);
+        letter-spacing: -0.01em;
     }
 }

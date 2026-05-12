@@ -16,7 +16,6 @@ class HomeController extends Controller
                 ->whereNull('parent_id')
                 ->with(['children:id,parent_id,name,slug'])
                 ->orderBy('sort_order')
-                ->limit(8)
                 ->get(['id', 'name', 'slug']),
             'newListings' => Company::query()
                 ->where('status', 'approved')
