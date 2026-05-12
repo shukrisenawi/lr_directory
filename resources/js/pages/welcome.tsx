@@ -138,11 +138,11 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                     onClick={() => setOpenCategory(openCategory === category.id ? null : category.id)}
                                     className={`w-full rounded-lg border p-3 text-left transition duration-200 ${
                                         openCategory === category.id
-                                            ? 'border-amber-300 bg-amber-50 shadow'
-                                            : 'border-[var(--idxi-shallows)] bg-white hover:border-amber-200 hover:shadow'
+                                            ? 'border-[var(--idxi-current)] bg-blue-50 shadow'
+                                            : 'border-blue-200 bg-white hover:border-[var(--idxi-current)] hover:shadow'
                                     }`}
                                 >
-                                    <div className={`text-sm font-medium ${openCategory === category.id ? 'text-amber-700' : 'text-[var(--idxi-abyss)]'}`}>
+                                    <div className={`text-sm font-medium ${openCategory === category.id ? 'text-[var(--idxi-current)]' : 'text-[var(--idxi-abyss)]'}`}>
                                         {category.name}
                                     </div>
                                 </button>
