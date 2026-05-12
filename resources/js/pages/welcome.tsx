@@ -151,12 +151,13 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
 
                         {openCategory && (() => {
                             const cat = featuredCategories.find(c => c.id === openCategory);
-                            if (!cat || !cat.children || cat.children.length === 0) return null;
+                            const children = cat?.children?.filter(c => (c.companies_count ?? 0) > 0) ?? [];
+                            if (!cat || children.length === 0) return null;
                             return (
                                 <div className="mt-4 rounded-xl border border-[var(--idxi-shallows)] bg-white p-4 shadow">
                                     <div className="flex items-center justify-between gap-4">
                                         <h3 className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--idxi-tide)]">
-                                            {cat.name} &mdash; {cat.children.length} subcategories
+                                            {cat.name} &mdash; {children.length} subcategories
                                         </h3>
                                         <Link
                                             href={route('categories.show', cat.slug)}
@@ -167,13 +168,13 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                         </Link>
                                     </div>
                                     <div className="mt-3 grid gap-1.5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-                                        {cat.children.map((child) => (
+                                        {children.map((child) => (
                                             <Link
                                                 key={child.slug}
                                                 href={route('categories.show', child.slug)}
                                                 className="rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] px-3 py-2 text-xs font-medium text-[var(--idxi-abyss)] transition hover:border-amber-200 hover:bg-amber-50 hover:text-amber-700"
                                             >
-                                                {child.name} {child.companies_count !== undefined ? `- ${child.companies_count}` : ''}
+                                                {child.name} - {child.companies_count}
                                             </Link>
                                         ))}
                                     </div>
