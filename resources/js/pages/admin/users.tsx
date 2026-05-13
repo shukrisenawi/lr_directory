@@ -2,7 +2,7 @@ import { AdminHero, AdminPage, AdminPanel, EmptyState, StatusPill } from '@/comp
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type User } from '@/types';
-import { Head, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { ShieldCheck, Users } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -50,7 +50,7 @@ export default function AdminUsers({ users }: AdminUsersProps) {
                                             <div className="flex size-7 items-center justify-center rounded-lg bg-slate-950 text-[10px] font-bold text-white">
                                                 {user.name.charAt(0)}
                                             </div>
-                                            <span className="font-medium text-slate-900">{user.name}</span>
+                                            <Link href={route('admin.users.show', user.id)} className="cursor-pointer font-medium text-slate-900 hover:text-cyan-700">{user.name}</Link>
                                         </div>
                                     </TableCell>
                                     <TableCell className="text-slate-500">{user.email}</TableCell>

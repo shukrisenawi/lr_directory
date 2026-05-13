@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateUserStatusRequest;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -20,6 +21,24 @@ class AdminUserController extends Controller
 
         return Inertia::render('admin/users', [
             'users' => $users,
+        ]);
+    }
+
+    public function show(User $user): Response
+    {
+        $user->loadCount([
+            'companies' => fn($q) => $q->whereNull('deleted_at'),
+        ]);
+
+        $companies = Company::query()
+            ->where('user_id', $user->id)
+            ->select(['id', 'name', 'status', 'slug', 'created_at'])
+            ->latest()
+            ->get();
+
+        return Inertia::render('admin/user-show', [
+            'userData' => $user,
+            'companies' => $companies,
         ]);
     }
 
