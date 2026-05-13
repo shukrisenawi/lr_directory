@@ -31,13 +31,13 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
 
             <div className="min-h-screen bg-[var(--idxi-foam)] text-[var(--idxi-abyss)]">
                 <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#0A2647] to-[#1E3A5F]">
-                    <div className="pointer-events-none absolute inset-0 bg-[url('/assets/hero-market.jpg')] bg-cover bg-center opacity-20" />
+                    <div className="pointer-events-none absolute inset-0 bg-[url('/assets/hero.png')] bg-cover bg-center opacity-20" />
                     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.12),transparent_60%)]" />
 
                     <div className="relative mx-auto flex min-h-[36rem] max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
                         <header className="flex items-center justify-between">
                             <Link href={route('home')} className="flex items-center gap-3">
-                                <img src="/assets/idxi-fish-logo.png" alt="IDXI" className="size-11 rounded-xl bg-white/10 p-1.5 ring-1 ring-white/20 backdrop-blur-sm" />
+                                <img src="/logo_white.png" alt="IDXI" className="size-11" />
                                 <div>
                                     <div className="text-2xl font-semibold tracking-wider text-white">IDXI</div>
                                     <div className="text-[10px] tracking-[0.3em] text-blue-200">INFOFISH DIRECTORY</div>
@@ -142,8 +142,11 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                             : 'border-blue-200 bg-white hover:border-[var(--idxi-current)] hover:shadow'
                                     }`}
                                 >
-                                    <div className={`text-sm font-medium ${openCategory === category.id ? 'text-[var(--idxi-current)]' : 'text-[var(--idxi-abyss)]'}`}>
-                                        {category.name}
+                                    <div className={`flex items-center justify-between text-sm font-medium ${openCategory === category.id ? 'text-[var(--idxi-current)]' : 'text-[var(--idxi-abyss)]'}`}>
+                                        <span>{category.name}</span>
+                                        <span className="rounded-full bg-[var(--idxi-coral)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--idxi-coral)]">
+                                            {((category.companies_count ?? 0) + category.children.reduce((sum, c) => sum + (c.companies_count ?? 0), 0))}
+                                        </span>
                                     </div>
                                 </button>
                             ))}

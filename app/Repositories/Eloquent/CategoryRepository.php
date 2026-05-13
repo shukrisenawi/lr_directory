@@ -33,8 +33,19 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function getWithChildren(): Collection
     {
-        return $this->model->with('children')
+        return $this->model->withCount('companies')
+            ->with(['children' => function ($query) {
+                $query->withCount('companies')
+                    ->whereHas('companies')
+                    ->orderBy('sort_order');
+            }])
             ->whereNull('parent_id')
+            ->where(function ($query) {
+                $query->whereHas('companies')
+                    ->orWhereHas('children', function ($q) {
+                        $q->whereHas('companies');
+                    });
+            })
             ->orderBy('sort_order')
             ->get();
     }

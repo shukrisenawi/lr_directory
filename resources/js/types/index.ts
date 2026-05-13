@@ -46,6 +46,7 @@ export interface Category {
     name: string;
     slug: string;
     description?: string | null;
+    companies_count?: number;
     children?: (Category & { companies_count?: number })[];
 }
 
