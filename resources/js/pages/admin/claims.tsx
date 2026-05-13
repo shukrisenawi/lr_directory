@@ -1,4 +1,4 @@
-import { AdminHero, AdminPage, AdminPanel, StatusPill } from '@/components/admin/admin-design';
+import { AdminHero, AdminPage, AdminPanel, EmptyState, StatusPill } from '@/components/admin/admin-design';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
@@ -25,18 +25,21 @@ export default function AdminClaimsPage({
                 />
 
                 <AdminPanel title="Review Queue" icon={BellRing}>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Company</TableHead>
-                                <TableHead>Requester</TableHead>
-                                <TableHead>Message</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead className="text-right">Action</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {claims.data.map((claim) => (
+                    {claims.data.length === 0 ? (
+                        <EmptyState>No claims yet.</EmptyState>
+                    ) : (
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Company</TableHead>
+                                    <TableHead>Requester</TableHead>
+                                    <TableHead>Message</TableHead>
+                                    <TableHead>Status</TableHead>
+                                    <TableHead className="text-right">Action</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {claims.data.map((claim) => (
                                 <TableRow key={claim.id}>
                                     <TableCell className="font-medium text-[var(--idxi-abyss)]">{claim.company.name}</TableCell>
                                     <TableCell className="text-[var(--idxi-tide)]">{claim.user.name}</TableCell>
@@ -68,6 +71,7 @@ export default function AdminClaimsPage({
                             ))}
                         </TableBody>
                     </Table>
+                    )}
                 </AdminPanel>
             </AdminPage>
         </AppLayout>

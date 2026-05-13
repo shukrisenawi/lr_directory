@@ -1,4 +1,4 @@
-import { AdminHero, AdminPage, AdminPanel, StatusPill } from '@/components/admin/admin-design';
+import { AdminHero, AdminPage, AdminPanel, EmptyState, StatusPill } from '@/components/admin/admin-design';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type User } from '@/types';
@@ -29,18 +29,21 @@ export default function AdminUsers({ users }: AdminUsersProps) {
                 />
 
                 <AdminPanel title="All Users" icon={ShieldCheck}>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>User</TableHead>
-                                <TableHead>Email</TableHead>
-                                <TableHead>Role</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead className="text-right">Action</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {users.data.map((user) => (
+                    {users.data.length === 0 ? (
+                        <EmptyState>No users yet.</EmptyState>
+                    ) : (
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>User</TableHead>
+                                    <TableHead>Email</TableHead>
+                                    <TableHead>Role</TableHead>
+                                    <TableHead>Status</TableHead>
+                                    <TableHead className="text-right">Action</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {users.data.map((user) => (
                                 <TableRow key={user.id}>
                                     <TableCell>
                                         <div className="flex items-center gap-2.5">
@@ -78,6 +81,7 @@ export default function AdminUsers({ users }: AdminUsersProps) {
                             ))}
                         </TableBody>
                     </Table>
+                    )}
                 </AdminPanel>
             </AdminPage>
         </AppLayout>

@@ -1,4 +1,4 @@
-import { AdminHero, AdminPage, AdminPanel, MetricCard, StatusPill } from '@/components/admin/admin-design';
+import { AdminHero, AdminPage, AdminPanel, EmptyState, MetricCard, StatusPill } from '@/components/admin/admin-design';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
@@ -38,33 +38,37 @@ export default function AdminIndex({
                 </div>
 
                 <AdminPanel title="Recent Claims" icon={BellRing}>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Company</TableHead>
-                                <TableHead>User</TableHead>
-                                <TableHead>Status</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {recentClaims.map((claim) => (
-                                <TableRow key={claim.id}>
-                                    <TableCell>
-                                        <Link
-                                            href={route('admin.claims.index')}
-                                            className="font-medium text-[var(--idxi-current)] hover:text-amber-600"
-                                        >
-                                            {claim.company.name}
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell className="text-[var(--idxi-tide)]">{claim.user.name}</TableCell>
-                                    <TableCell>
-                                        <StatusPill status={claim.status} />
-                                    </TableCell>
+                    {recentClaims.length === 0 ? (
+                        <EmptyState>No recent claims.</EmptyState>
+                    ) : (
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Company</TableHead>
+                                    <TableHead>User</TableHead>
+                                    <TableHead>Status</TableHead>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {recentClaims.map((claim) => (
+                                    <TableRow key={claim.id}>
+                                        <TableCell>
+                                            <Link
+                                                href={route('admin.claims.index')}
+                                                className="font-medium text-[var(--idxi-current)] hover:text-amber-600"
+                                            >
+                                                {claim.company.name}
+                                            </Link>
+                                        </TableCell>
+                                        <TableCell className="text-[var(--idxi-tide)]">{claim.user.name}</TableCell>
+                                        <TableCell>
+                                            <StatusPill status={claim.status} />
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    )}
                 </AdminPanel>
             </AdminPage>
         </AppLayout>

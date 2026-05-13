@@ -1,4 +1,4 @@
-import { AdminHero, AdminPage, AdminPanel, StatusPill } from '@/components/admin/admin-design';
+import { AdminHero, AdminPage, AdminPanel, EmptyState, StatusPill } from '@/components/admin/admin-design';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
@@ -25,17 +25,20 @@ export default function AdminCompaniesPage({
                 />
 
                 <AdminPanel title="Company Queue" icon={BriefcaseBusiness}>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Name</TableHead>
-                                <TableHead>Owner</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead className="text-right">Action</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {companies.data.map((company) => (
+                    {companies.data.length === 0 ? (
+                        <EmptyState>No companies yet.</EmptyState>
+                    ) : (
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Name</TableHead>
+                                    <TableHead>Owner</TableHead>
+                                    <TableHead>Status</TableHead>
+                                    <TableHead className="text-right">Action</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {companies.data.map((company) => (
                                 <TableRow key={company.id}>
                                     <TableCell className="font-medium text-[var(--idxi-abyss)]">{company.name}</TableCell>
                                     <TableCell className="text-[var(--idxi-tide)]">{company.owner?.name ?? 'Unclaimed'}</TableCell>
@@ -56,6 +59,7 @@ export default function AdminCompaniesPage({
                             ))}
                         </TableBody>
                     </Table>
+                    )}
                 </AdminPanel>
             </AdminPage>
         </AppLayout>
