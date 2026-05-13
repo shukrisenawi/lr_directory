@@ -196,9 +196,7 @@ const Sidebar = React.forwardRef<
                     'group-data-[side=right]:rotate-180',
                     variant === 'floating'
                         ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]'
-                        : variant === 'inset'
-                          ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+10px)]'
-                          : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
+                        : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
                 )}
             />
             <div
@@ -210,16 +208,14 @@ const Sidebar = React.forwardRef<
                     // Adjust the padding for floating and inset variants.
                     variant === 'floating'
                         ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
-                        : variant === 'inset'
-                          ? 'p-[5px] group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+10px)]'
-                          : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
+                        : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
                     className,
                 )}
                 {...props}
             >
                 <div
                     data-sidebar="sidebar"
-                    className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-sm group-data-[variant=inset]:rounded-xl"
+                    className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-sm"
                 >
                     {children}
                 </div>
