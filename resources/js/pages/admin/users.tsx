@@ -67,7 +67,7 @@ export default function AdminUsers({ users }: AdminUsersProps) {
                                                     onClick={() =>
                                                         router.patch(route('admin.users.update', user.id), { status }, { preserveScroll: true })
                                                     }
-                                                    className="cursor-pointer rounded-md bg-white px-2 py-1 text-[10px] font-semibold capitalize text-slate-500 ring-1 ring-slate-200 transition hover:bg-cyan-50 hover:text-cyan-700 hover:ring-cyan-200"
+                                                    className="cursor-pointer rounded-md bg-white px-3 py-1.5 text-xs font-semibold capitalize text-slate-500 ring-1 ring-slate-200 transition hover:bg-cyan-50 hover:text-cyan-700 hover:ring-cyan-200"
                                                 >
                                                     {status}
                                                 </button>
