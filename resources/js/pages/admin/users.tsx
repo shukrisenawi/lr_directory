@@ -1,4 +1,5 @@
 import { AdminHero, AdminPage, AdminPanel, StatusPill } from '@/components/admin/admin-design';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type User } from '@/types';
 import { Head, router } from '@inertiajs/react';
@@ -28,38 +29,55 @@ export default function AdminUsers({ users }: AdminUsersProps) {
                 />
 
                 <AdminPanel title="All Users" icon={ShieldCheck}>
-                    <div className="grid gap-3 p-4">
-                        {users.data.map((user) => (
-                            <div
-                                key={user.id}
-                                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-100 bg-slate-50/75 p-3 transition hover:border-cyan-100 hover:bg-cyan-50/35"
-                            >
-                                <div className="flex items-center gap-3">
-                                    <div className="flex size-10 items-center justify-center rounded-2xl bg-slate-950 text-sm font-bold text-white">
-                                        {user.name.charAt(0)}
-                                    </div>
-                                    <div>
-                                        <div className="font-semibold text-slate-950">{user.name}</div>
-                                        <div className="mt-0.5 text-xs text-slate-500">
-                                            {user.email} &middot; {user.role}
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>User</TableHead>
+                                <TableHead>Email</TableHead>
+                                <TableHead>Role</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead className="text-right">Action</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {users.data.map((user) => (
+                                <TableRow key={user.id}>
+                                    <TableCell>
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="flex size-7 items-center justify-center rounded-lg bg-slate-950 text-[10px] font-bold text-white">
+                                                {user.name.charAt(0)}
+                                            </div>
+                                            <span className="font-medium text-slate-900">{user.name}</span>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <StatusPill status={user.status} />
-                                    {statuses.map((status) => (
-                                        <button
-                                            key={status}
-                                            onClick={() => router.patch(route('admin.users.update', user.id), { status }, { preserveScroll: true })}
-                                            className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-500 capitalize ring-1 ring-slate-200 transition hover:bg-cyan-50 hover:text-cyan-700 hover:ring-cyan-200"
-                                        >
-                                            {status}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                                    </TableCell>
+                                    <TableCell className="text-slate-500">{user.email}</TableCell>
+                                    <TableCell>
+                                        <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-semibold capitalize text-slate-600">
+                                            {user.role}
+                                        </span>
+                                    </TableCell>
+                                    <TableCell>
+                                        <StatusPill status={user.status} />
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <div className="flex justify-end gap-1.5">
+                                            {statuses.map((status) => (
+                                                <button
+                                                    key={status}
+                                                    onClick={() =>
+                                                        router.patch(route('admin.users.update', user.id), { status }, { preserveScroll: true })
+                                                    }
+                                                    className="cursor-pointer rounded-md bg-white px-2 py-1 text-[10px] font-semibold capitalize text-slate-500 ring-1 ring-slate-200 transition hover:bg-cyan-50 hover:text-cyan-700 hover:ring-cyan-200"
+                                                >
+                                                    {status}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                 </AdminPanel>
             </AdminPage>
         </AppLayout>
