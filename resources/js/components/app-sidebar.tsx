@@ -65,7 +65,7 @@ export function AppSidebar() {
 
     return (
         <Sidebar collapsible="icon" variant="inset">
-            <SidebarHeader className="border-b border-white/10 pb-3">
+            <SidebarHeader className="border-b border-white/10 px-0 pb-3">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
@@ -77,12 +77,12 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
 
-            <SidebarContent className="px-1 py-3">
+            <SidebarContent className="px-0 py-3">
                 <NavMain items={mainNavItems} />
             </SidebarContent>
 
-            <SidebarFooter className="pb-3">
-                <SidebarSeparator />
+            <SidebarFooter className="mt-auto px-0 pb-3">
+                <SidebarSeparator className="mx-0" />
                 <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
