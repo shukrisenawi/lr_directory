@@ -212,5 +212,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => $companyUser->id,
             'body' => 'Absolutely. We can share current export pricing after account verification.',
         ]);
+
+        $this->call(SampleCompanySeeder::class);
     }
 }
