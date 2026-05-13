@@ -26,12 +26,8 @@ class AdminUserController extends Controller
 
     public function show(User $user): Response
     {
-        $user->loadCount([
-            'companies' => fn($q) => $q->whereNull('deleted_at'),
-        ]);
-
         $companies = Company::query()
-            ->where('user_id', $user->id)
+            ->where('claimed_by_user_id', $user->id)
             ->select(['id', 'name', 'status', 'slug', 'created_at'])
             ->latest()
             ->get();

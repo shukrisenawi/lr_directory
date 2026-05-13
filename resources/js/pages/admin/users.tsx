@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type User } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { ShieldCheck, Users } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck, Users } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Admin', href: '/admin' },
@@ -40,6 +40,7 @@ export default function AdminUsers({ users }: AdminUsersProps) {
                                     <TableHead>Role</TableHead>
                                     <TableHead>Status</TableHead>
                                     <TableHead className="text-right">Action</TableHead>
+                                    <TableHead className="w-10"></TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -76,6 +77,14 @@ export default function AdminUsers({ users }: AdminUsersProps) {
                                                 </button>
                                             ))}
                                         </div>
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <Link
+                                            href={route('admin.users.show', user.id)}
+                                            className="inline-flex cursor-pointer items-center justify-center rounded-lg p-1.5 text-slate-400 transition hover:bg-cyan-100 hover:text-cyan-700"
+                                        >
+                                            <ArrowUpRight className="size-4" />
+                                        </Link>
                                     </TableCell>
                                 </TableRow>
                             ))}
