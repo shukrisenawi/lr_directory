@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
     ({ className, ...props }, ref) => (
-        <div className="relative w-full overflow-hidden rounded-lg border border-slate-200 shadow-sm m-2.5">
+        <div className="relative w-full overflow-auto">
             <table ref={ref} className={cn('w-full caption-bottom text-sm', className)} {...props} />
         </div>
     ),
@@ -16,7 +16,7 @@ const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttribut
         <thead
             ref={ref}
             className={cn(
-                'border-b border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100/70 [&_tr]:border-b [&_tr]:border-slate-200',
+                'bg-slate-100/80',
                 className,
             )}
             {...props}
@@ -30,7 +30,7 @@ const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes
         <tbody
             ref={ref}
             className={cn(
-                '[&_tr:last-child]:border-0 [&_tr:nth-child(even)]:bg-slate-50/40',
+                '[&_tr:nth-child(even)]:bg-slate-50/40',
                 className,
             )}
             {...props}
@@ -44,7 +44,7 @@ const TableFooter = React.forwardRef<HTMLTableSectionElement, React.HTMLAttribut
         <tfoot
             ref={ref}
             className={cn(
-                'border-t border-slate-200 bg-gradient-to-r from-slate-100/80 to-white font-medium [&>tr]:last:border-b-0',
+                'bg-gradient-to-r from-slate-100/80 to-white font-medium',
                 className,
             )}
             {...props}
@@ -58,7 +58,7 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
         <tr
             ref={ref}
             className={cn(
-                'border-b border-slate-100 transition-all duration-100 hover:bg-gradient-to-r hover:from-cyan-100/70 hover:to-blue-100/50 data-[state=selected]:bg-sky-100',
+                'transition-all duration-100 hover:bg-gradient-to-r hover:from-cyan-100/70 hover:to-blue-100/50 data-[state=selected]:bg-sky-100',
                 className,
             )}
             {...props}
