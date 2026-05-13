@@ -10,7 +10,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
             <SidebarMenu className="gap-1.5">
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton className="h-10 rounded-xl" asChild isActive={item.url === page.url}>
+                        <SidebarMenuButton className="h-10 cursor-pointer rounded-xl" asChild isActive={item.url === page.url}>
                             <Link href={item.url} prefetch>
                                 {item.icon && <item.icon />}
                                 <span>{item.title}</span>
