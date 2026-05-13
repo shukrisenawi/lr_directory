@@ -196,7 +196,9 @@ const Sidebar = React.forwardRef<
                     'group-data-[side=right]:rotate-180',
                     variant === 'floating'
                         ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]'
-                        : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
+                        : variant === 'inset'
+                          ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+10px)]'
+                          : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
                 )}
             />
             <div
@@ -208,14 +210,16 @@ const Sidebar = React.forwardRef<
                     // Adjust the padding for floating and inset variants.
                     variant === 'floating'
                         ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
-                        : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
+                        : variant === 'inset'
+                          ? 'p-[5px] group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+10px)]'
+                          : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
                     className,
                 )}
                 {...props}
             >
                 <div
                     data-sidebar="sidebar"
-                    className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-sm"
+                    className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-sm group-data-[variant=inset]:rounded-xl"
                 >
                     {children}
                 </div>
@@ -282,7 +286,7 @@ const SidebarInset = React.forwardRef<HTMLDivElement, React.ComponentProps<'main
             ref={ref}
             className={cn(
                 'relative flex min-h-svh flex-1 flex-col bg-background',
-                'peer-data-[variant=inset]:min-h-[calc(100svh-(--spacing(4)))] md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm',
+                'peer-data-[variant=inset]:min-h-svh peer-data-[variant=inset]:m-0 peer-data-[variant=inset]:rounded-none peer-data-[variant=inset]:shadow-none',
                 className,
             )}
             {...props}
