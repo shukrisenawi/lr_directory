@@ -40,7 +40,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                     <Link
-                        className="flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 font-medium text-slate-700 transition hover:bg-cyan-50 hover:text-cyan-700"
+                        className="flex w-full cursor-pointer items-center gap-2.5 rounded-xl px-2.5 py-2 font-medium text-slate-700 transition hover:bg-cyan-50 hover:text-cyan-700"
                         href={route('profile.edit')}
                         as="button"
                         prefetch
@@ -56,7 +56,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <DropdownMenuSeparator className="mx-0 my-1.5 bg-slate-200" />
             <DropdownMenuItem asChild>
                 <Link
-                    className="flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 font-medium text-rose-600 transition hover:bg-rose-50 hover:text-rose-700"
+                    className="flex w-full cursor-pointer items-center gap-2.5 rounded-xl px-2.5 py-2 font-medium text-rose-600 transition hover:bg-rose-50 hover:text-rose-700"
                     method="post"
                     href={route('logout')}
                     as="button"
