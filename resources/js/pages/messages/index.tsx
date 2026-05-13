@@ -1,7 +1,7 @@
+import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { Card, CardContent } from '@/components/ui/card';
 import { MessageCircleMore } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Messages', href: '/messages' }];
@@ -39,7 +39,9 @@ export default function MessageListPage({ conversations }: ConversationListProps
                                         />
                                         <div>
                                             <div className="font-semibold text-[var(--idxi-abyss)]">{conversation.company.name}</div>
-                                            <div className="mt-0.5 text-sm text-[var(--idxi-tide)]">{conversation.messages[0]?.body ?? 'No messages yet.'}</div>
+                                            <div className="mt-0.5 text-sm text-[var(--idxi-tide)]">
+                                                {conversation.messages[0]?.body ?? 'No messages yet.'}
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="text-xs text-[var(--idxi-tide)]">{conversation.last_message_at ?? 'New'}</div>

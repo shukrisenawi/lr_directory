@@ -29,7 +29,10 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                 <img src={company.hero_image || '/assets/hero-market.jpg'} alt={company.name} className="h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--idxi-deep-ocean)]/90 via-[var(--idxi-deep-ocean)]/40 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
-                    <Link href={route('directory.index')} className="mb-3 inline-flex items-center gap-1.5 text-sm text-blue-200 transition hover:text-amber-400">
+                    <Link
+                        href={route('directory.index')}
+                        className="mb-3 inline-flex items-center gap-1.5 text-sm text-blue-200 transition hover:text-amber-400"
+                    >
                         <ArrowLeft className="size-3.5" />
                         Back to directory
                     </Link>
@@ -52,7 +55,10 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                             <p>{company.description}</p>
                             <div className="flex flex-wrap gap-2">
                                 {company.categories?.map((category) => (
-                                    <span key={category.slug} className="rounded-lg bg-[var(--idxi-foam)] px-3 py-1.5 text-xs font-medium text-[var(--idxi-current)]">
+                                    <span
+                                        key={category.slug}
+                                        className="rounded-lg bg-[var(--idxi-foam)] px-3 py-1.5 text-xs font-medium text-[var(--idxi-current)]"
+                                    >
                                         {category.name}
                                     </span>
                                 ))}
@@ -66,7 +72,10 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                         </CardHeader>
                         <CardContent className="grid gap-4 md:grid-cols-2">
                             {company.products?.map((product) => (
-                                <div key={product.id} className="rounded-xl border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-4 shadow-sm transition hover:border-amber-200">
+                                <div
+                                    key={product.id}
+                                    className="rounded-xl border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-4 shadow-sm transition hover:border-amber-200"
+                                >
                                     <div className="text-sm font-semibold text-[var(--idxi-abyss)]">{product.name}</div>
                                     <p className="mt-2 text-sm text-[var(--idxi-tide)]">{product.summary}</p>
                                 </div>
@@ -84,35 +93,35 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                             <div className="flex items-center gap-3">
                                 <Building2 className="size-4 shrink-0 text-[var(--idxi-current)]" />
                                 <div>
-                                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--idxi-tide)]">Type</span>
+                                    <span className="text-[11px] font-semibold tracking-wider text-[var(--idxi-tide)] uppercase">Type</span>
                                     <p className="font-medium text-[var(--idxi-abyss)]">{company.company_type}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
                                 <MapPin className="size-4 shrink-0 text-[var(--idxi-current)]" />
                                 <div>
-                                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--idxi-tide)]">Location</span>
+                                    <span className="text-[11px] font-semibold tracking-wider text-[var(--idxi-tide)] uppercase">Location</span>
                                     <p className="font-medium text-[var(--idxi-abyss)]">{company.location}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Globe className="size-4 shrink-0 text-[var(--idxi-current)]" />
                                 <div>
-                                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--idxi-tide)]">Website</span>
+                                    <span className="text-[11px] font-semibold tracking-wider text-[var(--idxi-tide)] uppercase">Website</span>
                                     <p className="font-medium text-[var(--idxi-abyss)]">{company.website || 'Available after login'}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Mail className="size-4 shrink-0 text-[var(--idxi-current)]" />
                                 <div>
-                                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--idxi-tide)]">Email</span>
+                                    <span className="text-[11px] font-semibold tracking-wider text-[var(--idxi-tide)] uppercase">Email</span>
                                     <p className="font-medium text-[var(--idxi-abyss)]">{company.contact_email || 'Login required'}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Phone className="size-4 shrink-0 text-[var(--idxi-current)]" />
                                 <div>
-                                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--idxi-tide)]">Phone</span>
+                                    <span className="text-[11px] font-semibold tracking-wider text-[var(--idxi-tide)] uppercase">Phone</span>
                                     <p className="font-medium text-[var(--idxi-abyss)]">{company.contact_phone || 'Login required'}</p>
                                 </div>
                             </div>
@@ -125,10 +134,26 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                                 <CardTitle className="text-lg text-[var(--idxi-abyss)]">Contact supplier</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-3">
-                                <Input value={leadForm.data.name} onChange={(event) => leadForm.setData('name', event.target.value)} placeholder="Your name" />
-                                <Input value={leadForm.data.email} onChange={(event) => leadForm.setData('email', event.target.value)} placeholder="Email" />
-                                <Input value={leadForm.data.phone} onChange={(event) => leadForm.setData('phone', event.target.value)} placeholder="Phone / WhatsApp" />
-                                <Input value={leadForm.data.product_interest} onChange={(event) => leadForm.setData('product_interest', event.target.value)} placeholder="Product interest" />
+                                <Input
+                                    value={leadForm.data.name}
+                                    onChange={(event) => leadForm.setData('name', event.target.value)}
+                                    placeholder="Your name"
+                                />
+                                <Input
+                                    value={leadForm.data.email}
+                                    onChange={(event) => leadForm.setData('email', event.target.value)}
+                                    placeholder="Email"
+                                />
+                                <Input
+                                    value={leadForm.data.phone}
+                                    onChange={(event) => leadForm.setData('phone', event.target.value)}
+                                    placeholder="Phone / WhatsApp"
+                                />
+                                <Input
+                                    value={leadForm.data.product_interest}
+                                    onChange={(event) => leadForm.setData('product_interest', event.target.value)}
+                                    placeholder="Product interest"
+                                />
                                 <Textarea
                                     value={leadForm.data.message}
                                     onChange={(event) => leadForm.setData('message', event.target.value)}
@@ -136,7 +161,12 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                                     className="border-[var(--idxi-shallows)] focus-visible:ring-2 focus-visible:ring-amber-500"
                                 />
                                 <Button
-                                    onClick={() => leadForm.post(route('leads.store', company.id), { preserveScroll: true, onSuccess: () => leadForm.reset('phone', 'product_interest', 'message') })}
+                                    onClick={() =>
+                                        leadForm.post(route('leads.store', company.id), {
+                                            preserveScroll: true,
+                                            onSuccess: () => leadForm.reset('phone', 'product_interest', 'message'),
+                                        })
+                                    }
                                     disabled={leadForm.processing}
                                     className="w-full rounded-xl bg-[var(--idxi-deep-ocean)] text-white hover:bg-[var(--idxi-current)]"
                                 >
@@ -172,9 +202,14 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                             <CardContent className="space-y-4 p-6">
                                 <div className="flex items-center gap-3">
                                     <Tag className="size-5 text-amber-500" />
-                                    <p className="text-sm text-[var(--idxi-tide)]">Login to view contact details, add favorites, and contact this supplier.</p>
+                                    <p className="text-sm text-[var(--idxi-tide)]">
+                                        Login to view contact details, add favorites, and contact this supplier.
+                                    </p>
                                 </div>
-                                <Button asChild className="w-full rounded-xl bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600">
+                                <Button
+                                    asChild
+                                    className="w-full rounded-xl bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600"
+                                >
                                     <Link href={route('login')}>Login to continue</Link>
                                 </Button>
                             </CardContent>

@@ -15,10 +15,7 @@ export function NavFooter({
                 <SidebarMenu>
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton
-                                asChild
-                                className="hover:bg-sidebar-accent"
-                            >
+                            <SidebarMenuButton asChild className="hover:bg-sidebar-accent">
                                 <a href={item.url} target="_blank" rel="noopener noreferrer">
                                     {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
                                     <span>{item.title}</span>

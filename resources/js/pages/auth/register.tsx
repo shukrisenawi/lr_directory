@@ -79,7 +79,7 @@ export default function Register() {
                             id="role"
                             value={data.role}
                             onChange={(event) => setData('role', event.target.value as 'normal' | 'company')}
-                            className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs"
+                            className="border-input bg-background flex h-12 w-full rounded-md border px-3 py-2 text-sm shadow-xs"
                         >
                             <option value="normal">Normal User</option>
                             <option value="company">Company</option>
@@ -136,7 +136,12 @@ export default function Register() {
                         <InputError message={errors.password_confirmation} />
                     </div>
 
-                    <Button type="submit" className="mt-2 w-full rounded-xl bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600" tabIndex={6} disabled={processing}>
+                    <Button
+                        type="submit"
+                        className="mt-2 w-full rounded-xl bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600"
+                        tabIndex={6}
+                        disabled={processing}
+                    >
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Create account
                     </Button>

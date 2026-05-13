@@ -1,9 +1,8 @@
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Activity, ArrowRight, BriefcaseBusiness, Building2, Heart, LayoutGrid, MessageCircleMore, TrendingUp, Users } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Dashboard', href: '/dashboard' }];
@@ -67,18 +66,16 @@ export default function Dashboard({ role, stats, companyProfile }: DashboardProp
             <Head title="Dashboard" />
             <div className="flex flex-col gap-6 p-6">
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--idxi-deep-ocean)] to-[#0D1F3C] p-8 shadow-xl">
-                    <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-amber-500/10 blur-3xl" />
+                    <div className="pointer-events-none absolute -top-20 -right-20 size-64 rounded-full bg-amber-500/10 blur-3xl" />
                     <div className="pointer-events-none absolute -bottom-10 -left-10 size-48 rounded-full bg-blue-500/10 blur-3xl" />
                     <div className="relative flex flex-wrap items-start justify-between gap-4">
                         <div>
-                            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-amber-400 ring-1 ring-white/10">
+                            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1 text-[11px] font-semibold tracking-[0.15em] text-amber-400 uppercase ring-1 ring-white/10">
                                 <roleInfo.icon className="size-3" />
                                 {role} dashboard
                             </div>
                             <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white">Welcome back</h1>
-                            <p className="mt-2 max-w-xl text-sm leading-relaxed text-blue-200">
-                                {roleInfo.desc}
-                            </p>
+                            <p className="mt-2 max-w-xl text-sm leading-relaxed text-blue-200">{roleInfo.desc}</p>
                         </div>
                         {role === 'company' && companyProfile ? (
                             <Badge className="rounded-lg border-amber-500/30 bg-amber-500/20 px-3 py-1.5 text-xs font-medium text-amber-400">
@@ -93,11 +90,16 @@ export default function Dashboard({ role, stats, companyProfile }: DashboardProp
                         const Icon = iconMap[label] || LayoutGrid;
                         const gradient = gradients[label] || 'from-[var(--idxi-current)] to-[var(--idxi-deep-ocean)]';
                         return (
-                            <div key={label} className="group relative overflow-hidden rounded-xl border border-[var(--idxi-shallows)] bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-                                <div className={`absolute right-0 top-0 size-20 translate-x-6 -translate-y-6 rounded-full bg-gradient-to-br ${gradient} opacity-5 blur-xl`} />
+                            <div
+                                key={label}
+                                className="group relative overflow-hidden rounded-xl border border-[var(--idxi-shallows)] bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+                            >
+                                <div
+                                    className={`absolute top-0 right-0 size-20 translate-x-6 -translate-y-6 rounded-full bg-gradient-to-br ${gradient} opacity-5 blur-xl`}
+                                />
                                 <div className="flex items-start justify-between">
                                     <div>
-                                        <div className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--idxi-tide)]">
+                                        <div className="text-[11px] font-semibold tracking-[0.15em] text-[var(--idxi-tide)] uppercase">
                                             {label.replace(/([A-Z])/g, ' $1')}
                                         </div>
                                         <div className="mt-2 text-3xl font-semibold tracking-tight text-[var(--idxi-abyss)]">{value}</div>

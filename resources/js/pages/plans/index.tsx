@@ -1,9 +1,9 @@
-import { Head, Link } from '@inertiajs/react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Check, Sparkles } from 'lucide-react';
 import { type SubscriptionPlan } from '@/types';
+import { Head, Link } from '@inertiajs/react';
+import { Check, Sparkles } from 'lucide-react';
 
 interface PlansIndexProps {
     plans: SubscriptionPlan[];
@@ -32,7 +32,7 @@ export default function PlansIndex({ plans }: PlansIndexProps) {
 
             <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
                 <div className="text-center">
-                    <Badge className="mb-4 rounded-full bg-amber-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-amber-700">
+                    <Badge className="mb-4 rounded-full bg-amber-100 px-3 py-1 text-[11px] font-semibold tracking-[0.15em] text-amber-700 uppercase">
                         <Sparkles className="mr-1 size-3" />
                         Pricing
                     </Badge>
@@ -42,7 +42,10 @@ export default function PlansIndex({ plans }: PlansIndexProps) {
 
                 <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {plans.map((plan) => (
-                        <Card key={plan.id} className="relative flex flex-col border-[var(--idxi-shallows)] bg-white shadow-sm transition hover:shadow-lg">
+                        <Card
+                            key={plan.id}
+                            className="relative flex flex-col border-[var(--idxi-shallows)] bg-white shadow-sm transition hover:shadow-lg"
+                        >
                             <CardHeader>
                                 <CardTitle className="text-xl text-[var(--idxi-abyss)]">{plan.name}</CardTitle>
                                 <CardDescription className="text-sm text-[var(--idxi-tide)]">

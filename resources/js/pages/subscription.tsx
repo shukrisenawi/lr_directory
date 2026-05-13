@@ -1,8 +1,8 @@
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Subscription, type SubscriptionPlan } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, CreditCard } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,7 +29,11 @@ export default function SubscriptionPage({ activeSubscription, subscriptionHisto
                 <Card className="border-[var(--idxi-shallows)] bg-white shadow-sm">
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-lg text-[var(--idxi-abyss)]">
-                            {activeSubscription ? <CheckCircle2 className="size-4 text-emerald-500" /> : <CreditCard className="size-4 text-amber-500" />}
+                            {activeSubscription ? (
+                                <CheckCircle2 className="size-4 text-emerald-500" />
+                            ) : (
+                                <CreditCard className="size-4 text-amber-500" />
+                            )}
                             Current Plan
                         </CardTitle>
                     </CardHeader>
@@ -53,7 +57,9 @@ export default function SubscriptionPage({ activeSubscription, subscriptionHisto
                                 <CardTitle className="text-lg text-[var(--idxi-abyss)]">{plan.name}</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-2 text-sm text-[var(--idxi-tide)]">
-                                <p>RM{plan.price} / {plan.duration_days} days</p>
+                                <p>
+                                    RM{plan.price} / {plan.duration_days} days
+                                </p>
                                 <p>{plan.features?.join(', ')}</p>
                                 <button
                                     onClick={() => router.post(route('subscription.store', plan.id), {}, { preserveScroll: true })}
@@ -73,7 +79,10 @@ export default function SubscriptionPage({ activeSubscription, subscriptionHisto
                         </CardHeader>
                         <CardContent className="space-y-3">
                             {subscriptionHistory.map((sub) => (
-                                <div key={sub.id} className="flex items-center justify-between rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-4 text-sm">
+                                <div
+                                    key={sub.id}
+                                    className="flex items-center justify-between rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-4 text-sm"
+                                >
                                     <span className="font-medium text-[var(--idxi-abyss)]">{sub.plan.name}</span>
                                     <Badge className="rounded-lg capitalize">{sub.status}</Badge>
                                 </div>

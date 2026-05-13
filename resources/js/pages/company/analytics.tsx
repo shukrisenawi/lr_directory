@@ -1,7 +1,7 @@
+import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { Card, CardContent } from '@/components/ui/card';
 import { BarChart3, Eye, Heart, Mail, MessageCircleMore } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -35,7 +35,7 @@ export default function CompanyAnalytics({ summary }: AnalyticsProps) {
                         <Card key={card.label} className="border-[var(--idxi-shallows)] bg-white shadow-sm">
                             <CardContent className="flex items-center justify-between p-5">
                                 <div>
-                                    <div className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--idxi-tide)]">{card.label}</div>
+                                    <div className="text-[11px] font-semibold tracking-[0.15em] text-[var(--idxi-tide)] uppercase">{card.label}</div>
                                     <div className="mt-2 text-3xl font-semibold text-[var(--idxi-abyss)]">{String(card.value)}</div>
                                 </div>
                                 <div className="rounded-lg bg-amber-100 p-2.5">

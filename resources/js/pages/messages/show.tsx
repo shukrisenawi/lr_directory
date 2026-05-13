@@ -1,11 +1,11 @@
-import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
+import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
 import { Send } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface MessageShowProps {
     conversation: {
@@ -25,23 +25,26 @@ export default function MessageShowPage({ conversation }: MessageShowProps) {
     const [messages, setMessages] = useState(conversation.messages);
 
     useEffect(() => {
-        const channel = window.Echo.private(`conversation.${conversation.id}`).listen('.message.sent', (event: { message: { id: number; body: string; created_at: string; user_id: number } }) => {
-            setMessages((current) => {
-                if (current.some((message) => message.id === event.message.id)) {
-                    return current;
-                }
+        const channel = window.Echo.private(`conversation.${conversation.id}`).listen(
+            '.message.sent',
+            (event: { message: { id: number; body: string; created_at: string; user_id: number } }) => {
+                setMessages((current) => {
+                    if (current.some((message) => message.id === event.message.id)) {
+                        return current;
+                    }
 
-                return [
-                    ...current,
-                    {
-                        id: event.message.id,
-                        body: event.message.body,
-                        created_at: event.message.created_at,
-                        user: { name: 'New message', role: 'company' },
-                    },
-                ];
-            });
-        });
+                    return [
+                        ...current,
+                        {
+                            id: event.message.id,
+                            body: event.message.body,
+                            created_at: event.message.created_at,
+                            user: { name: 'New message', role: 'company' },
+                        },
+                    ];
+                });
+            },
+        );
 
         return () => {
             channel.stopListening('.message.sent');

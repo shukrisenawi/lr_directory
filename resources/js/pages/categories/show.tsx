@@ -22,7 +22,7 @@ export default function CategoryShow({ category }: CategoryPageProps) {
                     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                         {category.companies.map((company) => (
                             <Link key={company.id} href={route('directory.show', company.slug)} className="group">
-                                <Card className="overflow-hidden border-[var(--idxi-shallows)] bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[var(--idxi-deep-ocean)]/8">
+                                <Card className="overflow-hidden border-[var(--idxi-shallows)] bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-[var(--idxi-deep-ocean)]/8 hover:shadow-xl">
                                     <CardContent className="space-y-3 p-5">
                                         <h2 className="font-semibold text-[var(--idxi-abyss)] group-hover:text-amber-600">{company.name}</h2>
                                         <p className="flex items-center gap-1.5 text-sm text-[var(--idxi-tide)]">

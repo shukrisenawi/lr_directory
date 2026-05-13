@@ -1,8 +1,8 @@
-import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem, type SubscriptionPlan, type Subscription } from '@/types';
-import { Head, router } from '@inertiajs/react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import AppLayout from '@/layouts/app-layout';
+import { type BreadcrumbItem, type Subscription, type SubscriptionPlan } from '@/types';
+import { Head, router } from '@inertiajs/react';
 import { CheckCircle2, Clock, XCircle } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -63,9 +63,7 @@ export default function SupplierSubscription({ activeSubscription, subscriptionH
                     </Card>
                 ) : (
                     <Card className="border-[var(--idxi-shallows)] bg-white shadow-sm">
-                        <CardContent className="p-6 text-center text-sm text-[var(--idxi-tide)]">
-                            No active subscription.
-                        </CardContent>
+                        <CardContent className="p-6 text-center text-sm text-[var(--idxi-tide)]">No active subscription.</CardContent>
                     </Card>
                 )}
 
@@ -76,10 +74,15 @@ export default function SupplierSubscription({ activeSubscription, subscriptionH
                         </CardHeader>
                         <CardContent className="space-y-3">
                             {plans.map((plan) => (
-                                <div key={plan.id} className="flex items-center justify-between rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-4">
+                                <div
+                                    key={plan.id}
+                                    className="flex items-center justify-between rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-4"
+                                >
                                     <div>
                                         <div className="font-medium text-[var(--idxi-abyss)]">{plan.name}</div>
-                                        <div className="mt-1 text-sm text-[var(--idxi-tide)]">RM{plan.price} / {plan.duration_days} days</div>
+                                        <div className="mt-1 text-sm text-[var(--idxi-tide)]">
+                                            RM{plan.price} / {plan.duration_days} days
+                                        </div>
                                     </div>
                                     <Badge className="rounded-lg bg-amber-100 px-3 py-1.5 text-xs font-medium text-amber-700">
                                         {plan.is_active ? 'Available' : 'Inactive'}
@@ -108,14 +111,19 @@ export default function SupplierSubscription({ activeSubscription, subscriptionH
                                 const Icon = statusIcon[sub.status] || Clock;
                                 const color = statusColor[sub.status] || 'text-gray-600 bg-gray-50';
                                 return (
-                                    <div key={sub.id} className="flex items-center justify-between rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-4">
+                                    <div
+                                        key={sub.id}
+                                        className="flex items-center justify-between rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] p-4"
+                                    >
                                         <div className="flex items-center gap-3">
                                             <div className={`rounded-full p-1.5 ${color}`}>
                                                 <Icon className="size-4" />
                                             </div>
                                             <div>
                                                 <div className="font-medium text-[var(--idxi-abyss)]">{sub.plan.name}</div>
-                                                <div className="text-sm text-[var(--idxi-tide)]">{sub.start_date} &ndash; {sub.end_date ?? 'Present'}</div>
+                                                <div className="text-sm text-[var(--idxi-tide)]">
+                                                    {sub.start_date} &ndash; {sub.end_date ?? 'Present'}
+                                                </div>
                                             </div>
                                         </div>
                                         <Badge className="rounded-lg capitalize">{sub.status}</Badge>

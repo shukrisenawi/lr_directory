@@ -8,9 +8,7 @@ export function UserInfo({ user, showEmail = false }: { user: User; showEmail?: 
         <>
             <Avatar className="h-8 w-8 overflow-hidden rounded-lg ring-1 ring-white/20">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="bg-amber-500 text-white text-xs font-semibold">
-                    {getInitials(user.name)}
-                </AvatarFallback>
+                <AvatarFallback className="bg-amber-500 text-xs font-semibold text-white">{getInitials(user.name)}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium text-white">{user.name}</span>

@@ -1,8 +1,8 @@
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Lead } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Mail, Phone, UserRound } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -41,15 +41,29 @@ export default function CompanyLeads({ leads }: CompanyLeadsProps) {
                                             {lead.name}
                                         </CardTitle>
                                         <div className="mt-2 flex flex-wrap gap-3 text-xs text-[var(--idxi-tide)]">
-                                            {lead.email ? <span className="flex items-center gap-1"><Mail className="size-3" />{lead.email}</span> : null}
-                                            {lead.phone ? <span className="flex items-center gap-1"><Phone className="size-3" />{lead.phone}</span> : null}
+                                            {lead.email ? (
+                                                <span className="flex items-center gap-1">
+                                                    <Mail className="size-3" />
+                                                    {lead.email}
+                                                </span>
+                                            ) : null}
+                                            {lead.phone ? (
+                                                <span className="flex items-center gap-1">
+                                                    <Phone className="size-3" />
+                                                    {lead.phone}
+                                                </span>
+                                            ) : null}
                                         </div>
                                     </div>
                                     <Badge className="rounded-lg capitalize">{lead.status}</Badge>
                                 </div>
                             </CardHeader>
                             <CardContent className="space-y-4 text-sm text-[var(--idxi-tide)]">
-                                {lead.product_interest ? <p><span className="font-medium text-[var(--idxi-abyss)]">Interest:</span> {lead.product_interest}</p> : null}
+                                {lead.product_interest ? (
+                                    <p>
+                                        <span className="font-medium text-[var(--idxi-abyss)]">Interest:</span> {lead.product_interest}
+                                    </p>
+                                ) : null}
                                 <p className="leading-6">{lead.message}</p>
                                 <div className="flex flex-wrap gap-2">
                                     {statuses.map((status) => (
@@ -57,7 +71,9 @@ export default function CompanyLeads({ leads }: CompanyLeadsProps) {
                                             key={status}
                                             onClick={() => updateStatus(lead, status)}
                                             className={`rounded-lg px-3 py-1.5 text-xs font-medium capitalize transition ${
-                                                lead.status === status ? 'bg-[var(--idxi-deep-ocean)] text-white' : 'bg-[var(--idxi-foam)] text-[var(--idxi-tide)] hover:bg-blue-50'
+                                                lead.status === status
+                                                    ? 'bg-[var(--idxi-deep-ocean)] text-white'
+                                                    : 'bg-[var(--idxi-foam)] text-[var(--idxi-tide)] hover:bg-blue-50'
                                             }`}
                                         >
                                             {status}

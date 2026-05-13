@@ -1,7 +1,7 @@
+import { Card, CardContent } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Company } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Heart, MapPin } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Favorites', href: '/favorites' }];
@@ -19,9 +19,13 @@ export default function FavoritesPage({ favorites }: { favorites: Company[] }) {
                     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                         {favorites.map((company) => (
                             <Link key={company.id} href={route('directory.show', company.slug)} className="group">
-                                <Card className="overflow-hidden border-[var(--idxi-shallows)] bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[var(--idxi-deep-ocean)]/8">
+                                <Card className="overflow-hidden border-[var(--idxi-shallows)] bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-[var(--idxi-deep-ocean)]/8 hover:shadow-xl">
                                     <div className="aspect-[16/10] overflow-hidden bg-[var(--idxi-foam)]">
-                                        <img src={company.hero_image || '/assets/hero-market.jpg'} alt={company.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                                        <img
+                                            src={company.hero_image || '/assets/hero-market.jpg'}
+                                            alt={company.name}
+                                            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                        />
                                     </div>
                                     <CardContent className="space-y-2 p-5">
                                         <div className="flex items-start justify-between">
