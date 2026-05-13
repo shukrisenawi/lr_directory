@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\UpdateUserStatusRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -36,6 +38,31 @@ class AdminUserController extends Controller
             'userData' => $user,
             'companies' => $companies,
         ]);
+    }
+
+    public function impersonate(Request $request, User $user): RedirectResponse
+    {
+        abort_if($user->is($request->user()), 422, 'You cannot impersonate yourself.');
+        abort_if($user->role === 'admin', 422, 'You cannot impersonate another admin.');
+
+        $request->session()->put('impersonator_id', $request->user()->id);
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        return to_route('dashboard')->with('success', "Logged in as {$user->name}.");
+    }
+
+    public function stopImpersonating(Request $request): RedirectResponse
+    {
+        $adminId = $request->session()->pull('impersonator_id');
+
+        abort_if(! $adminId, 403);
+
+        Auth::loginUsingId($adminId);
+        $request->session()->regenerate();
+
+        return to_route('admin.users.index')->with('success', 'Returned as admin.');
     }
 
     public function update(UpdateUserStatusRequest $request, User $user): RedirectResponse

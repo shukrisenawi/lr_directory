@@ -56,12 +56,15 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/subscription/{plan}', [SupplierSubscriptionController::class, 'store'])->name('subscription.store');
     });
 
+    Route::post('/impersonation/stop', [AdminUserController::class, 'stopImpersonating'])->name('impersonation.stop');
+
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', AdminController::class)->name('index');
         Route::get('/companies', [AdminCompanyController::class, 'index'])->name('companies.index');
         Route::patch('/companies/{company}', [AdminCompanyController::class, 'update'])->name('companies.update');
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
         Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
+        Route::post('/users/{user}/impersonate', [AdminUserController::class, 'impersonate'])->name('users.impersonate');
         Route::patch('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
         Route::get('/claims', [AdminClaimController::class, 'index'])->name('claims.index');
         Route::patch('/claims/{claimRequest}', [AdminClaimController::class, 'update'])->name('claims.update');

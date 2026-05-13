@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type User } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { ArrowUpRight, ShieldCheck, Users } from 'lucide-react';
+import { ArrowUpRight, LogIn, ShieldCheck, Users } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Admin', href: '/admin' },
@@ -45,51 +45,62 @@ export default function AdminUsers({ users }: AdminUsersProps) {
                             </TableHeader>
                             <TableBody>
                                 {users.data.map((user) => (
-                                <TableRow key={user.id}>
-                                    <TableCell>
-                                        <div className="flex items-center gap-2.5">
-                                            <div className="flex size-7 items-center justify-center rounded-lg bg-slate-950 text-[10px] font-bold text-white">
-                                                {user.name.charAt(0)}
+                                    <TableRow key={user.id}>
+                                        <TableCell>
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="flex size-7 items-center justify-center rounded-lg bg-slate-950 text-[10px] font-bold text-white">
+                                                    {user.name.charAt(0)}
+                                                </div>
+                                                <Link href={route('admin.users.show', user.id)} className="cursor-pointer font-medium text-slate-900 hover:text-cyan-700">
+                                                    {user.name}
+                                                </Link>
                                             </div>
-                                            <Link href={route('admin.users.show', user.id)} className="cursor-pointer font-medium text-slate-900 hover:text-cyan-700">{user.name}</Link>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="text-slate-500">{user.email}</TableCell>
-                                    <TableCell>
-                                        <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-semibold capitalize text-slate-600">
-                                            {user.role}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell>
-                                        <StatusPill status={user.status} />
-                                    </TableCell>
-                                    <TableCell className="text-right">
-                                        <div className="flex justify-end gap-1.5">
-                                            {statuses.map((status) => (
-                                                <button
-                                                    key={status}
-                                                    onClick={() =>
-                                                        router.patch(route('admin.users.update', user.id), { status }, { preserveScroll: true })
-                                                    }
-                                                    className="cursor-pointer rounded-md bg-white px-3 py-1.5 text-xs font-semibold capitalize text-slate-500 ring-1 ring-slate-200 transition hover:bg-cyan-50 hover:text-cyan-700 hover:ring-cyan-200"
-                                                >
-                                                    {status}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="text-right">
-                                        <Link
-                                            href={route('admin.users.show', user.id)}
-                                            className="inline-flex cursor-pointer items-center justify-center rounded-lg p-1.5 text-slate-400 transition hover:bg-cyan-100 hover:text-cyan-700"
-                                        >
-                                            <ArrowUpRight className="size-4" />
-                                        </Link>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                                        </TableCell>
+                                        <TableCell className="text-slate-500">{user.email}</TableCell>
+                                        <TableCell>
+                                            <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-semibold capitalize text-slate-600">
+                                                {user.role}
+                                            </span>
+                                        </TableCell>
+                                        <TableCell>
+                                            <StatusPill status={user.status} />
+                                        </TableCell>
+                                        <TableCell className="text-right">
+                                            <div className="flex justify-end gap-1.5">
+                                                {statuses.map((status) => (
+                                                    <button
+                                                        key={status}
+                                                        onClick={() => router.patch(route('admin.users.update', user.id), { status }, { preserveScroll: true })}
+                                                        className="cursor-pointer rounded-md bg-white px-3 py-1.5 text-xs font-semibold capitalize text-slate-500 ring-1 ring-slate-200 transition hover:bg-cyan-50 hover:text-cyan-700 hover:ring-cyan-200"
+                                                    >
+                                                        {status}
+                                                    </button>
+                                                ))}
+                                                {user.role !== 'admin' ? (
+                                                    <Link
+                                                        href={route('admin.users.impersonate', user.id)}
+                                                        method="post"
+                                                        as="button"
+                                                        className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-amber-400 px-3 py-1.5 text-xs font-semibold text-slate-950 transition hover:bg-amber-300"
+                                                    >
+                                                        <LogIn className="size-3" />
+                                                        Login
+                                                    </Link>
+                                                ) : null}
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-right">
+                                            <Link
+                                                href={route('admin.users.show', user.id)}
+                                                className="inline-flex cursor-pointer items-center justify-center rounded-lg p-1.5 text-slate-400 transition hover:bg-cyan-100 hover:text-cyan-700"
+                                            >
+                                                <ArrowUpRight className="size-4" />
+                                            </Link>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
                     )}
                 </AdminPanel>
             </AdminPage>

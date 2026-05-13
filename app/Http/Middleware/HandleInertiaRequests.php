@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -38,6 +39,8 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
         $user = $request->user();
+        $impersonatorId = $request->session()->get('impersonator_id');
+        $impersonator = $impersonatorId ? User::query()->select(['id', 'name'])->find($impersonatorId) : null;
 
         return array_merge(parent::share($request), [
             'name' => config('app.name'),
@@ -53,6 +56,13 @@ class HandleInertiaRequests extends Middleware
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
                 ] : null,
+                'impersonation' => [
+                    'active' => (bool) $impersonator,
+                    'admin' => $impersonator ? [
+                        'id' => $impersonator->id,
+                        'name' => $impersonator->name,
+                    ] : null,
+                ],
             ],
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),

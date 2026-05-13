@@ -2,6 +2,10 @@ import { LucideIcon } from 'lucide-react';
 
 export interface Auth {
     user: User | null;
+    impersonation?: {
+        active: boolean;
+        admin: { id: number; name: string } | null;
+    };
 }
 
 export interface BreadcrumbItem {

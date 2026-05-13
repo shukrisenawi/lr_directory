@@ -1,9 +1,9 @@
-import { AdminHero, AdminPage, AdminPanel, StatusPill } from '@/components/admin/admin-design';
+import { AdminHero, AdminPage, AdminPanel, EmptyState, StatusPill } from '@/components/admin/admin-design';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Company, type User } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Building2, ShieldCheck, Users } from 'lucide-react';
+import { ArrowLeft, Building2, LogIn, ShieldCheck, Users } from 'lucide-react';
 
 interface UserShowProps {
     userData: User;
@@ -31,13 +31,26 @@ export default function AdminUserShow({ userData: user, companies }: UserShowPro
                     icon={Users}
                     tone="blue"
                     action={
-                        <Link
-                            href={route('admin.users.index')}
-                            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-bold text-white shadow-sm ring-1 ring-white/20 transition hover:bg-white/25"
-                        >
-                            <ArrowLeft className="size-3.5" />
-                            Back
-                        </Link>
+                        <div className="flex flex-wrap items-center justify-end gap-2">
+                            {user.role !== 'admin' ? (
+                                <Link
+                                    href={route('admin.users.impersonate', user.id)}
+                                    method="post"
+                                    as="button"
+                                    className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-amber-400 px-4 py-2 text-xs font-bold text-slate-950 shadow-sm transition hover:bg-amber-300"
+                                >
+                                    <LogIn className="size-3.5" />
+                                    Login as member
+                                </Link>
+                            ) : null}
+                            <Link
+                                href={route('admin.users.index')}
+                                className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-bold text-white shadow-sm ring-1 ring-white/20 transition hover:bg-white/25"
+                            >
+                                <ArrowLeft className="size-3.5" />
+                                Back
+                            </Link>
+                        </div>
                     }
                 />
 
@@ -75,24 +88,28 @@ export default function AdminUserShow({ userData: user, companies }: UserShowPro
 
                     <div className="md:col-span-2">
                         <AdminPanel title={`Companies (${companies.length})`} icon={Building2}>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Name</TableHead>
-                                        <TableHead>Status</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {companies.map((company) => (
-                                        <TableRow key={company.id}>
-                                            <TableCell className="font-medium text-slate-900">{company.name}</TableCell>
-                                            <TableCell>
-                                                <StatusPill status={company.status} />
-                                            </TableCell>
+                            {companies.length === 0 ? (
+                                <EmptyState>No companies yet.</EmptyState>
+                            ) : (
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Name</TableHead>
+                                            <TableHead>Status</TableHead>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {companies.map((company) => (
+                                            <TableRow key={company.id}>
+                                                <TableCell className="font-medium text-slate-900">{company.name}</TableCell>
+                                                <TableCell>
+                                                    <StatusPill status={company.status} />
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            )}
                         </AdminPanel>
                     </div>
                 </div>
