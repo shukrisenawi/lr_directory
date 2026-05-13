@@ -26,6 +26,11 @@ export default function MessageListPage({ conversations }: ConversationListProps
                         Messages
                     </h1>
                 </div>
+                {conversations.length === 0 ? (
+                    <div className="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-10 text-center text-sm text-slate-500">
+                        No conversations yet.
+                    </div>
+                ) : (
                 <div className="grid gap-4">
                     {conversations.map((conversation) => (
                         <Link key={conversation.id} href={route('messages.show', conversation.id)}>
@@ -50,6 +55,7 @@ export default function MessageListPage({ conversations }: ConversationListProps
                         </Link>
                     ))}
                 </div>
+                )}
             </div>
         </AppLayout>
     );
