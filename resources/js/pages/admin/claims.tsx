@@ -49,17 +49,17 @@ export default function AdminClaimsPage({
                                             <Button
                                                 size="sm"
                                                 onClick={() => router.patch(route('admin.claims.update', claim.id), { status: 'rejected' })}
-                                                className="rounded-lg border border-[var(--idxi-shallows)] bg-white text-[var(--idxi-tide)] shadow-sm hover:bg-red-50 hover:text-red-600"
+                                                className="h-7 rounded-md border border-[var(--idxi-shallows)] bg-white px-2.5 text-[11px] text-[var(--idxi-tide)] shadow-sm hover:bg-red-50 hover:text-red-600"
                                             >
-                                                <XCircle className="size-3.5" />
+                                                <XCircle className="size-3" />
                                                 Reject
                                             </Button>
                                             <Button
                                                 size="sm"
                                                 onClick={() => router.patch(route('admin.claims.update', claim.id), { status: 'approved' })}
-                                                className="rounded-lg bg-emerald-500 text-white shadow-sm hover:bg-emerald-600"
+                                                className="h-7 rounded-md bg-emerald-500 px-2.5 text-[11px] text-white shadow-sm hover:bg-emerald-600"
                                             >
-                                                <CheckCircle className="size-3.5" />
+                                                <CheckCircle className="size-3" />
                                                 Approve
                                             </Button>
                                         </div>

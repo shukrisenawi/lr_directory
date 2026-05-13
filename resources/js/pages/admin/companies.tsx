@@ -46,9 +46,9 @@ export default function AdminCompaniesPage({
                                         <Button
                                             size="sm"
                                             onClick={() => router.patch(route('admin.companies.update', company.id), { status: 'approved' })}
-                                            className="rounded-lg bg-emerald-500 text-white shadow-sm hover:bg-emerald-600"
+                                            className="h-7 rounded-md bg-emerald-500 px-2.5 text-[11px] text-white shadow-sm hover:bg-emerald-600"
                                         >
-                                            <CheckCircle className="size-3.5" />
+                                            <CheckCircle className="size-3" />
                                             Approve
                                         </Button>
                                     </TableCell>
