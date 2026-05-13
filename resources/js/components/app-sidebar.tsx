@@ -77,15 +77,17 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
 
-            <SidebarContent className="px-0 py-3">
-                <NavMain items={mainNavItems} />
-            </SidebarContent>
+            <div className="flex min-h-0 flex-1 flex-col px-[5px]">
+                <SidebarContent className="px-0 py-3">
+                    <NavMain items={mainNavItems} />
+                </SidebarContent>
 
-            <SidebarFooter className="mt-auto px-0 pb-3">
-                <SidebarSeparator className="mx-0" />
-                <NavFooter items={footerNavItems} className="mt-auto" />
-                <NavUser />
-            </SidebarFooter>
+                <SidebarFooter className="mt-auto px-0 pb-3">
+                    <SidebarSeparator className="mx-0" />
+                    <NavFooter items={footerNavItems} className="mt-auto" />
+                    <NavUser />
+                </SidebarFooter>
+            </div>
         </Sidebar>
     );
 }
