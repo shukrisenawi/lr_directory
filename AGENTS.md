@@ -1,5 +1,11 @@
 # AGENTS.md — IDXI Directory
 
+## Git
+- Selepas jalankan arahan terus commit & push dalam bahasa melayu. sebelum commit jalankan npm run build.. setelah selesai baru commit dan push.
+
+## Planning
+- PLAN.md adalah file ringkasan sistem
+
 ## Stack
 
 - **Laravel 12** + **React 19** SPA via **Inertia 2** — no Blade/Livewire except root `app.blade.php`.
