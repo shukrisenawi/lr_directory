@@ -25,8 +25,7 @@ export default function CompanyShow({ company }: CompanyShowProps) {
         <div className="min-h-screen bg-[var(--idxi-foam)]">
             <Head title={company.name} />
 
-            <div className="relative h-[24rem] overflow-hidden">
-                <img src={company.hero_image || '/assets/hero.png'} alt={company.name} className="h-full w-full object-cover" />
+            <div className="relative h-[24rem] overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url('${company.hero_image || '/assets/hero.png'}')` }}>
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--idxi-deep-ocean)]/90 via-[var(--idxi-deep-ocean)]/40 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
                     <Link
