@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(UserCategorySeeder::class);
+        $this->call(SubscriptionPlanSeeder::class);
 
         $admin = User::factory()->create([
             'name' => 'IDXI Admin',

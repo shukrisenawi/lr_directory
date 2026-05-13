@@ -23,6 +23,7 @@ class AdminController extends Controller
                 'pendingCompanies' => $stats['pending_claims'],
                 'pendingClaims' => $stats['pending_claims'],
                 'users' => $stats['total_users'],
+                'leads' => $stats['total_leads'],
             ],
             'recentClaims' => $stats['recent_claims'],
         ]);

@@ -52,7 +52,9 @@ class ConversationService
 
         $conversation->update(['last_message_at' => now()]);
 
-        broadcast(new MessageSent($message))->toOthers();
+        if (! app()->environment('testing')) {
+            broadcast(new MessageSent($message))->toOthers();
+        }
 
         return $message;
     }

@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator } from '@/components/ui/sidebar';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BellRing, BriefcaseBusiness, Heart, LayoutGrid, MessageCircleMore, ShieldCheck, Store, Tags } from 'lucide-react';
+import { BellRing, BriefcaseBusiness, CreditCard, Heart, LayoutGrid, MessageCircleMore, ShieldCheck, Store, Tags } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const footerNavItems: NavItem[] = [
@@ -29,6 +29,7 @@ export function AppSidebar() {
             ? [
                   { title: 'Favorites', url: '/favorites', icon: Heart },
                   { title: 'Messages', url: '/messages', icon: MessageCircleMore },
+                  { title: 'Subscription', url: '/subscription', icon: CreditCard },
               ]
             : []),
         ...(role === 'company'
@@ -36,13 +37,19 @@ export function AppSidebar() {
                   { title: 'Company Profile', url: '/company/profile', icon: Store },
                   { title: 'Products', url: '/company/products', icon: Tags },
                   { title: 'Messages', url: '/messages', icon: MessageCircleMore },
+                  { title: 'Leads', url: '/company/leads', icon: Heart },
+                  { title: 'Analytics', url: '/company/analytics', icon: LayoutGrid },
+                  { title: 'Subscription', url: '/company/subscription', icon: CreditCard },
               ]
             : []),
         ...(role === 'admin'
             ? [
                   { title: 'Admin Console', url: '/admin', icon: ShieldCheck },
+                  { title: 'Users', url: '/admin/users', icon: Store },
                   { title: 'Companies', url: '/admin/companies', icon: BriefcaseBusiness },
                   { title: 'Claims', url: '/admin/claims', icon: BellRing },
+                  { title: 'Subscriptions', url: '/admin/subscriptions', icon: CreditCard },
+                  { title: 'Analytics', url: '/admin/analytics', icon: LayoutGrid },
               ]
             : []),
     ];

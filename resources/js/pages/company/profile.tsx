@@ -66,6 +66,14 @@ export default function CompanyProfilePage({ activeTab, company }: { activeTab: 
                                 </div>
                                 <div><span className="font-medium text-[var(--idxi-abyss)]">Location:</span> {company.location}</div>
                             </div>
+                            <div className="grid gap-3 md:grid-cols-2">
+                                <div><span className="font-medium text-[var(--idxi-abyss)]">Supplier Type:</span> {company.supplier_type || '-'}</div>
+                                <div><span className="font-medium text-[var(--idxi-abyss)]">Company Type:</span> {company.company_type || '-'}</div>
+                                <div><span className="font-medium text-[var(--idxi-abyss)]">WhatsApp:</span> {company.whatsapp || '-'}</div>
+                                <div><span className="font-medium text-[var(--idxi-abyss)]">Delivery Coverage:</span> {company.delivery_coverage || '-'}</div>
+                                <div><span className="font-medium text-[var(--idxi-abyss)]">Operating Hours:</span> {company.operating_hours || '-'}</div>
+                                <div><span className="font-medium text-[var(--idxi-abyss)]">Address:</span> {company.address || '-'}</div>
+                            </div>
                             <div className="flex items-center gap-3">
                                 <div className="flex size-8 items-center justify-center rounded-lg bg-blue-50">
                                     <Building2 className="size-4 text-[var(--idxi-current)]" />
@@ -87,6 +95,12 @@ export default function CompanyProfilePage({ activeTab, company }: { activeTab: 
                                     <div>
                                         <div className="font-semibold text-[var(--idxi-abyss)]">{product.name}</div>
                                         <div className="mt-1 text-sm text-[var(--idxi-tide)]">{product.summary}</div>
+                                        <div className="mt-2 flex flex-wrap gap-2 text-xs text-[var(--idxi-tide)]">
+                                            {product.fish_type ? <span>{product.fish_type}</span> : null}
+                                            {product.price ? <span>RM{product.price}/{product.price_unit || 'unit'}</span> : null}
+                                            {product.minimum_order ? <span>MOQ: {product.minimum_order}</span> : null}
+                                            {product.availability_status ? <span className="capitalize">{product.availability_status.replaceAll('_', ' ')}</span> : null}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

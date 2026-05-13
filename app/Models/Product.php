@@ -16,6 +16,12 @@ class Product extends Model
         'name',
         'slug',
         'summary',
+        'fish_type',
+        'description',
+        'price',
+        'price_unit',
+        'minimum_order',
+        'availability_status',
         'image',
         'is_active',
     ];
@@ -24,6 +30,7 @@ class Product extends Model
     {
         return [
             'is_active' => 'boolean',
+            'price' => 'decimal:2',
         ];
     }
 

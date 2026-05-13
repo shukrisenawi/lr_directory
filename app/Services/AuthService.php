@@ -28,7 +28,7 @@ class AuthService
             $user->companyProfile()->create([
                 'name' => $dto->name,
                 'slug' => str($dto->name)->slug()->append('-company'),
-                'status' => CompanyStatus::Unclaimed->value,
+                'status' => CompanyStatus::Pending->value,
             ]);
         }
 

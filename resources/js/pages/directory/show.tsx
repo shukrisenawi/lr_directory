@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { type Company, type SharedData } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
@@ -11,7 +12,14 @@ interface CompanyShowProps {
 
 export default function CompanyShow({ company }: CompanyShowProps) {
     const { auth } = usePage<SharedData>().props;
-    const { data, setData, post, processing } = useForm({ message: '' });
+    const claimForm = useForm({ message: '' });
+    const leadForm = useForm({
+        name: auth.user?.name ?? '',
+        email: auth.user?.email ?? '',
+        phone: '',
+        product_interest: '',
+        message: '',
+    });
 
     return (
         <div className="min-h-screen bg-[var(--idxi-foam)]">
@@ -114,18 +122,45 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                     {auth.user ? (
                         <Card className="border-[var(--idxi-shallows)] bg-white shadow-sm">
                             <CardHeader>
+                                <CardTitle className="text-lg text-[var(--idxi-abyss)]">Contact supplier</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-3">
+                                <Input value={leadForm.data.name} onChange={(event) => leadForm.setData('name', event.target.value)} placeholder="Your name" />
+                                <Input value={leadForm.data.email} onChange={(event) => leadForm.setData('email', event.target.value)} placeholder="Email" />
+                                <Input value={leadForm.data.phone} onChange={(event) => leadForm.setData('phone', event.target.value)} placeholder="Phone / WhatsApp" />
+                                <Input value={leadForm.data.product_interest} onChange={(event) => leadForm.setData('product_interest', event.target.value)} placeholder="Product interest" />
+                                <Textarea
+                                    value={leadForm.data.message}
+                                    onChange={(event) => leadForm.setData('message', event.target.value)}
+                                    placeholder="Tell the supplier what you need."
+                                    className="border-[var(--idxi-shallows)] focus-visible:ring-2 focus-visible:ring-amber-500"
+                                />
+                                <Button
+                                    onClick={() => leadForm.post(route('leads.store', company.id), { preserveScroll: true, onSuccess: () => leadForm.reset('phone', 'product_interest', 'message') })}
+                                    disabled={leadForm.processing}
+                                    className="w-full rounded-xl bg-[var(--idxi-deep-ocean)] text-white hover:bg-[var(--idxi-current)]"
+                                >
+                                    Send enquiry
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    ) : null}
+
+                    {auth.user ? (
+                        <Card className="border-[var(--idxi-shallows)] bg-white shadow-sm">
+                            <CardHeader>
                                 <CardTitle className="text-lg text-[var(--idxi-abyss)]">Claim this listing</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <Textarea
-                                    value={data.message}
-                                    onChange={(event) => setData('message', event.target.value)}
+                                    value={claimForm.data.message}
+                                    onChange={(event) => claimForm.setData('message', event.target.value)}
                                     placeholder="Tell the admin how this listing belongs to your company."
                                     className="border-[var(--idxi-shallows)] focus-visible:ring-2 focus-visible:ring-amber-500"
                                 />
                                 <Button
-                                    onClick={() => post(route('claims.store', company.id))}
-                                    disabled={processing}
+                                    onClick={() => claimForm.post(route('claims.store', company.id))}
+                                    disabled={claimForm.processing}
                                     className="rounded-xl bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600"
                                 >
                                     Submit claim request
@@ -137,7 +172,7 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                             <CardContent className="space-y-4 p-6">
                                 <div className="flex items-center gap-3">
                                     <Tag className="size-5 text-amber-500" />
-                                    <p className="text-sm text-[var(--idxi-tide)]">Login to view contact details, add favorites, and claim this listing.</p>
+                                    <p className="text-sm text-[var(--idxi-tide)]">Login to view contact details, add favorites, and contact this supplier.</p>
                                 </div>
                                 <Button asChild className="w-full rounded-xl bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600">
                                     <Link href={route('login')}>Login to continue</Link>

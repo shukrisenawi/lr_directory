@@ -3,7 +3,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { BellRing, Building2, ShieldCheck, TrendingUp, Users } from 'lucide-react';
+import { BellRing, Building2, Mail, ShieldCheck, Users } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Admin', href: '/admin' }];
 
@@ -16,9 +16,9 @@ export default function AdminIndex({
 }) {
     const statCards = [
         { label: 'Companies', icon: Building2, value: stats.companies ?? 0, gradient: 'from-blue-600 to-blue-800' },
-        { label: 'Total Views', icon: TrendingUp, value: stats.total_views ?? 0, gradient: 'from-amber-500 to-orange-600' },
-        { label: 'Total Users', icon: Users, value: stats.total_users ?? 0, gradient: 'from-cyan-500 to-blue-600' },
-        { label: 'Pending Claims', icon: BellRing, value: stats.total_claims ?? 0, gradient: 'from-purple-500 to-purple-700' },
+        { label: 'Total Users', icon: Users, value: stats.users ?? 0, gradient: 'from-cyan-500 to-blue-600' },
+        { label: 'Pending Claims', icon: BellRing, value: stats.pendingClaims ?? 0, gradient: 'from-purple-500 to-purple-700' },
+        { label: 'Leads', icon: Mail, value: stats.leads ?? 0, gradient: 'from-emerald-500 to-emerald-700' },
     ];
 
     return (

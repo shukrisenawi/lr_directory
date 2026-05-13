@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Company extends Model
 {
@@ -19,9 +20,16 @@ class Company extends Model
         'slug',
         'status',
         'location',
+        'address',
+        'delivery_coverage',
+        'operating_hours',
+        'latitude',
+        'longitude',
         'company_type',
+        'supplier_type',
         'contact_email',
         'contact_phone',
+        'whatsapp',
         'website',
         'hero_image',
         'logo',
@@ -36,6 +44,8 @@ class Company extends Model
         return [
             'social_links' => 'array',
             'is_featured' => 'boolean',
+            'latitude' => 'decimal:7',
+            'longitude' => 'decimal:7',
         ];
     }
 
@@ -47,6 +57,11 @@ class Company extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class)->withTimestamps();
+    }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
     }
 
     public function products(): HasMany
@@ -72,5 +87,15 @@ class Company extends Model
     public function conversations(): HasMany
     {
         return $this->hasMany(Conversation::class);
+    }
+
+    public function leads(): HasMany
+    {
+        return $this->hasMany(Lead::class);
+    }
+
+    public function subscriptions(): MorphMany
+    {
+        return $this->morphMany(Subscription::class, 'subscribable');
     }
 }
