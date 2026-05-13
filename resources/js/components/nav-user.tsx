@@ -26,7 +26,7 @@ export function NavUser() {
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                        className="mx-[10px] w-[min(16rem,calc(100vw-1.25rem))] rounded-2xl border border-slate-200/80 bg-white/96 p-1.5 text-slate-900 shadow-[0_18px_45px_rgba(15,23,42,0.16)] backdrop-blur-xl"
+                        className="mx-[10px] w-4/5 rounded-2xl border border-slate-200/80 bg-white/96 p-1.5 text-slate-900 shadow-[0_18px_45px_rgba(15,23,42,0.16)] backdrop-blur-xl"
                         align="end"
                         sideOffset={10}
                         side={isMobile ? 'bottom' : state === 'collapsed' ? 'left' : 'bottom'}
