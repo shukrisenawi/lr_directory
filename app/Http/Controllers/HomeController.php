@@ -2,32 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Company;
+use App\Services\CategoryService;
+use App\Services\CompanyService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class HomeController extends Controller
 {
+    public function __construct(
+        private CompanyService $companyService,
+        private CategoryService $categoryService,
+    ) {}
+
     public function __invoke(): Response
     {
         return Inertia::render('welcome', [
-            'featuredCategories' => Category::query()
-                ->whereNull('parent_id')
-                ->whereHas('children.companies')
-                ->with(['children' => fn ($q) => $q->withCount('companies')->orderBy('sort_order')])
-                ->orderBy('sort_order')
-                ->get(['id', 'name', 'slug']),
-            'newListings' => Company::query()
-                ->where('status', 'approved')
-                ->latest()
-                ->limit(6)
-                ->get(['id', 'name', 'slug', 'location', 'summary', 'company_type', 'hero_image']),
-            'featuredCompanies' => Company::query()
-                ->where('status', 'approved')
-                ->where('is_featured', true)
-                ->limit(4)
-                ->get(['id', 'name', 'slug', 'location', 'summary', 'company_type', 'hero_image']),
+            'featuredCategories' => $this->categoryService->getWithChildren(),
+            'newListings' => $this->companyService->getNewListings(6),
+            'featuredCompanies' => $this->companyService->getFeatured(4),
             'steps' => [
                 ['title' => 'Get Claimed', 'copy' => 'Register a company account and submit a claim for your listing.'],
                 ['title' => 'Complete Profile', 'copy' => 'Add products, campaigns, and company details after approval.'],

@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreClaimRequest;
 use App\Models\Company;
+use App\Services\CompanyService;
 use Illuminate\Http\RedirectResponse;
 
 class ClaimController extends Controller
 {
-    public function store(Company $company): RedirectResponse
-    {
-        request()->validate([
-            'message' => 'nullable|string|max:1000',
-        ]);
+    public function __construct(
+        private CompanyService $companyService,
+    ) {}
 
-        request()->user()->claimRequests()->updateOrCreate(
-            ['company_id' => $company->id],
-            [
-                'status' => 'pending',
-                'message' => request('message'),
-                'reviewed_at' => null,
-            ],
-        );
+    public function store(StoreClaimRequest $request, Company $company): RedirectResponse
+    {
+        $this->companyService->claim($company, $request->user(), $request->validated('message'));
 
         return back()->with('success', 'Claim request submitted for review.');
     }

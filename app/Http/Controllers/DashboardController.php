@@ -2,40 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClaimRequest;
-use App\Models\Company;
-use App\Models\Conversation;
-use App\Models\User;
+use App\Services\DashboardService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class DashboardController extends Controller
 {
+    public function __construct(
+        private DashboardService $dashboardService,
+    ) {}
+
     public function __invoke(): Response
     {
-        /** @var User $user */
         $user = request()->user();
         $company = $user->companyProfile;
 
+        $stats = match ($user->role) {
+            'admin' => $this->dashboardService->getAdminStats(),
+            'company' => $this->dashboardService->getCompanyStats($user),
+            default => $this->dashboardService->getUserStats($user),
+        };
+
         return Inertia::render('dashboard', [
             'role' => $user->role,
-            'stats' => match ($user->role) {
-                'admin' => [
-                    'companies' => Company::count(),
-                    'pendingClaims' => ClaimRequest::query()->where('status', 'pending')->count(),
-                    'activeUsers' => User::query()->where('status', 'active')->count(),
-                ],
-                'company' => [
-                    'products' => $company?->products()->count() ?? 0,
-                    'campaigns' => $company?->campaigns()->count() ?? 0,
-                    'messages' => $company ? Conversation::query()->where('company_id', $company->id)->count() : 0,
-                ],
-                default => [
-                    'favorites' => $user->favorites()->count(),
-                    'conversations' => $user->conversations()->count(),
-                    'recentSearches' => $user->searchHistories()->count(),
-                ],
-            },
+            'stats' => $stats,
             'companyProfile' => $company?->only(['id', 'name', 'status', 'summary']),
         ]);
     }

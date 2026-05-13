@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use App\Models\CompanyAnalyticsEvent;
+use App\Services\FavoriteService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class FavoriteController extends Controller
 {
+    public function __construct(
+        private FavoriteService $favoriteService,
+    ) {}
+
     public function index(): Response
     {
-        $favorites = request()->user()->favorites()->with('categories:id,name,slug')->get();
+        $favorites = $this->favoriteService->getUserFavorites(request()->user());
 
         return Inertia::render('favorites', [
             'favorites' => $favorites,
@@ -20,20 +24,14 @@ class FavoriteController extends Controller
 
     public function store(Company $company)
     {
-        request()->user()->favorites()->syncWithoutDetaching([$company->id]);
-
-        CompanyAnalyticsEvent::query()->create([
-            'company_id' => $company->id,
-            'user_id' => request()->user()->id,
-            'event_type' => 'favorite_added',
-        ]);
+        $this->favoriteService->add(request()->user(), $company);
 
         return back()->with('success', 'Company added to favorites.');
     }
 
     public function destroy(Company $company)
     {
-        request()->user()->favorites()->detach($company->id);
+        $this->favoriteService->remove(request()->user(), $company);
 
         return back()->with('success', 'Company removed from favorites.');
     }

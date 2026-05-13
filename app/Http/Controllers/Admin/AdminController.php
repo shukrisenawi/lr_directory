@@ -3,24 +3,28 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ClaimRequest;
-use App\Models\Company;
-use App\Models\User;
+use App\Services\DashboardService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AdminController extends Controller
 {
+    public function __construct(
+        private DashboardService $dashboardService,
+    ) {}
+
     public function __invoke(): Response
     {
+        $stats = $this->dashboardService->getAdminStats();
+
         return Inertia::render('admin/index', [
             'stats' => [
-                'companies' => Company::count(),
-                'pendingCompanies' => Company::query()->where('status', 'pending')->count(),
-                'pendingClaims' => ClaimRequest::query()->where('status', 'pending')->count(),
-                'users' => User::count(),
+                'companies' => $stats['total_companies'],
+                'pendingCompanies' => $stats['pending_claims'],
+                'pendingClaims' => $stats['pending_claims'],
+                'users' => $stats['total_users'],
             ],
-            'recentClaims' => ClaimRequest::query()->with(['company:id,name,slug', 'user:id,name,email'])->latest()->limit(5)->get(),
+            'recentClaims' => $stats['recent_claims'],
         ]);
     }
 }
