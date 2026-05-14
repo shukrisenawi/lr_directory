@@ -35,32 +35,32 @@ interface WelcomeProps {
 
 const categoryIcons = [Fish, Anchor, ShipWheel, Snowflake, PackageCheck, Store, Anchor, Truck];
 
-const popularSearches = ['Ikan Kembung', 'Udang', 'Sotong', 'Pemborong', 'Frozen Seafood'];
+const popularSearches = ['Mackerel', 'Shrimp', 'Squid', 'Wholesaler', 'Frozen Seafood'];
 
 const marketplaceBenefits = [
-    { title: 'Verified Suppliers', copy: 'Supplier disahkan dan dipercayai', icon: ShieldCheck },
-    { title: 'Banyak Kategori', copy: 'Produk dan perkhidmatan perikanan', icon: Grid2X2 },
-    { title: 'Direct Connection', copy: 'Hubungi terus dengan supplier', icon: Users },
-    { title: 'Grow Business', copy: 'Lebih banyak peluang untuk bisnes anda', icon: BarChart3 },
+    { title: 'Verified Suppliers', copy: 'Screened and trusted suppliers', icon: ShieldCheck },
+    { title: 'Many Categories', copy: 'Fishery products and services', icon: Grid2X2 },
+    { title: 'Direct Connection', copy: 'Connect directly with suppliers', icon: Users },
+    { title: 'Grow Business', copy: 'More opportunities for your business', icon: BarChart3 },
 ];
 
 const buyerSteps = [
-    { title: 'Cari Supplier', copy: 'Cari produk atau supplier yang anda perlukan', icon: Search },
-    { title: 'Lihat Profil', copy: 'Semak maklumat, produk dan lokasi supplier', icon: PackageCheck },
-    { title: 'Hubungi & Dapatkan Penawaran', copy: 'Chat atau hantar pertanyaan terus ke supplier', icon: MessageCircle },
+    { title: 'Find Suppliers', copy: 'Search for the products or suppliers you need', icon: Search },
+    { title: 'View Profiles', copy: 'Review supplier details, products, and locations', icon: PackageCheck },
+    { title: 'Connect & Request Quotes', copy: 'Chat or send enquiries directly to suppliers', icon: MessageCircle },
 ];
 
 const supplierSteps = [
-    { title: 'Daftar Akaun', copy: 'Daftar sebagai supplier dan claim listing anda', icon: Users },
-    { title: 'Lengkapkan Profil', copy: 'Tambah produk, gambar dan maklumat syarikat', icon: Store },
-    { title: 'Terima Lead', copy: 'Terima pertanyaan dan kembangkan bisnes anda', icon: BarChart3 },
+    { title: 'Create Account', copy: 'Register as a supplier and claim your listing', icon: Users },
+    { title: 'Complete Profile', copy: 'Add products, photos, and company details', icon: Store },
+    { title: 'Receive Leads', copy: 'Receive enquiries and grow your business', icon: BarChart3 },
 ];
 
 const stats = [
-    { value: '5,000+', label: 'Pembeli Aktif', icon: Users },
-    { value: '600+', label: 'Supplier Berdaftar', icon: Store },
-    { value: '30+', label: 'Kategori Produk', icon: Grid2X2 },
-    { value: '15,000+', label: 'Lead & Pertanyaan', icon: BarChart3 },
+    { value: '5,000+', label: 'Active Buyers', icon: Users },
+    { value: '600+', label: 'Registered Suppliers', icon: Store },
+    { value: '30+', label: 'Product Categories', icon: Grid2X2 },
+    { value: '15,000+', label: 'Leads & Enquiries', icon: BarChart3 },
 ];
 
 function categoryIcon(index: number) {
@@ -90,14 +90,14 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
         }
 
         return [
-            { id: 1, name: 'Ikan Segar', slug: 'ikan-segar' },
-            { id: 2, name: 'Udang', slug: 'udang' },
-            { id: 3, name: 'Sotong & Cumi', slug: 'sotong-cumi' },
+            { id: 1, name: 'Fresh Fish', slug: 'ikan-segar' },
+            { id: 2, name: 'Shrimp', slug: 'udang' },
+            { id: 3, name: 'Squid & Cuttlefish', slug: 'sotong-cumi' },
             { id: 4, name: 'Frozen Seafood', slug: 'frozen-seafood' },
-            { id: 5, name: 'Pemborong', slug: 'pemborong' },
-            { id: 6, name: 'Kolam Ikan & Akuakultur', slug: 'akuakultur' },
-            { id: 7, name: 'Peralatan Perikanan', slug: 'peralatan-perikanan' },
-            { id: 8, name: 'Perkhidmatan Logistik', slug: 'logistik' },
+            { id: 5, name: 'Wholesalers', slug: 'pemborong' },
+            { id: 6, name: 'Fish Farms & Aquaculture', slug: 'akuakultur' },
+            { id: 7, name: 'Fishing Equipment', slug: 'peralatan-perikanan' },
+            { id: 8, name: 'Logistics Services', slug: 'logistik' },
         ] satisfies Category[];
     }, [featuredCategories]);
 
@@ -172,10 +172,10 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                     THE FISHERIES MARKETPLACE
                                 </div>
                                 <h1 className="max-w-2xl text-5xl leading-[1.05] font-extrabold tracking-tight text-[#071a3d] sm:text-6xl lg:text-7xl">
-                                    Cari Supplier Ikan Dengan Mudah
+                                    Find Fishery Suppliers With Ease
                                 </h1>
                                 <p className="mt-6 max-w-2xl text-xl leading-8 font-medium text-[#12294f]">
-                                    Temui nelayan, pemborong dan pembekal seafood terpercaya di seluruh Malaysia.
+                                    Discover trusted fishermen, wholesalers, and seafood suppliers across Malaysia.
                                 </p>
 
                                 <form onSubmit={submit} className="mt-7 max-w-4xl rounded-lg bg-white p-3 shadow-[0_22px_60px_rgba(7,26,61,0.16)]">
@@ -185,7 +185,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                             <Input
                                                 value={query}
                                                 onChange={(event) => setQuery(event.target.value)}
-                                                placeholder="Cari ikan, supplier, produk..."
+                                                placeholder="Search fish, suppliers, products..."
                                                 className="h-full border-0 bg-transparent pl-4 text-base shadow-none placeholder:text-slate-500 focus-visible:ring-0"
                                             />
                                         </label>
@@ -194,12 +194,12 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                             <Input
                                                 value={location}
                                                 onChange={(event) => setLocation(event.target.value)}
-                                                placeholder="Lokasi / Negeri"
+                                                placeholder="Location / State"
                                                 className="h-full border-0 bg-transparent pl-4 text-sm shadow-none placeholder:text-slate-600 focus-visible:ring-0"
                                             />
                                         </label>
                                         <div className="hidden h-14 items-center justify-center gap-2 border-l border-slate-200 text-sm font-semibold text-[#071a3d] md:flex">
-                                            <span>Kategori</span>
+                                            <span>Category</span>
                                             <ChevronDown className="size-4" />
                                         </div>
                                         <Button
@@ -207,7 +207,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                             className="h-14 rounded-md bg-[#073d91] px-7 text-base font-bold text-white hover:bg-[#082f6f]"
                                         >
                                             <Search className="size-4" />
-                                            Cari
+                                            Search
                                         </Button>
                                     </div>
                                 </form>
@@ -253,12 +253,12 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                     <section id="categories" className="bg-white py-8 sm:py-12">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <div className="flex items-center justify-between gap-4">
-                                <h2 className="text-2xl font-extrabold tracking-tight text-[#071a3d]">Browse Kategori Popular</h2>
+                                <h2 className="text-2xl font-extrabold tracking-tight text-[#071a3d]">Browse Popular Categories</h2>
                                 <Link
                                     href={route('directory.index')}
                                     className="inline-flex items-center gap-2 text-sm font-bold text-[#075ccc] hover:text-[#073d91]"
                                 >
-                                    Lihat semua kategori <ArrowRight className="size-4" />
+                                    View all categories <ArrowRight className="size-4" />
                                 </Link>
                             </div>
 
@@ -287,12 +287,12 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                     <section className="bg-white pb-5">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <div className="flex items-center justify-between gap-4">
-                                <h2 className="text-2xl font-extrabold tracking-tight text-[#071a3d]">Supplier Terpilih</h2>
+                                <h2 className="text-2xl font-extrabold tracking-tight text-[#071a3d]">Featured Suppliers</h2>
                                 <Link
                                     href={route('directory.index')}
                                     className="inline-flex items-center gap-2 text-sm font-bold text-[#075ccc] hover:text-[#073d91]"
                                 >
-                                    Lihat semua supplier <ArrowRight className="size-4" />
+                                    View all suppliers <ArrowRight className="size-4" />
                                 </Link>
                             </div>
 
@@ -329,7 +329,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                                 </div>
                                                 <h3 className="text-base font-extrabold text-[#071a3d]">{company.name}</h3>
                                                 <p className="mt-1 line-clamp-1 text-sm text-[#405675]">
-                                                    {company.summary ?? company.company_type ?? 'Pembekal seafood dan perikanan'}
+                                                    {company.summary ?? company.company_type ?? 'Seafood and fishery supplier'}
                                                 </p>
                                                 <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-[#5f708a]">
                                                     <MapPin className="size-3.5" />
@@ -351,7 +351,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                                     )}
                                                 </div>
                                                 <span className="mt-4 flex h-9 items-center justify-center rounded-md border border-[#b8cbe6] text-sm font-bold text-[#071a3d] transition group-hover:border-[#073d91] group-hover:bg-[#073d91] group-hover:text-white">
-                                                    Lihat Profil
+                                                    View Profile
                                                 </span>
                                             </div>
                                         </Link>
@@ -359,7 +359,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                 ) : (
                                     <div className="col-span-full rounded-lg border border-dashed border-[#b8cbe6] bg-[#f7fbff] p-10 text-center text-sm font-semibold text-[#405675]">
                                         <Building2 className="mx-auto mb-3 size-9 text-[#083f99]" />
-                                        Supplier akan dipaparkan selepas listing diluluskan.
+                                        Suppliers will appear once listings are approved.
                                     </div>
                                 )}
                             </div>
@@ -388,10 +388,10 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
 
                     <section id="how-it-works" className="bg-white py-10 sm:py-14">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                            <h2 className="text-center text-2xl font-extrabold tracking-tight text-[#071a3d]">Bagaimana IDXI Berfungsi?</h2>
+                            <h2 className="text-center text-2xl font-extrabold tracking-tight text-[#071a3d]">How Does IDXI Work?</h2>
                             <div className="mt-7 grid gap-5 lg:grid-cols-2">
-                                <ProcessPanel title="Untuk Pembeli" accent="blue" steps={buyerSteps} />
-                                <ProcessPanel title="Untuk Supplier" accent="green" steps={supplierSteps} />
+                                <ProcessPanel title="For Buyers" accent="blue" steps={buyerSteps} />
+                                <ProcessPanel title="For Suppliers" accent="green" steps={supplierSteps} />
                             </div>
                         </div>
                     </section>
@@ -400,9 +400,9 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                         <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(4,32,77,0.96),rgba(4,32,77,0.7),rgba(4,32,77,0.2)),url('/assets/picture2.png')] bg-cover bg-center" />
                         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-9 text-white sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
                             <div>
-                                <h2 className="text-2xl font-extrabold">Ada bisnes perikanan?</h2>
+                                <h2 className="text-2xl font-extrabold">Own a fishery business?</h2>
                                 <p className="mt-2 max-w-xl text-base leading-7 text-white/90">
-                                    Daftarkan profil supplier anda dan mula dapatkan lebih banyak peluang perniagaan hari ini!
+                                    Register your supplier profile and start unlocking more business opportunities today.
                                 </p>
                             </div>
                             <div className="flex flex-col gap-3 sm:flex-row">
@@ -411,10 +411,10 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                     variant="outline"
                                     className="h-12 rounded-md border-white/50 bg-white/5 px-8 font-bold text-white hover:bg-white/15"
                                 >
-                                    <Link href={route('directory.index')}>Pelajari Lebih Lanjut</Link>
+                                    <Link href={route('directory.index')}>Learn More</Link>
                                 </Button>
                                 <Button asChild className="h-12 rounded-md bg-[#0b78ff] px-10 font-bold text-white hover:bg-[#0667dd]">
-                                    <Link href={route('register')}>Daftar Sebagai Supplier</Link>
+                                    <Link href={route('register')}>Register as Supplier</Link>
                                 </Button>
                             </div>
                         </div>
@@ -426,14 +426,14 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                         <div>
                             <img src="/logo_white.png" alt="IDXI Fisheries Directory" className="h-12 w-auto" />
                             <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
-                                Platform directory perikanan terulung di Malaysia yang menghubungkan pembeli dengan supplier terpercaya.
+                                Malaysia's leading fishery directory platform connecting buyers with trusted suppliers.
                             </p>
                         </div>
-                        <FooterLinks title="Pautan Pantas" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers', 'Resources']} />
-                        <FooterLinks title="Untuk Pembeli" links={['Cara Mencari', 'Tips Pembelian', 'Soalan Lazim']} />
-                        <FooterLinks title="Untuk Supplier" links={['Daftar Supplier', 'Panduan Supplier', 'Pusat Bantuan']} />
+                        <FooterLinks title="Quick Links" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers', 'Resources']} />
+                        <FooterLinks title="For Buyers" links={['How to Search', 'Buying Tips', 'FAQ']} />
+                        <FooterLinks title="For Suppliers" links={['Register Supplier', 'Supplier Guide', 'Help Center']} />
                         <div>
-                            <h3 className="text-sm font-extrabold">Hubungi Kami</h3>
+                            <h3 className="text-sm font-extrabold">Contact Us</h3>
                             <div className="mt-4 space-y-2 text-sm text-white/75">
                                 <p>+60 12-345 6789</p>
                                 <p>support@idxi.com.my</p>
@@ -443,10 +443,10 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                     </div>
                     <div className="border-t border-white/10">
                         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-                            <p>© {new Date().getFullYear()} IDXI Fisheries Directory. Hak Cipta Terpelihara.</p>
+                            <p>© {new Date().getFullYear()} IDXI Fisheries Directory. All Rights Reserved.</p>
                             <div className="flex gap-8">
-                                <Link href={route('home')}>Terma & Syarat</Link>
-                                <Link href={route('home')}>Dasar Privasi</Link>
+                                <Link href={route('home')}>Terms & Conditions</Link>
+                                <Link href={route('home')}>Privacy Policy</Link>
                             </div>
                         </div>
                     </div>
