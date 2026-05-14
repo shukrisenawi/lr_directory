@@ -36,7 +36,8 @@ class CompanyRepository extends BaseRepository implements CompanyRepositoryInter
             ->when($dto->query, fn($q) => $q->where(function ($sub) use ($dto) {
                 $sub->where('name', 'like', "%{$dto->query}%")
                     ->orWhere('summary', 'like', "%{$dto->query}%")
-                    ->orWhere('description', 'like', "%{$dto->query}%");
+                    ->orWhere('description', 'like', "%{$dto->query}%")
+                    ->orWhereHas('categories', fn($categoryQuery) => $categoryQuery->where('name', 'like', "%{$dto->query}%"));
             }))
             ->when($dto->location, fn($q) => $q->where('location', 'like', "%{$dto->location}%"))
             ->when($dto->categoryId, fn($q) => $q->whereHas('categories', fn($c) => $c->where('id', $dto->categoryId)))

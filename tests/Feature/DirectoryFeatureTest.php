@@ -67,6 +67,13 @@ class DirectoryFeatureTest extends TestCase
                 ->where('categories.0.slug', 'frozen-seafood')
                 ->where('categories.0.children.0.slug', 'frozen-fish')
                 ->where('companies.data.0.slug', 'database-cold-chain'));
+
+        $this->get('/directory?q=Frozen%20Seafood')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('directory/index')
+                ->where('filters.q', 'Frozen Seafood')
+                ->where('companies.data.0.slug', 'database-cold-chain'));
     }
 
     public function test_supplier_profile_uses_products_and_similar_suppliers_from_database(): void
