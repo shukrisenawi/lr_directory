@@ -1,10 +1,29 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { type Category, type Company, type SharedData } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { ArrowRight, Building2, MapPin, Search, ShieldCheck, Users } from 'lucide-react';
-import { FormEvent, useState } from 'react';
+import {
+    Anchor,
+    ArrowRight,
+    BadgeCheck,
+    BarChart3,
+    Building2,
+    ChevronDown,
+    Fish,
+    Grid2X2,
+    type LucideIcon,
+    MapPin,
+    MessageCircle,
+    PackageCheck,
+    Search,
+    ShieldCheck,
+    ShipWheel,
+    Snowflake,
+    Store,
+    Truck,
+    Users,
+} from 'lucide-react';
+import { FormEvent, useMemo, useState } from 'react';
 
 interface WelcomeProps {
     featuredCategories: Category[];
@@ -14,11 +33,75 @@ interface WelcomeProps {
     testimonial: { quote: string; author: string };
 }
 
-export default function Welcome({ featuredCategories, newListings, featuredCompanies, steps, testimonial }: WelcomeProps) {
+const categoryIcons = [Fish, Anchor, ShipWheel, Snowflake, PackageCheck, Store, Anchor, Truck];
+
+const popularSearches = ['Ikan Kembung', 'Udang', 'Sotong', 'Pemborong', 'Frozen Seafood'];
+
+const marketplaceBenefits = [
+    { title: 'Verified Suppliers', copy: 'Supplier disahkan dan dipercayai', icon: ShieldCheck },
+    { title: 'Banyak Kategori', copy: 'Produk dan perkhidmatan perikanan', icon: Grid2X2 },
+    { title: 'Direct Connection', copy: 'Hubungi terus dengan supplier', icon: Users },
+    { title: 'Grow Business', copy: 'Lebih banyak peluang untuk bisnes anda', icon: BarChart3 },
+];
+
+const buyerSteps = [
+    { title: 'Cari Supplier', copy: 'Cari produk atau supplier yang anda perlukan', icon: Search },
+    { title: 'Lihat Profil', copy: 'Semak maklumat, produk dan lokasi supplier', icon: PackageCheck },
+    { title: 'Hubungi & Dapatkan Penawaran', copy: 'Chat atau hantar pertanyaan terus ke supplier', icon: MessageCircle },
+];
+
+const supplierSteps = [
+    { title: 'Daftar Akaun', copy: 'Daftar sebagai supplier dan claim listing anda', icon: Users },
+    { title: 'Lengkapkan Profil', copy: 'Tambah produk, gambar dan maklumat syarikat', icon: Store },
+    { title: 'Terima Lead', copy: 'Terima pertanyaan dan kembangkan bisnes anda', icon: BarChart3 },
+];
+
+const stats = [
+    { value: '5,000+', label: 'Pembeli Aktif', icon: Users },
+    { value: '600+', label: 'Supplier Berdaftar', icon: Store },
+    { value: '30+', label: 'Kategori Produk', icon: Grid2X2 },
+    { value: '15,000+', label: 'Lead & Pertanyaan', icon: BarChart3 },
+];
+
+function categoryIcon(index: number) {
+    return categoryIcons[index % categoryIcons.length];
+}
+
+function categoryCount(category: Category) {
+    return (category.companies_count ?? 0) + (category.children ?? []).reduce((sum, child) => sum + (child.companies_count ?? 0), 0);
+}
+
+function companyImage(company: Company, index: number) {
+    if (company.hero_image) {
+        return company.hero_image;
+    }
+
+    return index % 2 === 0 ? '/assets/hero-reference.jpeg' : '/assets/hero-market.jpg';
+}
+
+export default function Welcome({ featuredCategories, newListings, featuredCompanies }: WelcomeProps) {
     const { auth } = usePage<SharedData>().props;
     const [query, setQuery] = useState('');
     const [location, setLocation] = useState('');
-    const [openCategory, setOpenCategory] = useState<number | null>(null);
+
+    const displayCategories = useMemo(() => {
+        if (featuredCategories.length > 0) {
+            return featuredCategories.slice(0, 8);
+        }
+
+        return [
+            { id: 1, name: 'Ikan Segar', slug: 'ikan-segar' },
+            { id: 2, name: 'Udang', slug: 'udang' },
+            { id: 3, name: 'Sotong & Cumi', slug: 'sotong-cumi' },
+            { id: 4, name: 'Frozen Seafood', slug: 'frozen-seafood' },
+            { id: 5, name: 'Pemborong', slug: 'pemborong' },
+            { id: 6, name: 'Kolam Ikan & Akuakultur', slug: 'akuakultur' },
+            { id: 7, name: 'Peralatan Perikanan', slug: 'peralatan-perikanan' },
+            { id: 8, name: 'Perkhidmatan Logistik', slug: 'logistik' },
+        ] satisfies Category[];
+    }, [featuredCategories]);
+
+    const displayCompanies = (featuredCompanies.length > 0 ? featuredCompanies : newListings).slice(0, 4);
 
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -27,335 +110,403 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
 
     return (
         <>
-            <Head title="IDXI Directory" />
+            <Head title="IDXI Fisheries Directory" />
 
-            <div className="min-h-screen bg-[var(--idxi-foam)] text-[var(--idxi-abyss)]">
-                <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#0A2647] to-[#1E3A5F]">
-                    <div className="pointer-events-none absolute inset-0 bg-[url('/assets/hero.png')] bg-cover bg-center opacity-20" />
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.12),transparent_60%)]" />
+            <div className="min-h-screen bg-white text-[#071a3d]">
+                <section className="relative isolate overflow-hidden bg-[#eef7ff]">
+                    <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(238,247,255,0.98)_0%,rgba(238,247,255,0.84)_42%,rgba(238,247,255,0.08)_72%),url('/assets/hero.png')] bg-cover bg-[58%_center]" />
+                    <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-[#e9f5ff] to-transparent" />
 
-                    <div className="relative mx-auto flex min-h-[36rem] max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-                        <header className="flex items-center justify-between">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <header className="flex h-20 items-center justify-between gap-5">
                             <Link href={route('home')} className="flex items-center gap-3">
-                                <img src="/logo_white.png" alt="IDXI" className="size-11" />
-                                <div>
-                                    <div className="text-2xl font-semibold tracking-wider text-white">IDXI</div>
-                                    <div className="text-[10px] tracking-[0.3em] text-blue-200">INFOFISH DIRECTORY</div>
-                                </div>
+                                <img src="/logo.svg" alt="IDXI Fisheries Directory" className="h-12 w-auto" />
                             </Link>
+
+                            <nav className="hidden items-center gap-10 text-sm font-semibold text-[#071a3d] lg:flex">
+                                <Link href={route('directory.index')} className="transition hover:text-[#0b63ce]">
+                                    Directory
+                                </Link>
+                                <a href="#categories" className="transition hover:text-[#0b63ce]">
+                                    Categories
+                                </a>
+                                <a href="#how-it-works" className="transition hover:text-[#0b63ce]">
+                                    For Buyers
+                                </a>
+                                <Link href={route('register')} className="transition hover:text-[#0b63ce]">
+                                    For Suppliers
+                                </Link>
+                                <button className="inline-flex items-center gap-1 transition hover:text-[#0b63ce]" type="button">
+                                    Resources <ChevronDown className="size-3.5" />
+                                </button>
+                            </nav>
 
                             <div className="flex items-center gap-3">
                                 {auth.user ? (
-                                    <Button asChild className="bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600">
+                                    <Button asChild className="h-11 rounded-md bg-[#073d91] px-5 text-white hover:bg-[#082f6f]">
                                         <Link href={route('dashboard')}>Dashboard</Link>
                                     </Button>
                                 ) : (
                                     <>
-                                        <Button asChild variant="ghost" className="text-white/80 hover:bg-white/10 hover:text-white">
-                                            <Link href={route('login')}>Login</Link>
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            className="hidden h-11 rounded-md border-[#071a3d]/40 bg-white/40 px-5 text-[#071a3d] sm:inline-flex"
+                                        >
+                                            <Link href={route('login')}>Sign In</Link>
                                         </Button>
-                                        <Button asChild className="bg-amber-500 text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600">
-                                            <Link href={route('register')}>Add Listing</Link>
+                                        <Button
+                                            asChild
+                                            className="h-11 rounded-md bg-[#073d91] px-5 text-white shadow-lg shadow-blue-900/20 hover:bg-[#082f6f]"
+                                        >
+                                            <Link href={route('register')}>Get Started</Link>
                                         </Button>
                                     </>
                                 )}
                             </div>
                         </header>
 
-                        <div className="mx-auto flex flex-1 flex-col items-center justify-center pb-16 text-center">
-                            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium tracking-wider text-blue-200 backdrop-blur-sm">
-                                <ShieldCheck className="size-3.5 text-amber-400" />
-                                TRUSTED FISHERY DIRECTORY
-                            </div>
-                            <h1 className="max-w-4xl text-4xl leading-tight font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                                Find trusted fishery suppliers, <span className="text-amber-400">processors,</span>
-                                <br />
-                                and service partners.
-                            </h1>
-                            <p className="mt-5 max-w-2xl text-base leading-relaxed text-blue-200">
-                                Public search for buyers. Claim, manage, and grow your listing once your team signs in.
-                            </p>
-
-                            <form
-                                onSubmit={submit}
-                                className="mt-10 flex w-full max-w-4xl flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/20 backdrop-blur-md md:flex-row"
-                            >
-                                <div className="flex-1">
-                                    <label className="mb-1.5 block px-1 text-[10px] font-semibold tracking-[0.25em] text-blue-300 uppercase">
-                                        What
-                                    </label>
-                                    <div className="relative">
-                                        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-blue-400" />
-                                        <Input
-                                            value={query}
-                                            onChange={(event) => setQuery(event.target.value)}
-                                            placeholder="Seafood, Processor, Freezer or Service"
-                                            className="h-11 border-0 bg-white/10 pl-9 text-sm text-white placeholder:text-blue-300/60 focus-visible:ring-2 focus-visible:ring-amber-500"
-                                        />
-                                    </div>
+                        <div className="flex min-h-[31rem] items-center py-10 sm:py-16">
+                            <div className="w-full max-w-3xl">
+                                <div className="mb-6 inline-flex rounded-full border border-[#1d6fe0]/30 bg-white/55 px-4 py-1.5 text-xs font-bold text-[#075ccc] shadow-sm backdrop-blur">
+                                    THE FISHERIES MARKETPLACE
                                 </div>
-                                <div className="flex-1">
-                                    <label className="mb-1.5 block px-1 text-[10px] font-semibold tracking-[0.25em] text-blue-300 uppercase">
-                                        Where
-                                    </label>
-                                    <div className="relative">
-                                        <MapPin className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-blue-400" />
-                                        <Input
-                                            value={location}
-                                            onChange={(event) => setLocation(event.target.value)}
-                                            placeholder="Port City or Region"
-                                            className="h-11 border-0 bg-white/10 pl-9 text-sm text-white placeholder:text-blue-300/60 focus-visible:ring-2 focus-visible:ring-amber-500"
-                                        />
+                                <h1 className="max-w-2xl text-5xl leading-[1.05] font-extrabold tracking-tight text-[#071a3d] sm:text-6xl lg:text-7xl">
+                                    Cari Supplier Ikan Dengan Mudah
+                                </h1>
+                                <p className="mt-6 max-w-2xl text-xl leading-8 font-medium text-[#12294f]">
+                                    Temui nelayan, pemborong dan pembekal seafood terpercaya di seluruh Malaysia.
+                                </p>
+
+                                <form onSubmit={submit} className="mt-7 max-w-4xl rounded-lg bg-white p-3 shadow-[0_22px_60px_rgba(7,26,61,0.16)]">
+                                    <div className="grid gap-2 md:grid-cols-[1.05fr_0.72fr_0.55fr_auto]">
+                                        <label className="relative flex h-14 items-center rounded-md bg-white px-4">
+                                            <Search className="size-5 shrink-0 text-[#071a3d]" />
+                                            <Input
+                                                value={query}
+                                                onChange={(event) => setQuery(event.target.value)}
+                                                placeholder="Cari ikan, supplier, produk..."
+                                                className="h-full border-0 bg-transparent pl-4 text-base shadow-none placeholder:text-slate-500 focus-visible:ring-0"
+                                            />
+                                        </label>
+                                        <label className="relative flex h-14 items-center rounded-md border-l border-slate-200 bg-white px-4">
+                                            <MapPin className="size-5 shrink-0 text-[#071a3d]" />
+                                            <Input
+                                                value={location}
+                                                onChange={(event) => setLocation(event.target.value)}
+                                                placeholder="Lokasi / Negeri"
+                                                className="h-full border-0 bg-transparent pl-4 text-sm shadow-none placeholder:text-slate-600 focus-visible:ring-0"
+                                            />
+                                        </label>
+                                        <div className="hidden h-14 items-center justify-center gap-2 border-l border-slate-200 text-sm font-semibold text-[#071a3d] md:flex">
+                                            <span>Kategori</span>
+                                            <ChevronDown className="size-4" />
+                                        </div>
+                                        <Button
+                                            type="submit"
+                                            className="h-14 rounded-md bg-[#073d91] px-7 text-base font-bold text-white hover:bg-[#082f6f]"
+                                        >
+                                            <Search className="size-4" />
+                                            Cari
+                                        </Button>
                                     </div>
+                                </form>
+
+                                <div className="mt-5 flex flex-wrap items-center gap-3 text-sm">
+                                    <span className="font-semibold text-[#071a3d]">Popular searches:</span>
+                                    {popularSearches.map((search) => (
+                                        <button
+                                            key={search}
+                                            type="button"
+                                            onClick={() => setQuery(search)}
+                                            className="rounded-md border border-[#b8cbe6] bg-white/80 px-4 py-1.5 text-xs font-semibold text-[#14315c] shadow-sm transition hover:border-[#073d91] hover:text-[#073d91]"
+                                        >
+                                            {search}
+                                        </button>
+                                    ))}
                                 </div>
-                                <Button
-                                    type="submit"
-                                    className="mt-0 h-11 rounded-xl bg-amber-500 px-8 text-sm font-semibold text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600 md:mt-5"
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="border-y border-[#dce8f6] bg-[#f7fbff]">
+                    <div className="mx-auto grid max-w-7xl gap-5 px-4 py-7 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
+                        {marketplaceBenefits.map((benefit, index) => {
+                            const Icon = benefit.icon;
+
+                            return (
+                                <div key={benefit.title} className="flex items-center gap-5 lg:border-r lg:border-[#d5e3f4] lg:last:border-r-0">
+                                    <Icon className="size-10 shrink-0 text-[#083f99]" strokeWidth={1.8} />
+                                    <div>
+                                        <h2 className="text-base font-extrabold text-[#071a3d]">{benefit.title}</h2>
+                                        <p className="mt-1 max-w-44 text-sm leading-5 text-[#405675]">{benefit.copy}</p>
+                                    </div>
+                                    {index < marketplaceBenefits.length - 1 && <span className="hidden" />}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </section>
+
+                <main>
+                    <section id="categories" className="bg-white py-8 sm:py-12">
+                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                            <div className="flex items-center justify-between gap-4">
+                                <h2 className="text-2xl font-extrabold tracking-tight text-[#071a3d]">Browse Kategori Popular</h2>
+                                <Link
+                                    href={route('directory.index')}
+                                    className="inline-flex items-center gap-2 text-sm font-bold text-[#075ccc] hover:text-[#073d91]"
                                 >
-                                    <Search className="size-4" />
-                                    Search
-                                </Button>
-                            </form>
-
-                            <div className="mt-8 flex flex-wrap items-center gap-2 text-xs text-blue-300">
-                                <span>Popular:</span>
-                                {featuredCategories.slice(0, 4).map((category) => (
-                                    <Link
-                                        key={category.id}
-                                        href={route('categories.show', category.slug)}
-                                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-blue-200 transition hover:border-amber-400/30 hover:text-amber-400"
-                                    >
-                                        {category.name}
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="border-b border-[var(--idxi-shallows)] bg-white py-10">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="text-center">
-                            <span className="text-[11px] font-semibold tracking-[0.2em] text-[var(--idxi-tide)] uppercase">Categories</span>
-                            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--idxi-abyss)]">Browse by category</h2>
-                            <p className="mt-1 text-sm text-[var(--idxi-tide)]">Find exactly what you need across our fishery network</p>
-                        </div>
-                        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                            {featuredCategories.map((category) => (
-                                <button
-                                    key={category.id}
-                                    onClick={() => setOpenCategory(openCategory === category.id ? null : category.id)}
-                                    className={`w-full rounded-lg border p-3 text-left transition duration-200 ${
-                                        openCategory === category.id
-                                            ? 'border-[var(--idxi-current)] bg-blue-50 shadow'
-                                            : 'border-blue-200 bg-white hover:border-[var(--idxi-current)] hover:shadow'
-                                    }`}
-                                >
-                                    <div
-                                        className={`flex items-center justify-between text-sm font-medium ${openCategory === category.id ? 'text-[var(--idxi-current)]' : 'text-[var(--idxi-abyss)]'}`}
-                                    >
-                                        <span>{category.name}</span>
-                                        <span className="rounded-full bg-[var(--idxi-coral)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--idxi-coral)]">
-                                            {(category.companies_count ?? 0) +
-                                                category.children.reduce((sum, c) => sum + (c.companies_count ?? 0), 0)}
-                                        </span>
-                                    </div>
-                                </button>
-                            ))}
-                        </div>
-
-                        {openCategory &&
-                            (() => {
-                                const cat = featuredCategories.find((c) => c.id === openCategory);
-                                const children = cat?.children?.filter((c) => (c.companies_count ?? 0) > 0) ?? [];
-                                if (!cat || children.length === 0) return null;
-                                return (
-                                    <div className="mt-4 rounded-xl border border-[var(--idxi-shallows)] bg-white p-4 shadow">
-                                        <div className="flex items-center justify-between gap-4">
-                                            <h3 className="text-xs font-semibold tracking-[0.1em] text-[var(--idxi-tide)] uppercase">
-                                                {cat.name} &mdash; {children.length} subcategories
-                                            </h3>
-                                            <Link
-                                                href={route('categories.show', cat.slug)}
-                                                className="flex shrink-0 items-center gap-1 rounded-lg bg-[var(--idxi-deep-ocean)] px-3.5 py-1.5 text-xs font-medium text-white transition hover:bg-[var(--idxi-current)]"
-                                            >
-                                                Browse all
-                                                <ArrowRight className="size-3" />
-                                            </Link>
-                                        </div>
-                                        <div className="mt-3 grid gap-1.5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-                                            {children.map((child) => (
-                                                <Link
-                                                    key={child.slug}
-                                                    href={route('categories.show', child.slug)}
-                                                    className="rounded-lg border border-[var(--idxi-shallows)] bg-[var(--idxi-foam)] px-3 py-2 text-xs font-medium text-[var(--idxi-abyss)] transition hover:border-amber-200 hover:bg-amber-50 hover:text-amber-700"
-                                                >
-                                                    {child.name} - {child.companies_count}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    </div>
-                                );
-                            })()}
-                    </div>
-                </section>
-
-                <section className="bg-white py-20">
-                    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                        <div className="text-center">
-                            <span className="text-[11px] font-semibold tracking-[0.2em] text-[var(--idxi-tide)] uppercase">How it works</span>
-                            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--idxi-abyss)]">Claim &amp; Get Started Today</h2>
-                            <p className="mt-2 text-sm text-[var(--idxi-tide)]">
-                                Verify your listing, publish your profile, and start replying to real buyer conversations.
-                            </p>
-                        </div>
-                        <div className="mt-12 grid gap-8 lg:grid-cols-2 lg:items-center">
-                            <div className="overflow-hidden rounded-2xl border border-[var(--idxi-shallows)] bg-gradient-to-br from-[var(--idxi-foam)] to-white shadow-[var(--idxi-deep-ocean)]/5 shadow-lg">
-                                <img src="/assets/hero-reference.jpeg" alt="IDXI listing preview" className="h-full w-full object-cover" />
-                            </div>
-                            <div className="space-y-5">
-                                {steps.map((step, index) => (
-                                    <div
-                                        key={step.title}
-                                        className="rounded-xl border border-[var(--idxi-shallows)] bg-white p-5 transition duration-200 hover:shadow-[var(--idxi-deep-ocean)]/5 hover:shadow-md"
-                                    >
-                                        <div className="flex gap-4">
-                                            <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--idxi-deep-ocean)] to-[var(--idxi-current)] text-sm font-semibold text-white shadow-sm">
-                                                {index + 1}
-                                            </div>
-                                            <div>
-                                                <h3 className="font-semibold text-[var(--idxi-abyss)]">{step.title}</h3>
-                                                <p className="mt-1 text-sm leading-6 text-[var(--idxi-tide)]">{step.copy}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="bg-[var(--idxi-foam)] py-20">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-wrap items-end justify-between gap-6">
-                            <div>
-                                <span className="text-[11px] font-semibold tracking-[0.2em] text-[var(--idxi-tide)] uppercase">Latest</span>
-                                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--idxi-abyss)]">New Listings</h2>
-                                <p className="mt-2 text-sm text-[var(--idxi-tide)]">Latest additions to our directory</p>
-                            </div>
-                            <Button asChild variant="outline" className="rounded-xl border-[var(--idxi-shallows)]">
-                                <Link href={route('directory.index')}>
-                                    View all listings
-                                    <ArrowRight className="ml-1.5 size-3.5" />
+                                    Lihat semua kategori <ArrowRight className="size-4" />
                                 </Link>
-                            </Button>
-                        </div>
+                            </div>
 
-                        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                            {newListings.length > 0 ? (
-                                newListings.map((company) => (
-                                    <Link key={company.id} href={route('directory.show', company.slug)} className="group">
-                                        <Card className="overflow-hidden border-[var(--idxi-shallows)] bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-[var(--idxi-deep-ocean)]/8 hover:shadow-xl">
-                                            <div className="aspect-[16/10] overflow-hidden bg-[var(--idxi-foam)]">
+                            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-8">
+                                {displayCategories.map((category, index) => {
+                                    const Icon = categoryIcon(index);
+
+                                    return (
+                                        <Link
+                                            key={category.slug}
+                                            href={route('categories.show', category.slug)}
+                                            className="group flex min-h-32 flex-col items-center justify-center rounded-lg border border-[#d6e3f2] bg-white p-4 text-center shadow-sm transition hover:-translate-y-1 hover:border-[#075ccc] hover:shadow-lg"
+                                        >
+                                            <Icon className="size-11 text-[#083f99] transition group-hover:scale-110" strokeWidth={1.8} />
+                                            <span className="mt-4 text-sm leading-tight font-extrabold text-[#071a3d]">{category.name}</span>
+                                            {categoryCount(category) > 0 && (
+                                                <span className="mt-1 text-xs font-semibold text-slate-500">{categoryCount(category)} supplier</span>
+                                            )}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="bg-white pb-5">
+                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                            <div className="flex items-center justify-between gap-4">
+                                <h2 className="text-2xl font-extrabold tracking-tight text-[#071a3d]">Supplier Terpilih</h2>
+                                <Link
+                                    href={route('directory.index')}
+                                    className="inline-flex items-center gap-2 text-sm font-bold text-[#075ccc] hover:text-[#073d91]"
+                                >
+                                    Lihat semua supplier <ArrowRight className="size-4" />
+                                </Link>
+                            </div>
+
+                            <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                                {displayCompanies.length > 0 ? (
+                                    displayCompanies.map((company, index) => (
+                                        <Link
+                                            key={company.id}
+                                            href={route('directory.show', company.slug)}
+                                            className="group overflow-hidden rounded-lg border border-[#d6e3f2] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                                        >
+                                            <div className="relative h-28 overflow-hidden">
                                                 <img
-                                                    src={company.hero_image || '/assets/hero-market.jpg'}
+                                                    src={companyImage(company, index)}
                                                     alt={company.name}
                                                     className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                                                 />
+                                                <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-md bg-white px-2.5 py-1 text-xs font-bold text-[#075ccc] shadow">
+                                                    <BadgeCheck className="size-3.5 fill-[#e8f2ff]" />
+                                                    Verified
+                                                </span>
                                             </div>
-                                            <CardContent className="space-y-3 p-5">
-                                                <div className="flex items-center justify-between gap-3">
-                                                    <h3 className="font-semibold text-[var(--idxi-abyss)]">{company.name}</h3>
-                                                    <span className="rounded-lg bg-[var(--idxi-coral)]/10 px-2.5 py-0.5 text-[11px] font-medium text-[var(--idxi-coral)]">
-                                                        {company.company_type}
-                                                    </span>
+                                            <div className="p-4">
+                                                <div className="-mt-10 mb-3 flex size-16 items-center justify-center rounded-full border-4 border-white bg-white shadow">
+                                                    {company.logo ? (
+                                                        <img
+                                                            src={company.logo}
+                                                            alt={`${company.name} logo`}
+                                                            className="size-full rounded-full object-cover"
+                                                        />
+                                                    ) : (
+                                                        <Fish className="size-8 text-[#083f99]" />
+                                                    )}
                                                 </div>
-                                                <p className="flex items-center gap-1.5 text-sm text-[var(--idxi-tide)]">
-                                                    <MapPin className="size-3.5 shrink-0" />
-                                                    {company.location}
+                                                <h3 className="text-base font-extrabold text-[#071a3d]">{company.name}</h3>
+                                                <p className="mt-1 line-clamp-1 text-sm text-[#405675]">
+                                                    {company.summary ?? company.company_type ?? 'Pembekal seafood dan perikanan'}
                                                 </p>
-                                                <p className="line-clamp-2 text-sm leading-6 text-[var(--idxi-tide)]">{company.summary}</p>
-                                            </CardContent>
-                                        </Card>
-                                    </Link>
-                                ))
-                            ) : (
-                                <div className="col-span-full rounded-2xl border border-dashed border-[var(--idxi-shallows)] bg-white p-12 text-center text-sm text-[var(--idxi-tide)]">
-                                    <Building2 className="mx-auto mb-3 size-8 text-[var(--idxi-shallows)]" />
-                                    No listings found
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </section>
-
-                <section className="bg-white py-20">
-                    <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
-                        <div className="overflow-hidden rounded-2xl border border-[var(--idxi-shallows)] bg-gradient-to-br from-[var(--idxi-foam)] to-white shadow-[var(--idxi-deep-ocean)]/5 shadow-lg">
-                            <img src="/assets/hero-reference.jpeg" alt="IDXI media reference" className="h-full w-full object-cover" />
-                        </div>
-                        <div className="flex flex-col justify-center">
-                            <span className="text-[11px] font-semibold tracking-[0.2em] text-[var(--idxi-tide)] uppercase">Testimonials</span>
-                            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--idxi-abyss)]">People talking about us</h2>
-                            <div className="mt-6 rounded-2xl border border-[var(--idxi-shallows)] bg-gradient-to-br from-[var(--idxi-foam)] to-white p-8 shadow-sm">
-                                <svg className="mb-4 size-8 text-amber-400/40" fill="currentColor" viewBox="0 0 32 32">
-                                    <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2V8zm16 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2V8z" />
-                                </svg>
-                                <p className="text-base leading-8 text-[var(--idxi-tide)]">"{testimonial.quote}"</p>
-                            </div>
-                            <div className="mt-6 flex items-center gap-4">
-                                <div className="flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--idxi-deep-ocean)] to-[var(--idxi-current)] text-lg font-bold text-white shadow-sm">
-                                    {testimonial.author.charAt(0)}
-                                </div>
-                                <div>
-                                    <div className="font-semibold text-[var(--idxi-abyss)]">{testimonial.author}</div>
-                                    <div className="text-sm text-[var(--idxi-tide)]">Directory partner</div>
-                                </div>
+                                                <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-[#5f708a]">
+                                                    <MapPin className="size-3.5" />
+                                                    {company.location ?? 'Malaysia'}
+                                                </p>
+                                                <div className="mt-4 flex flex-wrap gap-1.5">
+                                                    {(company.categories ?? []).slice(0, 3).map((category) => (
+                                                        <span
+                                                            key={category.slug}
+                                                            className="rounded bg-[#eef4fb] px-2 py-1 text-[11px] font-semibold text-[#405675]"
+                                                        >
+                                                            {category.name}
+                                                        </span>
+                                                    ))}
+                                                    {(company.categories?.length ?? 0) === 0 && (
+                                                        <span className="rounded bg-[#eef4fb] px-2 py-1 text-[11px] font-semibold text-[#405675]">
+                                                            {company.company_type ?? 'Supplier'}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <span className="mt-4 flex h-9 items-center justify-center rounded-md border border-[#b8cbe6] text-sm font-bold text-[#071a3d] transition group-hover:border-[#073d91] group-hover:bg-[#073d91] group-hover:text-white">
+                                                    Lihat Profil
+                                                </span>
+                                            </div>
+                                        </Link>
+                                    ))
+                                ) : (
+                                    <div className="col-span-full rounded-lg border border-dashed border-[#b8cbe6] bg-[#f7fbff] p-10 text-center text-sm font-semibold text-[#405675]">
+                                        <Building2 className="mx-auto mb-3 size-9 text-[#083f99]" />
+                                        Supplier akan dipaparkan selepas listing diluluskan.
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <section className="bg-gradient-to-b from-[var(--idxi-deep-ocean)] to-[#0D1F3C] py-20">
-                    <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-                        <h2 className="text-3xl font-semibold tracking-tight text-white">Ready to grow your reach?</h2>
-                        <p className="mt-4 text-base text-blue-200">Join the leading fishery directory and connect with buyers across the region.</p>
-                        <div className="mt-8 flex flex-wrap justify-center gap-4">
-                            <Button
-                                asChild
-                                className="rounded-xl bg-amber-500 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-amber-500/25 hover:bg-amber-600"
-                            >
-                                <Link href={route('register')}>
-                                    <Users className="mr-2 size-4" />
-                                    Claim Your Listing
-                                </Link>
-                            </Button>
-                            <Button
-                                asChild
-                                variant="outline"
-                                className="rounded-xl border-white/20 bg-white/5 px-8 py-6 text-base text-white hover:bg-white/10"
-                            >
-                                <Link href={route('directory.index')}>Browse Directory</Link>
-                            </Button>
+                    <section className="bg-[#073d91] py-6 text-white">
+                        <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
+                            {stats.map((stat) => {
+                                const Icon = stat.icon;
+
+                                return (
+                                    <div key={stat.label} className="flex items-center gap-5 lg:border-r lg:border-white/20 lg:last:border-r-0">
+                                        <div className="flex size-16 items-center justify-center rounded-full border border-white/35 bg-white/5">
+                                            <Icon className="size-8 text-[#68b7ff]" strokeWidth={1.7} />
+                                        </div>
+                                        <div>
+                                            <div className="text-3xl font-extrabold text-[#38a4ff]">{stat.value}</div>
+                                            <div className="mt-1 text-sm font-bold">{stat.label}</div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </section>
+
+                    <section id="how-it-works" className="bg-white py-10 sm:py-14">
+                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                            <h2 className="text-center text-2xl font-extrabold tracking-tight text-[#071a3d]">Bagaimana IDXI Berfungsi?</h2>
+                            <div className="mt-7 grid gap-5 lg:grid-cols-2">
+                                <ProcessPanel title="Untuk Pembeli" accent="blue" steps={buyerSteps} />
+                                <ProcessPanel title="Untuk Supplier" accent="green" steps={supplierSteps} />
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="relative isolate overflow-hidden bg-[#073d91]">
+                        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(4,32,77,0.96),rgba(4,32,77,0.7),rgba(4,32,77,0.2)),url('/assets/picture2.png')] bg-cover bg-center" />
+                        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-9 text-white sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+                            <div>
+                                <h2 className="text-2xl font-extrabold">Ada bisnes perikanan?</h2>
+                                <p className="mt-2 max-w-xl text-base leading-7 text-white/90">
+                                    Daftarkan profil supplier anda dan mula dapatkan lebih banyak peluang perniagaan hari ini!
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-3 sm:flex-row">
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    className="h-12 rounded-md border-white/50 bg-white/5 px-8 font-bold text-white hover:bg-white/15"
+                                >
+                                    <Link href={route('directory.index')}>Pelajari Lebih Lanjut</Link>
+                                </Button>
+                                <Button asChild className="h-12 rounded-md bg-[#0b78ff] px-10 font-bold text-white hover:bg-[#0667dd]">
+                                    <Link href={route('register')}>Daftar Sebagai Supplier</Link>
+                                </Button>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+
+                <footer className="bg-[#051936] text-white">
+                    <div className="mx-auto grid max-w-7xl gap-8 px-4 py-9 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr] lg:px-8">
+                        <div>
+                            <img src="/logo_white.png" alt="IDXI Fisheries Directory" className="h-12 w-auto" />
+                            <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
+                                Platform directory perikanan terulung di Malaysia yang menghubungkan pembeli dengan supplier terpercaya.
+                            </p>
+                        </div>
+                        <FooterLinks title="Pautan Pantas" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers', 'Resources']} />
+                        <FooterLinks title="Untuk Pembeli" links={['Cara Mencari', 'Tips Pembelian', 'Soalan Lazim']} />
+                        <FooterLinks title="Untuk Supplier" links={['Daftar Supplier', 'Panduan Supplier', 'Pusat Bantuan']} />
+                        <div>
+                            <h3 className="text-sm font-extrabold">Hubungi Kami</h3>
+                            <div className="mt-4 space-y-2 text-sm text-white/75">
+                                <p>+60 12-345 6789</p>
+                                <p>support@idxi.com.my</p>
+                                <p>Kuala Lumpur, Malaysia</p>
+                            </div>
                         </div>
                     </div>
-                </section>
-
-                <footer className="bg-[#060D18] py-12">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col items-center justify-between gap-6 text-sm text-blue-300/60 sm:flex-row">
-                            <p>&copy; {new Date().getFullYear()} Infofish Mail &bull; Wisma Unit, Jalan Pantai Baharu, Petaling Jaya</p>
-                            <div className="flex items-center gap-4">
-                                {featuredCompanies.slice(0, 3).map((company) => (
-                                    <span key={company.id} className="text-blue-300/40">
-                                        {company.name}
-                                    </span>
-                                ))}
+                    <div className="border-t border-white/10">
+                        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+                            <p>© {new Date().getFullYear()} IDXI Fisheries Directory. Hak Cipta Terpelihara.</p>
+                            <div className="flex gap-8">
+                                <Link href={route('home')}>Terma & Syarat</Link>
+                                <Link href={route('home')}>Dasar Privasi</Link>
                             </div>
                         </div>
                     </div>
                 </footer>
             </div>
         </>
+    );
+}
+
+function ProcessPanel({
+    title,
+    steps,
+    accent,
+}: {
+    title: string;
+    steps: Array<{ title: string; copy: string; icon: LucideIcon }>;
+    accent: 'blue' | 'green';
+}) {
+    const color = accent === 'blue' ? 'text-[#075ccc]' : 'text-[#069456]';
+    const bg = accent === 'blue' ? 'bg-[#075ccc]' : 'bg-[#06a461]';
+
+    return (
+        <div className="rounded-lg border border-[#d6e3f2] bg-white p-6 shadow-sm">
+            <h3 className={`text-center text-sm font-extrabold ${color}`}>{title}</h3>
+            <div className="mt-6 grid gap-5 md:grid-cols-3">
+                {steps.map((step, index) => {
+                    const Icon = step.icon;
+
+                    return (
+                        <div key={step.title} className="relative text-center">
+                            <span
+                                className={`absolute top-0 left-1/2 z-10 flex size-6 -translate-x-9 -translate-y-2 items-center justify-center rounded-full ${bg} text-xs font-extrabold text-white`}
+                            >
+                                {index + 1}
+                            </span>
+                            <div className="mx-auto flex size-16 items-center justify-center rounded-xl border border-[#e0ebf7] bg-white shadow-[0_12px_30px_rgba(7,26,61,0.08)]">
+                                <Icon className={`size-8 ${color}`} strokeWidth={1.8} />
+                            </div>
+                            <h4 className="mt-4 text-base font-extrabold text-[#071a3d]">{step.title}</h4>
+                            <p className="mt-2 text-xs leading-5 text-[#405675]">{step.copy}</p>
+                            {index < steps.length - 1 && <ArrowRight className={`absolute top-8 -right-3 hidden size-4 md:block ${color}`} />}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+function FooterLinks({ title, links }: { title: string; links: string[] }) {
+    return (
+        <div>
+            <h3 className="text-sm font-extrabold">{title}</h3>
+            <div className="mt-4 flex flex-col gap-2 text-sm text-white/75">
+                {links.map((link) => (
+                    <Link key={link} href={route('directory.index')} className="transition hover:text-white">
+                        {link}
+                    </Link>
+                ))}
+            </div>
+        </div>
     );
 }
