@@ -13,6 +13,13 @@ class CategoryController extends Controller
         private CategoryService $categoryService,
     ) {}
 
+    public function index(): Response
+    {
+        return Inertia::render('categories/index', [
+            'categories' => $this->categoryService->getWithChildren(),
+        ]);
+    }
+
     public function show(Category $category): Response
     {
         $category->load([

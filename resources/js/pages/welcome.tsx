@@ -127,6 +127,9 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                 <Link href={route('directory.index')} className="transition hover:text-[#0b63ce]">
                                     Directory
                                 </Link>
+                                <Link href={route('categories.index')} className="transition hover:text-[#0b63ce]">
+                                    Categories
+                                </Link>
                                 <a href="#how-it-works" className="transition hover:text-[#0b63ce]">
                                     For Buyers
                                 </a>
@@ -266,7 +269,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                     return (
                                         <Link
                                             key={category.slug}
-                                            href={route('categories.show', category.slug)}
+                                            href={route('directory.index', { q: category.name })}
                                             className="group flex min-h-32 flex-col items-center justify-center rounded-lg border border-[#d6e3f2] bg-white p-4 text-center shadow-sm transition hover:-translate-y-1 hover:border-[#075ccc] hover:shadow-lg"
                                         >
                                             <Icon className="size-11 text-[#083f99] transition group-hover:scale-110" strokeWidth={1.8} />

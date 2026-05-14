@@ -76,6 +76,29 @@ class DirectoryFeatureTest extends TestCase
                 ->where('companies.data.0.slug', 'database-cold-chain'));
     }
 
+    public function test_categories_menu_page_uses_categories_from_database(): void
+    {
+        $category = Category::factory()->create([
+            'name' => 'Fresh Fish',
+            'slug' => 'fresh-fish',
+        ]);
+
+        $company = Company::factory()->create([
+            'name' => 'Fresh Supplier',
+            'slug' => 'fresh-supplier',
+            'status' => 'approved',
+        ]);
+
+        $company->categories()->attach($category);
+
+        $this->get('/categories')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('categories/index')
+                ->has('categories', 1)
+                ->where('categories.0.slug', 'fresh-fish'));
+    }
+
     public function test_supplier_profile_uses_products_and_similar_suppliers_from_database(): void
     {
         $category = Category::factory()->create([

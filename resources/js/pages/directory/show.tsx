@@ -74,6 +74,9 @@ export default function CompanyShow({ company, similarCompanies }: CompanyShowPr
                         <Link href={route('directory.index')} className="transition hover:text-[#075ccc]">
                             Directory
                         </Link>
+                        <Link href={route('categories.index')} className="transition hover:text-[#075ccc]">
+                            Categories
+                        </Link>
                         <a href="#contact" className="transition hover:text-[#075ccc]">
                             For Buyers
                         </a>

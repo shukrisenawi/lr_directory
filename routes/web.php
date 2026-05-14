@@ -26,6 +26,7 @@ Route::get('/', HomeController::class)->name('home');
 Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
 Route::get('/directory', [DirectoryController::class, 'index'])->name('directory.index');
 Route::get('/directory/{company:slug}', [DirectoryController::class, 'show'])->name('directory.show');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::middleware(['auth'])->group(function () {
