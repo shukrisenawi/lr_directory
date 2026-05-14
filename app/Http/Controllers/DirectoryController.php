@@ -6,6 +6,7 @@ use App\DTOs\SearchDto;
 use App\Http\Requests\SearchCompanyRequest;
 use App\Models\Company;
 use App\Services\AnalyticsService;
+use App\Services\CategoryService;
 use App\Services\CompanyService;
 use App\Services\SearchService;
 use Inertia\Inertia;
@@ -15,6 +16,7 @@ class DirectoryController extends Controller
 {
     public function __construct(
         private CompanyService $companyService,
+        private CategoryService $categoryService,
         private SearchService $searchService,
         private AnalyticsService $analyticsService,
     ) {}
@@ -43,6 +45,7 @@ class DirectoryController extends Controller
                 'q' => $search,
                 'location' => $location,
             ],
+            'categories' => $this->categoryService->getWithChildren(),
             'companies' => $companies->through(fn(Company $company) => [
                 'id' => $company->id,
                 'name' => $company->name,
@@ -65,7 +68,22 @@ class DirectoryController extends Controller
 
         $this->analyticsService->trackListingView($company, $request->user());
 
-        $company->load(['categories:id,name,slug', 'products', 'campaigns', 'newsEvents', 'owner:id,name,email']);
+        $company->load([
+            'categories:id,name,slug',
+            'products' => fn($query) => $query->where('is_active', true)->latest(),
+            'campaigns' => fn($query) => $query->where('is_active', true)->latest(),
+            'newsEvents' => fn($query) => $query->where('is_active', true)->latest(),
+            'owner:id,name,email',
+        ]);
+
+        $categoryIds = $company->categories->pluck('id');
+        $similarCompanies = Company::query()
+            ->where('status', 'approved')
+            ->whereKeyNot($company->id)
+            ->when($categoryIds->isNotEmpty(), fn($query) => $query->whereHas('categories', fn($categoryQuery) => $categoryQuery->whereIn('categories.id', $categoryIds)))
+            ->with('categories:id,name,slug')
+            ->limit(4)
+            ->get();
 
         return Inertia::render('directory/show', [
             'company' => [
@@ -88,6 +106,19 @@ class DirectoryController extends Controller
                 'news_events' => $company->newsEvents,
                 'owner' => $company->owner,
             ],
+            'similarCompanies' => $similarCompanies->map(fn(Company $similarCompany) => [
+                'id' => $similarCompany->id,
+                'name' => $similarCompany->name,
+                'slug' => $similarCompany->slug,
+                'location' => $similarCompany->location,
+                'company_type' => $similarCompany->company_type,
+                'summary' => $similarCompany->summary,
+                'logo' => $similarCompany->logo,
+                'categories' => $similarCompany->categories->map(fn($category) => [
+                    'name' => $category->name,
+                    'slug' => $category->slug,
+                ]),
+            ]),
         ]);
     }
 }

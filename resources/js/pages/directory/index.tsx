@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { type Company } from '@/types';
+import { type Category, type Company } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import {
     Anchor,
@@ -28,148 +28,29 @@ import { FormEvent, useState, type ReactNode } from 'react';
 
 interface DirectoryIndexProps {
     filters: { q: string; location: string };
+    categories: Category[];
     companies: {
         data: Company[];
+        total?: number;
         links: Array<{ url: string | null; label: string; active: boolean }>;
     };
 }
 
-const categoryCards = [
-    {
-        name: 'Fresh Fish',
-        description: 'A wide selection of fresh sea and freshwater fish.',
-        count: 128,
-        icon: Fish,
-        items: ['Pelagic Fish', 'Demersal Fish', 'Freshwater Fish', 'Other Fish'],
-    },
-    {
-        name: 'Frozen Seafood',
-        description: 'High-quality frozen marine products.',
-        count: 96,
-        icon: Snowflake,
-        items: ['Frozen Fish', 'Frozen Shrimp', 'Squid & Cuttlefish', 'Frozen Other'],
-    },
-    {
-        name: 'Shrimp',
-        description: 'Sea and freshwater shrimp products.',
-        count: 74,
-        icon: Waves,
-        items: ['Vannamei Shrimp', 'Tiger Prawn', 'Fresh Shrimp', 'Frozen Shrimp'],
-    },
-    {
-        name: 'Squid & Cuttlefish',
-        description: 'Squid, cuttlefish, and related products.',
-        count: 59,
-        icon: Anchor,
-        items: ['Squid', 'Cuttlefish', 'Squid Products', 'Cuttlefish Products'],
-    },
-    {
-        name: 'Wholesalers',
-        description: 'Seafood wholesalers and distributors.',
-        count: 112,
-        icon: House,
-        items: ['Fish Wholesalers', 'Shrimp Wholesalers', 'Seafood Wholesalers', 'Food Agents'],
-    },
-    {
-        name: 'Aquaculture / Fish Farms',
-        description: 'Aquaculture and fish farming production.',
-        count: 86,
-        icon: Waves,
-        items: ['Freshwater Fish', 'Brackish Fish', 'Aquaculture Systems', 'Aquaculture Equipment'],
-    },
-    {
-        name: 'Fishing Equipment',
-        description: 'Catching and processing equipment.',
-        count: 132,
-        icon: Anchor,
-        items: ['Nets & Lines', 'Boat Equipment', 'Fishing Gear', 'Processing Tools'],
-    },
-    {
-        name: 'Logistics / Transport',
-        description: 'Seafood logistics and delivery services.',
-        count: 78,
-        icon: Truck,
-        items: ['Land Transport', 'Sea Transport', 'Air Freight', '3PL Services'],
-    },
-    {
-        name: 'Cold Storage',
-        description: 'Cold storage and frozen supply chain.',
-        count: 41,
-        icon: Snowflake,
-        items: ['Cold Rooms', 'Blast Freezers', 'Cold Chain Management', 'Dry Ice'],
-    },
-    {
-        name: 'Feed & Nutrition',
-        description: 'Aquaculture feed and nutrition products.',
-        count: 38,
-        icon: Grid2X2,
-        items: ['Fish Feed', 'Supplements', 'Probiotics & Enzymes', 'Raw Materials'],
-    },
-    {
-        name: 'Processing',
-        description: 'Seafood processing and value-added products.',
-        count: 64,
-        icon: SlidersHorizontal,
-        items: ['Cleaning & Processing', 'Packaging', 'Freezing', 'Value-Added Products'],
-    },
-    {
-        name: 'Electronics & Communication',
-        description: 'Marine electronics and communication devices.',
-        count: 36,
-        icon: Radio,
-        items: ['Navigation & GPS', 'Marine Communication', 'Sensors & IoT', 'Other Electronics'],
-    },
-    {
-        name: 'Events / Publications',
-        description: 'Industry events, exhibitions, and publications.',
-        count: 22,
-        icon: CalendarDays,
-        items: ['Exhibitions & Expo', 'Seminars', 'Magazines & Publications', 'Industry News'],
-    },
-    {
-        name: 'Insurance / Finance',
-        description: 'Insurance protection and financing services.',
-        count: 28,
-        icon: ShieldCheck,
-        items: ['Marine Insurance', 'Aquaculture Insurance', 'Trade Financing', 'Financial Consulting'],
-    },
-    {
-        name: 'Marine Services',
-        description: 'Marine support and maintenance services.',
-        count: 48,
-        icon: ShipWheel,
-        items: ['Vessel Inspection', 'Dock & Yard', 'Vessel Cleaning', 'Other Marine Services'],
-    },
-    {
-        name: 'Export / Import',
-        description: 'Seafood export and import services.',
-        count: 34,
-        icon: Globe2,
-        items: ['Export Seafood', 'Import Seafood', 'Documentation & Customs', 'Trade Consulting'],
-    },
-];
+const categoryImages = ['/assets/hero-reference.jpeg', '/assets/hero-market.jpg', '/assets/hero.png', '/assets/picture2.png'];
 
-const popularCards = [
-    { name: 'Fresh Fish', copy: 'Daily fresh fish selections.', count: 128, image: '/assets/hero-reference.jpeg', icon: Fish },
-    { name: 'Shrimp', copy: 'Quality shrimp for every need.', count: 74, image: '/assets/hero-market.jpg', icon: Waves },
-    { name: 'Frozen Seafood', copy: 'Fresh frozen, trusted quality.', count: 96, image: '/assets/hero.png', icon: Snowflake },
-    { name: 'Aquaculture / Fish Farms', copy: 'Complete aquaculture solutions.', count: 86, image: '/assets/picture2.png', icon: Waves },
-];
-
-const businessTypes = [
-    ['All Types', 16, true],
-    ['Operators / Suppliers', 8, false],
-    ['Wholesalers', 28, false],
-    ['Services', 24, false],
-    ['Institutions / Organisations', 10, false],
-];
-
-const popularFilters = ['Fresh Fish', 'Frozen Seafood', 'Shrimp', 'Squid & Cuttlefish', 'Wholesalers'];
-const serviceFilters = ['Transport', 'Cold Storage', 'Installation', 'Maintenance', 'Consulting'];
-
-export default function DirectoryIndex({ filters, companies }: DirectoryIndexProps) {
+export default function DirectoryIndex({ filters, categories, companies }: DirectoryIndexProps) {
     const [query, setQuery] = useState(filters.q ?? '');
-    const indexedSuppliers = companies.data.length;
+    const indexedSuppliers = companies.total ?? companies.data.length;
+    const categoryCards = categories.map((category, index) => ({
+        ...category,
+        icon: categoryIcon(category.name),
+        image: categoryImages[index % categoryImages.length],
+        items: category.children?.map((child) => child.name).slice(0, 4) ?? [],
+        count: categorySupplierCount(category),
+    }));
+    const popularCards = categoryCards.slice(0, 4);
+    const popularFilters = categoryCards.slice(0, 5);
+    const businessTypes = companyTypeCounts(companies.data);
 
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -282,26 +163,26 @@ export default function DirectoryIndex({ filters, companies }: DirectoryIndexPro
                         </div>
 
                         <FilterGroup title="Business Type">
-                            {businessTypes.map(([label, count, checked]) => (
-                                <label key={String(label)} className="flex items-center justify-between gap-3 text-sm font-medium text-[#233f68]">
+                            {businessTypes.map((type, index) => (
+                                <label key={type.label} className="flex items-center justify-between gap-3 text-sm font-medium text-[#233f68]">
                                     <span className="flex items-center gap-2">
                                         <input
                                             type="checkbox"
-                                            defaultChecked={Boolean(checked)}
+                                            defaultChecked={index === 0}
                                             className="size-4 rounded border-[#b8cbe6] accent-[#075ccc]"
                                         />
-                                        {label}
+                                        {type.label}
                                     </span>
-                                    <span className="text-[#62738f]">({count})</span>
+                                    <span className="text-[#62738f]">({type.count})</span>
                                 </label>
                             ))}
                         </FilterGroup>
 
                         <FilterGroup title="Popular Categories">
                             {popularFilters.map((filter) => (
-                                <label key={filter} className="flex items-center gap-2 text-sm font-medium text-[#233f68]">
+                                <label key={filter.slug} className="flex items-center gap-2 text-sm font-medium text-[#233f68]">
                                     <input type="checkbox" className="size-4 rounded border-[#b8cbe6] accent-[#075ccc]" />
-                                    {filter}
+                                    {filter.name}
                                 </label>
                             ))}
                         </FilterGroup>
@@ -317,15 +198,6 @@ export default function DirectoryIndex({ filters, companies }: DirectoryIndexPro
                                 </span>
                                 <ChevronDown className="size-4" />
                             </button>
-                        </FilterGroup>
-
-                        <FilterGroup title="Services">
-                            {serviceFilters.map((filter) => (
-                                <label key={filter} className="flex items-center gap-2 text-sm font-medium text-[#233f68]">
-                                    <input type="checkbox" className="size-4 rounded border-[#b8cbe6] accent-[#075ccc]" />
-                                    {filter}
-                                </label>
-                            ))}
                         </FilterGroup>
 
                         <div className="mt-6 grid grid-cols-2 gap-3">
@@ -349,33 +221,44 @@ export default function DirectoryIndex({ filters, companies }: DirectoryIndexPro
                             </label>
                         </div>
 
-                        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                            {categoryCards.map((category) => {
-                                const Icon = category.icon;
+                        {categoryCards.length > 0 ? (
+                            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                                {categoryCards.map((category) => {
+                                    const Icon = category.icon;
 
-                                return (
-                                    <button
-                                        key={category.name}
-                                        type="button"
-                                        onClick={() => searchCategory(category.name)}
-                                        className="group rounded-lg border border-[#d6e3f2] bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#075ccc] hover:shadow-lg"
-                                    >
-                                        <Icon className="size-11 text-[#075ccc] transition group-hover:scale-110" strokeWidth={1.7} />
-                                        <h3 className="mt-4 text-lg font-extrabold text-[#071a3d]">{category.name}</h3>
-                                        <p className="mt-1 min-h-10 text-xs leading-5 font-medium text-[#405675]">{category.description}</p>
-                                        <ul className="mt-3 space-y-1.5 text-xs font-medium text-[#233f68]">
-                                            {category.items.map((item) => (
-                                                <li key={item} className="flex items-start gap-2">
-                                                    <span className="mt-1.5 size-1 rounded-full bg-[#075ccc]" />
-                                                    <span>{item}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        <p className="mt-4 text-sm font-extrabold text-[#075ccc]">{category.count} Suppliers</p>
-                                    </button>
-                                );
-                            })}
-                        </div>
+                                    return (
+                                        <button
+                                            key={category.slug}
+                                            type="button"
+                                            onClick={() => searchCategory(category.name)}
+                                            className="group rounded-lg border border-[#d6e3f2] bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#075ccc] hover:shadow-lg"
+                                        >
+                                            <Icon className="size-11 text-[#075ccc] transition group-hover:scale-110" strokeWidth={1.7} />
+                                            <h3 className="mt-4 text-lg font-extrabold text-[#071a3d]">{category.name}</h3>
+                                            <p className="mt-1 min-h-10 text-xs leading-5 font-medium text-[#405675]">
+                                                {category.description || 'Supplier category from the IDXI database.'}
+                                            </p>
+                                            {category.items.length > 0 ? (
+                                                <ul className="mt-3 space-y-1.5 text-xs font-medium text-[#233f68]">
+                                                    {category.items.map((item) => (
+                                                        <li key={item} className="flex items-start gap-2">
+                                                            <span className="mt-1.5 size-1 rounded-full bg-[#075ccc]" />
+                                                            <span>{item}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            ) : null}
+                                            <p className="mt-4 text-sm font-extrabold text-[#075ccc]">{category.count} Suppliers</p>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <EmptyState
+                                title="No categories found"
+                                copy="Add categories and assign approved suppliers in the database to display this section."
+                            />
+                        )}
                     </section>
                 </div>
 
@@ -386,33 +269,42 @@ export default function DirectoryIndex({ filters, companies }: DirectoryIndexPro
                             View all categories <ArrowRight className="size-4" />
                         </Link>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                        {popularCards.map((card) => {
-                            const Icon = card.icon;
+                    {popularCards.length > 0 ? (
+                        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                            {popularCards.map((card) => {
+                                const Icon = card.icon;
 
-                            return (
-                                <button
-                                    key={card.name}
-                                    type="button"
-                                    onClick={() => searchCategory(card.name)}
-                                    className="group relative min-h-36 overflow-hidden rounded-lg text-left shadow-sm"
-                                >
-                                    <img
-                                        src={card.image}
-                                        alt={card.name}
-                                        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-r from-[#041d43]/95 via-[#041d43]/72 to-[#041d43]/15" />
-                                    <div className="relative flex h-full flex-col justify-end p-5 text-white">
-                                        <Icon className="mb-3 size-10" strokeWidth={1.7} />
-                                        <h3 className="text-xl font-extrabold">{card.name}</h3>
-                                        <p className="mt-1 text-sm font-medium text-white/85">{card.copy}</p>
-                                        <p className="mt-3 text-sm font-bold">{card.count} Suppliers</p>
-                                    </div>
-                                </button>
-                            );
-                        })}
-                    </div>
+                                return (
+                                    <button
+                                        key={card.name}
+                                        type="button"
+                                        onClick={() => searchCategory(card.name)}
+                                        className="group relative min-h-36 overflow-hidden rounded-lg text-left shadow-sm"
+                                    >
+                                        <img
+                                            src={card.image}
+                                            alt={card.name}
+                                            className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-r from-[#041d43]/95 via-[#041d43]/72 to-[#041d43]/15" />
+                                        <div className="relative flex h-full flex-col justify-end p-5 text-white">
+                                            <Icon className="mb-3 size-10" strokeWidth={1.7} />
+                                            <h3 className="text-xl font-extrabold">{card.name}</h3>
+                                            <p className="mt-1 text-sm font-medium text-white/85">
+                                                {card.description || 'Browse suppliers in this category.'}
+                                            </p>
+                                            <p className="mt-3 text-sm font-bold">{card.count} Suppliers</p>
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <EmptyState
+                            title="No popular categories yet"
+                            copy="Popular categories will appear after supplier-category data is available."
+                        />
+                    )}
                 </section>
 
                 <section id="buyers" className="mx-auto mt-6 max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -505,6 +397,49 @@ function FooterLinks({ title, links }: { title: string; links: string[] }) {
                     </Link>
                 ))}
             </div>
+        </div>
+    );
+}
+
+function categorySupplierCount(category: Category): number {
+    return (category.companies_count ?? 0) + (category.children?.reduce((total, child) => total + (child.companies_count ?? 0), 0) ?? 0);
+}
+
+function categoryIcon(name: string): typeof Grid2X2 {
+    const normalized = name.toLowerCase();
+
+    if (normalized.includes('frozen') || normalized.includes('cold')) return Snowflake;
+    if (normalized.includes('shrimp') || normalized.includes('aquaculture') || normalized.includes('farm')) return Waves;
+    if (normalized.includes('fish')) return Fish;
+    if (normalized.includes('transport') || normalized.includes('logistic')) return Truck;
+    if (normalized.includes('marine')) return ShipWheel;
+    if (normalized.includes('export') || normalized.includes('import')) return Globe2;
+    if (normalized.includes('insurance') || normalized.includes('finance')) return ShieldCheck;
+    if (normalized.includes('electronic') || normalized.includes('communication')) return Radio;
+    if (normalized.includes('event') || normalized.includes('publication')) return CalendarDays;
+    if (normalized.includes('wholesale')) return House;
+    if (normalized.includes('squid') || normalized.includes('cuttlefish') || normalized.includes('equipment')) return Anchor;
+
+    return Grid2X2;
+}
+
+function companyTypeCounts(companies: Company[]) {
+    const counts = companies.reduce<Record<string, number>>((carry, company) => {
+        const label = company.company_type || 'Unspecified';
+        carry[label] = (carry[label] ?? 0) + 1;
+
+        return carry;
+    }, {});
+
+    return [{ label: 'All Types', count: companies.length }, ...Object.entries(counts).map(([label, count]) => ({ label, count }))];
+}
+
+function EmptyState({ title, copy }: { title: string; copy: string }) {
+    return (
+        <div className="rounded-lg border border-dashed border-[#b8cbe6] bg-white p-8 text-center">
+            <Grid2X2 className="mx-auto size-10 text-[#075ccc]" />
+            <h3 className="mt-4 text-lg font-extrabold text-[#071a3d]">{title}</h3>
+            <p className="mt-2 text-sm font-medium text-[#405675]">{copy}</p>
         </div>
     );
 }

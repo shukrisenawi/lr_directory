@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { type Company, type Product, type SharedData } from '@/types';
+import { type Campaign, type Company, type NewsEvent, type Product, type SharedData } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import {
     Anchor,
@@ -23,7 +23,6 @@ import {
     Play,
     ShieldCheck,
     Snowflake,
-    Star,
     Truck,
     Waves,
     type LucideIcon,
@@ -32,51 +31,12 @@ import { type ReactNode } from 'react';
 
 interface CompanyShowProps {
     company: Company;
+    similarCompanies: Company[];
 }
 
-const fallbackProducts = [
-    { name: 'Indian Mackerel', category: 'Fresh Fish', price: 'RM 12.50 / kg', stock: '500+ kg available', image: '/assets/hero-reference.jpeg' },
-    { name: 'Vannamei Shrimp (20/30)', category: 'Shrimp', price: 'RM 28.00 / kg', stock: '300+ kg available', image: '/assets/hero-market.jpg' },
-    { name: 'White Squid', category: 'Squid & Cuttlefish', price: 'RM 18.00 / kg', stock: '200+ kg available', image: '/assets/hero.png' },
-    { name: 'Frozen Tuna', category: 'Frozen Seafood', price: 'RM 9.80 / kg', stock: '1,000+ kg available', image: '/assets/hero-reference.jpeg' },
-    { name: 'Dory Fillet', category: 'Processed Product', price: 'RM 22.50 / kg', stock: '500+ kg available', image: '/assets/picture2.png' },
-];
+const categoryImages = ['/assets/hero-reference.jpeg', '/assets/hero-market.jpg', '/assets/hero.png', '/assets/picture2.png'];
 
-const productCategories = [
-    { name: 'Fresh Fish', count: 128, icon: Fish, image: '/assets/hero-reference.jpeg' },
-    { name: 'Shrimp', count: 74, icon: Waves, image: '/assets/hero-market.jpg' },
-    { name: 'Squid & Cuttlefish', count: 59, icon: Anchor, image: '/assets/hero.png' },
-    { name: 'Frozen Seafood', count: 96, icon: Snowflake, image: '/assets/hero-reference.jpeg' },
-    { name: 'Wholesalers', count: 112, icon: Truck, image: '/assets/picture2.png' },
-];
-
-const certifications = [
-    { name: 'HACCP', copy: 'Food Safety System', tone: 'bg-[#eaf4ff] text-[#075ccc]' },
-    { name: 'MeSTI', copy: 'Ministry of Health', tone: 'bg-[#fff3e0] text-[#b76100]' },
-    { name: 'DOF', copy: 'Department of Fisheries', tone: 'bg-[#e9f8f0] text-[#068647]' },
-    { name: 'Halal', copy: 'JAKIM', tone: 'bg-[#f1fff8] text-[#047a43]' },
-    { name: 'GMP', copy: 'Good Manufacturing Practice', tone: 'bg-[#eef4fb] text-[#31567f]' },
-];
-
-const reviews = [
-    { name: 'DLaut Restaurant', place: 'Kuala Lumpur', text: 'Fresh products and fast delivery. Service is excellent.', date: '10 May 2024' },
-    {
-        name: 'TTDI Wholesale Market',
-        place: 'Kuala Lumpur',
-        text: 'The quality is very good and consistent. Competitive pricing.',
-        date: '08 May 2024',
-    },
-    { name: 'Seri Malaysia Hotel', place: 'Kuantan, Pahang', text: 'A reliable supplier. Very satisfied with the service.', date: '05 May 2024' },
-];
-
-const similarSuppliers = [
-    { name: 'Marina Catch Trading', place: 'Kuantan, Pahang', rating: '4.7 (68)', type: 'Supplier & Wholesaler' },
-    { name: 'Blue Ocean Trading', place: 'Butterworth, Pulau Pinang', rating: '4.6 (53)', type: 'Supplier & Exporter' },
-    { name: 'Aqua Farm Malaysia', place: 'Johor Bahru, Johor', rating: '4.7 (72)', type: 'Farm & Supplier' },
-    { name: 'Fresh Catch Seafood', place: 'Kuala Terengganu', rating: '4.5 (41)', type: 'Supplier' },
-];
-
-export default function CompanyShow({ company }: CompanyShowProps) {
+export default function CompanyShow({ company, similarCompanies }: CompanyShowProps) {
     const { auth } = usePage<SharedData>().props;
     const claimForm = useForm({ message: '' });
     const leadForm = useForm({
@@ -88,7 +48,14 @@ export default function CompanyShow({ company }: CompanyShowProps) {
     });
 
     const products = company.products && company.products.length > 0 ? company.products : [];
-    const displayProducts = products.length > 0 ? products.map((product) => productToDisplay(product)) : fallbackProducts;
+    const displayProducts = products.map((product) => productToDisplay(product));
+    const productCategories = (company.categories ?? []).map((category, index) => ({
+        ...category,
+        count: products.filter((product) => product.fish_type === category.name).length || products.length,
+        icon: categoryIcon(category.name),
+        image: categoryImages[index % categoryImages.length],
+    }));
+    const newsItems = [...(company.campaigns ?? []).map(campaignToNewsItem), ...(company.news_events ?? []).map(newsEventToNewsItem)];
     const heroImage = company.hero_image || '/assets/hero.png';
     const companyType = company.company_type || 'Seafood Supplier & Exporter';
     const location = company.location || 'Malaysia';
@@ -235,8 +202,12 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                     <div className="grid rounded-lg border border-[#d6e3f2] bg-white shadow-sm md:grid-cols-2 lg:grid-cols-5">
                         <InfoTile icon={Truck} title="Business Type" value={companyType} />
                         <InfoTile icon={Anchor} title="Delivery Area" value={company.delivery_coverage || 'Malaysia & International Export'} />
-                        <InfoTile icon={CalendarDays} title="Years Operating" value="15+ Years Since 2009" />
-                        <InfoTile icon={ShieldCheck} title="Certifications" value="HACCP, MeSTI, DOF, GMP, Halal" />
+                        <InfoTile icon={CalendarDays} title="Listing Status" value={company.status} />
+                        <InfoTile
+                            icon={ShieldCheck}
+                            title="Verification"
+                            value={company.status === 'approved' ? 'Approved listing' : 'Pending verification'}
+                        />
                         <InfoTile icon={Clock3} title="Operating Hours" value={company.operating_hours || 'Mon - Sat, 8:00 AM - 6:00 PM'} />
                     </div>
                 </section>
@@ -276,88 +247,75 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                     </div>
                 </section>
 
-                <SectionShell title="Product Categories">
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-                        {productCategories.map((category) => {
-                            const Icon = category.icon;
+                {productCategories.length > 0 ? (
+                    <SectionShell title="Product Categories">
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+                            {productCategories.map((category) => {
+                                const Icon = category.icon;
 
-                            return (
-                                <button
-                                    key={category.name}
-                                    type="button"
-                                    className="group relative h-32 overflow-hidden rounded-lg text-left shadow-sm"
-                                >
-                                    <img
-                                        src={category.image}
-                                        alt={category.name}
-                                        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#041d43]/95 via-[#041d43]/55 to-transparent" />
-                                    <div className="relative flex h-full flex-col justify-end p-4 text-white">
-                                        <Icon className="mb-2 size-8" strokeWidth={1.6} />
-                                        <h3 className="text-base font-extrabold">{category.name}</h3>
-                                        <p className="text-xs font-semibold text-white/85">{category.count} Products</p>
-                                    </div>
-                                </button>
-                            );
-                        })}
-                    </div>
-                </SectionShell>
+                                return (
+                                    <button
+                                        key={category.slug}
+                                        type="button"
+                                        className="group relative h-32 overflow-hidden rounded-lg text-left shadow-sm"
+                                    >
+                                        <img
+                                            src={category.image}
+                                            alt={category.name}
+                                            className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#041d43]/95 via-[#041d43]/55 to-transparent" />
+                                        <div className="relative flex h-full flex-col justify-end p-4 text-white">
+                                            <Icon className="mb-2 size-8" strokeWidth={1.6} />
+                                            <h3 className="text-base font-extrabold">{category.name}</h3>
+                                            <p className="text-xs font-semibold text-white/85">{category.count} Products</p>
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </SectionShell>
+                ) : null}
 
                 <SectionShell title="Featured Products / Available Stock">
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-                        {displayProducts.slice(0, 5).map((product) => (
-                            <div key={product.name} className="overflow-hidden rounded-lg border border-[#d6e3f2] bg-white shadow-sm">
-                                <div className="relative h-32 overflow-hidden">
-                                    <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
-                                    <span className="absolute top-3 right-3 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold text-[#075ccc] shadow">
-                                        {product.category}
-                                    </span>
+                    {displayProducts.length > 0 ? (
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+                            {displayProducts.slice(0, 5).map((product) => (
+                                <div key={product.name} className="overflow-hidden rounded-lg border border-[#d6e3f2] bg-white shadow-sm">
+                                    <div className="relative h-32 overflow-hidden">
+                                        <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
+                                        <span className="absolute top-3 right-3 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold text-[#075ccc] shadow">
+                                            {product.category}
+                                        </span>
+                                    </div>
+                                    <div className="p-4">
+                                        <h3 className="text-sm font-extrabold text-[#071a3d]">{product.name}</h3>
+                                        <p className="mt-1 text-xs font-medium text-[#62738f]">{product.stock}</p>
+                                        <p className="mt-3 text-sm font-extrabold text-[#075ccc]">{product.price}</p>
+                                        <Button
+                                            variant="outline"
+                                            className="mt-4 h-9 w-full rounded-md border-[#b8cbe6] text-xs font-extrabold text-[#071a3d]"
+                                        >
+                                            View Product
+                                        </Button>
+                                    </div>
                                 </div>
-                                <div className="p-4">
-                                    <h3 className="text-sm font-extrabold text-[#071a3d]">{product.name}</h3>
-                                    <p className="mt-1 text-xs font-medium text-[#62738f]">{product.stock}</p>
-                                    <p className="mt-3 text-sm font-extrabold text-[#075ccc]">{product.price}</p>
-                                    <Button
-                                        variant="outline"
-                                        className="mt-4 h-9 w-full rounded-md border-[#b8cbe6] text-xs font-extrabold text-[#071a3d]"
-                                    >
-                                        View Product
-                                    </Button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <EmptyState title="No products available" copy="This supplier has not added active products in the database yet." />
+                    )}
                 </SectionShell>
 
                 <section className="mx-auto grid max-w-7xl gap-6 px-4 py-3 sm:px-6 lg:grid-cols-2 lg:px-8">
                     <div className="rounded-lg border border-[#d6e3f2] bg-white p-5 shadow-sm">
                         <div className="flex items-center justify-between">
                             <h2 className="text-xl font-extrabold text-[#071a3d]">Certifications & Licenses</h2>
-                            <Link href={route('directory.index')} className="text-xs font-extrabold text-[#075ccc]">
-                                View all
-                            </Link>
                         </div>
-                        <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-5">
-                            {certifications.map((cert) => (
-                                <div key={cert.name} className="text-center">
-                                    <div
-                                        className={`mx-auto flex size-16 items-center justify-center rounded-full text-sm font-extrabold ${cert.tone}`}
-                                    >
-                                        {cert.name}
-                                    </div>
-                                    <p className="mt-3 text-xs font-bold text-[#071a3d]">{cert.name}</p>
-                                    <p className="mt-1 text-[11px] leading-4 font-medium text-[#62738f]">{cert.copy}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="mt-6 border-t border-[#d6e3f2] pt-4">
-                            <h3 className="text-sm font-extrabold text-[#071a3d]">License / Registration No.</h3>
-                            <ul className="mt-2 space-y-1 text-xs font-medium text-[#233f68]">
-                                <li>Business License: KTN/BR/09/2006/1234</li>
-                                <li>SSM Registration: 200901023456 (001234567-V)</li>
-                            </ul>
-                        </div>
+                        <EmptyState
+                            title="No certifications listed"
+                            copy="Certification records will appear here after the supplier adds them to the database."
+                        />
                     </div>
 
                     <div className="rounded-lg border border-[#d6e3f2] bg-white p-5 shadow-sm">
@@ -367,15 +325,22 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                                 View all <ArrowRight className="size-3" />
                             </Link>
                         </div>
-                        <div className="mt-5 space-y-4">
-                            <NewsItem
-                                image="/assets/hero-market.jpg"
-                                tag="Promotion"
-                                title="Vannamei Shrimp Promotion This Month"
-                                date="01 May 2024"
-                            />
-                            <NewsItem image="/assets/hero-reference.jpeg" tag="News" title="MeSTI Certification Renewed" date="20 April 2024" />
-                        </div>
+                        {newsItems.length > 0 ? (
+                            <div className="mt-5 space-y-4">
+                                {newsItems.slice(0, 2).map((item) => (
+                                    <NewsItem
+                                        key={`${item.tag}-${item.title}`}
+                                        image={item.image}
+                                        tag={item.tag}
+                                        title={item.title}
+                                        date={item.date}
+                                        summary={item.summary}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <EmptyState title="No news or promotions" copy="Active campaigns and news from the database will appear here." />
+                        )}
                     </div>
                 </section>
 
@@ -384,10 +349,10 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                         <h2 className="text-xl font-extrabold text-[#071a3d]">Contact Us</h2>
                         <div className="mt-5 grid gap-6 md:grid-cols-[0.9fr_1.1fr]">
                             <div className="space-y-4 text-sm font-semibold text-[#233f68]">
-                                <ContactLine icon={Phone} text={company.contact_phone || '+60 12-345 6789'} />
-                                <ContactLine icon={Mail} text={company.contact_email || 'sales@example-seafood.com'} />
+                                <ContactLine icon={Phone} text={company.contact_phone || 'Sign in to view phone number'} />
+                                <ContactLine icon={Mail} text={company.contact_email || 'Sign in to view email address'} />
                                 <ContactLine icon={MapPin} text={company.address || location} />
-                                <ContactLine icon={Globe} text={company.website || 'www.example-seafood.com.my'} />
+                                {company.website ? <ContactLine icon={Globe} text={company.website} /> : null}
                                 <div className="flex gap-3 pt-2 text-[#075ccc]">
                                     <Facebook className="size-5" />
                                     <Instagram className="size-5" />
@@ -486,62 +451,48 @@ export default function CompanyShow({ company }: CompanyShowProps) {
                     </section>
                 ) : null}
 
-                <SectionShell title="Buyer Reviews" action="View all reviews">
-                    <div className="grid gap-5 lg:grid-cols-[14rem_1fr_1fr_1fr]">
-                        <div>
-                            <div className="text-5xl font-extrabold text-[#071a3d]">4.8</div>
-                            <div className="mt-2 flex gap-1 text-[#f4a51c]">
-                                {Array.from({ length: 5 }).map((_, index) => (
-                                    <Star key={index} className="size-5 fill-[#f4a51c]" />
-                                ))}
-                            </div>
-                            <p className="mt-2 text-xs font-semibold text-[#405675]">Based on 86 reviews</p>
-                        </div>
-                        {reviews.map((review) => (
-                            <div key={review.name} className="border-l border-[#d6e3f2] pl-5">
-                                <div className="flex gap-1 text-[#075ccc]">
-                                    {Array.from({ length: 5 }).map((_, index) => (
-                                        <Star key={index} className="size-4 fill-[#075ccc]" />
-                                    ))}
-                                </div>
-                                <p className="mt-3 text-sm leading-6 font-medium text-[#233f68]">{review.text}</p>
-                                <div className="mt-4 flex items-center justify-between gap-3">
-                                    <div>
-                                        <p className="text-xs font-extrabold text-[#071a3d]">{review.name}</p>
-                                        <p className="text-[11px] font-medium text-[#62738f]">{review.place}</p>
-                                    </div>
-                                    <span className="text-[11px] font-medium text-[#62738f]">{review.date}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                <SectionShell title="Buyer Reviews">
+                    <EmptyState
+                        title="No buyer reviews yet"
+                        copy="Review data is not available in the database yet, so no sample reviews are shown."
+                    />
                 </SectionShell>
 
                 <SectionShell title="Similar Suppliers" action="View all suppliers">
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                        {similarSuppliers.map((supplier) => (
-                            <div key={supplier.name} className="rounded-lg border border-[#d6e3f2] bg-white p-4 shadow-sm">
-                                <div className="flex gap-4">
-                                    <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-[#eaf4ff]">
-                                        <Fish className="size-8 text-[#075ccc]" />
+                    {similarCompanies.length > 0 ? (
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                            {similarCompanies.map((supplier) => (
+                                <div key={supplier.slug} className="rounded-lg border border-[#d6e3f2] bg-white p-4 shadow-sm">
+                                    <div className="flex gap-4">
+                                        <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-[#eaf4ff]">
+                                            {supplier.logo ? (
+                                                <img src={supplier.logo} alt="" className="size-12 object-contain" />
+                                            ) : (
+                                                <Fish className="size-8 text-[#075ccc]" />
+                                            )}
+                                        </div>
+                                        <div>
+                                            <h3 className="text-sm font-extrabold text-[#071a3d]">{supplier.name}</h3>
+                                            <p className="mt-1 text-xs font-medium text-[#62738f]">{supplier.location || 'Malaysia'}</p>
+                                            <p className="mt-1 text-xs font-medium text-[#405675]">{supplier.company_type || 'Supplier'}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3 className="text-sm font-extrabold text-[#071a3d]">{supplier.name}</h3>
-                                        <p className="mt-1 text-xs font-medium text-[#62738f]">{supplier.place}</p>
-                                        <p className="mt-2 text-xs font-bold text-[#f4a51c]">★ {supplier.rating}</p>
-                                        <p className="mt-1 text-xs font-medium text-[#405675]">{supplier.type}</p>
-                                    </div>
+                                    <Button
+                                        asChild
+                                        variant="outline"
+                                        className="mt-4 h-9 w-full rounded-md border-[#b8cbe6] text-xs font-extrabold text-[#071a3d]"
+                                    >
+                                        <Link href={route('directory.show', supplier.slug)}>View Profile</Link>
+                                    </Button>
                                 </div>
-                                <Button
-                                    asChild
-                                    variant="outline"
-                                    className="mt-4 h-9 w-full rounded-md border-[#b8cbe6] text-xs font-extrabold text-[#071a3d]"
-                                >
-                                    <Link href={route('directory.show', company.slug)}>View Profile</Link>
-                                </Button>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <EmptyState
+                            title="No similar suppliers found"
+                            copy="Similar suppliers will appear when other approved companies share this supplier's categories."
+                        />
+                    )}
                 </SectionShell>
             </main>
 
@@ -614,16 +565,14 @@ function SectionShell({ title, action, children }: { title: string; action?: str
     );
 }
 
-function NewsItem({ image, tag, title, date }: { image: string; tag: string; title: string; date: string }) {
+function NewsItem({ image, tag, title, date, summary }: { image: string; tag: string; title: string; date: string; summary?: string | null }) {
     return (
         <div className="flex gap-4 rounded-lg border border-[#d6e3f2] p-3">
             <img src={image} alt={title} className="size-24 rounded-md object-cover" />
             <div>
                 <span className="rounded bg-[#eaf4ff] px-2 py-1 text-[11px] font-extrabold text-[#075ccc]">{tag}</span>
                 <h3 className="mt-2 text-sm font-extrabold text-[#071a3d]">{title}</h3>
-                <p className="mt-1 text-xs leading-5 font-medium text-[#405675]">
-                    Learn the latest company updates, product availability, and supplier announcements.
-                </p>
+                <p className="mt-1 text-xs leading-5 font-medium text-[#405675]">{summary || 'Company update from the database.'}</p>
                 <p className="mt-1 text-[11px] font-medium text-[#62738f]">{date}</p>
             </div>
         </div>
@@ -650,6 +599,58 @@ function FooterLinks({ title, links }: { title: string; links: string[] }) {
                     </Link>
                 ))}
             </div>
+        </div>
+    );
+}
+
+function campaignToNewsItem(campaign: Campaign) {
+    return {
+        tag: 'Promotion',
+        title: campaign.title,
+        summary: campaign.summary,
+        date: formatDate(campaign.starts_at),
+        image: '/assets/hero-market.jpg',
+    };
+}
+
+function newsEventToNewsItem(newsEvent: NewsEvent) {
+    return {
+        tag: 'News',
+        title: newsEvent.title,
+        summary: newsEvent.summary,
+        date: formatDate(newsEvent.published_on),
+        image: '/assets/hero-reference.jpeg',
+    };
+}
+
+function formatDate(value?: string | null) {
+    if (!value) return 'Date not set';
+
+    return new Intl.DateTimeFormat('en-MY', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+    }).format(new Date(value));
+}
+
+function categoryIcon(name: string): LucideIcon {
+    const normalized = name.toLowerCase();
+
+    if (normalized.includes('frozen') || normalized.includes('cold')) return Snowflake;
+    if (normalized.includes('shrimp') || normalized.includes('aquaculture') || normalized.includes('farm')) return Waves;
+    if (normalized.includes('transport') || normalized.includes('logistic') || normalized.includes('wholesale')) return Truck;
+    if (normalized.includes('fish')) return Fish;
+    if (normalized.includes('squid') || normalized.includes('cuttlefish') || normalized.includes('marine')) return Anchor;
+
+    return Fish;
+}
+
+function EmptyState({ title, copy }: { title: string; copy: string }) {
+    return (
+        <div className="rounded-lg border border-dashed border-[#b8cbe6] bg-[#f8fbff] p-6 text-center">
+            <Fish className="mx-auto size-9 text-[#075ccc]" />
+            <h3 className="mt-3 text-base font-extrabold text-[#071a3d]">{title}</h3>
+            <p className="mt-2 text-sm font-medium text-[#405675]">{copy}</p>
         </div>
     );
 }
