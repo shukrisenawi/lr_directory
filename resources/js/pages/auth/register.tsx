@@ -61,24 +61,24 @@ export default function Register() {
         <div className="min-h-screen bg-[#eef7ff] text-[#071a3d]">
             <Head title="Register" />
 
-            <div className="mx-auto min-h-screen max-w-[96rem] overflow-hidden rounded-t-2xl border-t-3 border-[#073d91] bg-white shadow-[0_24px_70px_rgba(7,26,61,0.14)]">
-                <header className="flex flex-col gap-4 border-b border-[#dbe8f6] bg-white px-5 py-4 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="min-h-screen overflow-hidden rounded-t-[1.35rem] border-t-4 border-[#073d91] bg-white shadow-[0_30px_90px_rgba(7,26,61,0.16)]">
+                <header className="flex flex-col gap-5 border-b border-[#dbe8f6] bg-white px-7 py-7 sm:px-10 lg:flex-row lg:items-center lg:justify-between">
                     <Link href={route('home')} className="flex items-center gap-5">
-                        <img src="/logo.svg" alt="IDXI Fisheries Directory" className="h-12 w-auto sm:h-14" />
+                        <img src="/logo.svg" alt="IDXI Fisheries Directory" className="h-16 w-auto sm:h-[4.5rem]" />
                     </Link>
 
-                    <div className="flex items-center gap-3">
-                        <div className="flex size-11 items-center justify-center rounded-full bg-[#eaf4ff] text-[#073d91] shadow-inner">
-                            <ShieldCheck className="size-6" strokeWidth={1.8} />
+                    <div className="flex items-center gap-4">
+                        <div className="flex size-14 items-center justify-center rounded-full bg-[#eaf4ff] text-[#073d91] shadow-inner">
+                            <ShieldCheck className="size-8" strokeWidth={1.8} />
                         </div>
                         <div>
-                            <p className="text-sm font-extrabold text-[#071a3d]">Secure. Trusted. Connected.</p>
-                            <p className="mt-0.5 text-xs font-medium text-[#526b90]">Your data is safe with IDXI.</p>
+                            <p className="text-base font-extrabold text-[#071a3d]">Secure. Trusted. Connected.</p>
+                            <p className="mt-1 text-sm font-medium text-[#526b90]">Your data is safe with IDXI.</p>
                         </div>
                     </div>
                 </header>
 
-                <main className="grid min-h-[calc(100vh-10rem)] lg:grid-cols-[0.75fr_1fr]">
+                <main className="grid min-h-[calc(100vh-15rem)] lg:grid-cols-[0.42fr_0.58fr]">
                     <section className="relative isolate hidden overflow-hidden bg-[#eaf6ff] lg:block">
                         <img
                             src="/assets/hero.png"
@@ -88,31 +88,31 @@ export default function Register() {
                         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#eaf6ff]/90 via-[#dff2ff]/35 to-[#0a6ab5]/30" />
                         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-white/25 to-transparent" />
 
-                        <div className="relative flex h-full flex-col justify-between px-10 py-12">
+                        <div className="relative flex h-full flex-col justify-between px-12 py-16 xl:px-16">
                             <div>
-                                <h1 className="max-w-sm text-4xl leading-tight font-extrabold tracking-tight text-[#07316f]">
+                                <h1 className="max-w-md text-5xl leading-tight font-extrabold tracking-tight text-[#07316f]">
                                     The global fisheries network starts here.
                                 </h1>
-                                <div className="mt-5 h-1 w-14 rounded-full bg-[#0b78ff]" />
-                                <p className="mt-5 max-w-sm text-base leading-7 font-medium text-[#405675]">
+                                <div className="mt-8 h-1 w-16 rounded-full bg-[#0b78ff]" />
+                                <p className="mt-8 max-w-md text-xl leading-9 font-medium text-[#405675]">
                                     Join IDXI, the trusted directory connecting buyers, suppliers and industry professionals worldwide.
                                 </p>
                             </div>
 
-                            <div className="mb-4 max-w-xs rounded-2xl bg-[#063579]/95 p-5 text-white shadow-[0_20px_55px_rgba(4,24,62,0.24)] backdrop-blur">
-                                <h2 className="text-xl font-extrabold">Why join IDXI?</h2>
-                                <div className="mt-5 space-y-4">
+                            <div className="mb-6 max-w-md rounded-2xl bg-[#063579]/95 p-7 text-white shadow-[0_24px_70px_rgba(4,24,62,0.28)] backdrop-blur">
+                                <h2 className="text-2xl font-extrabold">Why join IDXI?</h2>
+                                <div className="mt-7 space-y-6">
                                     {benefits.map((benefit) => {
                                         const Icon = benefit.icon;
 
                                         return (
-                                            <div key={benefit.title} className="flex gap-4">
-                                                <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#116cc8]/55">
-                                                    <Icon className="size-6" strokeWidth={1.8} />
+                                            <div key={benefit.title} className="flex gap-5">
+                                                <div className="flex size-14 shrink-0 items-center justify-center rounded-full bg-[#116cc8]/55">
+                                                    <Icon className="size-8" strokeWidth={1.8} />
                                                 </div>
                                                 <div>
-                                                    <h3 className="text-sm font-extrabold">{benefit.title}</h3>
-                                                    <p className="mt-1 text-xs leading-5 font-medium text-white/85">{benefit.copy}</p>
+                                                    <h3 className="text-base font-extrabold">{benefit.title}</h3>
+                                                    <p className="mt-1 text-sm leading-6 font-medium text-white/85">{benefit.copy}</p>
                                                 </div>
                                             </div>
                                         );
@@ -122,21 +122,21 @@ export default function Register() {
                         </div>
                     </section>
 
-                    <section className="flex items-center justify-center bg-[radial-gradient(circle_at_50%_10%,rgba(11,120,255,0.08),transparent_22rem),linear-gradient(180deg,#f6fbff_0%,#ffffff_52%,#f6fbff_100%)] px-5 py-6 sm:px-8 lg:px-10">
-                        <div className="w-full max-w-2xl rounded-2xl border border-[#d8e6f6] bg-white p-6 shadow-[0_20px_60px_rgba(7,26,61,0.1)] sm:p-7 lg:p-8">
+                    <section className="flex items-center justify-center bg-[radial-gradient(circle_at_50%_10%,rgba(11,120,255,0.08),transparent_22rem),linear-gradient(180deg,#f6fbff_0%,#ffffff_52%,#f6fbff_100%)] px-5 py-10 sm:px-8 lg:px-14">
+                        <div className="w-full max-w-[48rem] rounded-[1.35rem] border border-[#d8e6f6] bg-white p-7 shadow-[0_24px_80px_rgba(7,26,61,0.12)] sm:p-9 lg:p-10">
                             <div className="text-center">
-                                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-[#073d91] text-white shadow-lg shadow-blue-900/20">
-                                    <Fish className="size-8" strokeWidth={1.7} />
+                                <div className="mx-auto flex size-20 items-center justify-center rounded-full bg-[#073d91] text-white shadow-lg shadow-blue-900/20">
+                                    <Fish className="size-11" strokeWidth={1.7} />
                                 </div>
-                                <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-[#071a3d] sm:text-3xl">Create an account</h2>
-                                <p className="mt-2 text-sm font-medium text-[#526b90]">Enter your details below to create your account</p>
+                                <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-[#071a3d] sm:text-4xl">Create an account</h2>
+                                <p className="mt-3 text-base font-medium text-[#526b90]">Enter your details below to create your account</p>
                             </div>
 
-                            <form className="mt-6 space-y-4" onSubmit={submit}>
+                            <form className="mt-8 space-y-5" onSubmit={submit}>
                                 <Field label="Name" error={errors.name}>
                                     <div className="relative">
                                         <User
-                                            className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-[#214877]"
+                                            className="pointer-events-none absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#214877]"
                                             strokeWidth={1.7}
                                         />
                                         <Input
@@ -150,7 +150,7 @@ export default function Register() {
                                             onChange={(e) => setData('name', e.target.value)}
                                             disabled={processing}
                                             placeholder="Full name"
-                                            className="h-12 rounded-lg border-[#c7d8eb] pl-12 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
+                                            className="h-14 rounded-lg border-[#c7d8eb] pl-14 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
                                         />
                                     </div>
                                 </Field>
@@ -158,7 +158,7 @@ export default function Register() {
                                 <Field label="Email address" error={errors.email}>
                                     <div className="relative">
                                         <Mail
-                                            className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-[#214877]"
+                                            className="pointer-events-none absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#214877]"
                                             strokeWidth={1.7}
                                         />
                                         <Input
@@ -171,7 +171,7 @@ export default function Register() {
                                             onChange={(e) => setData('email', e.target.value)}
                                             disabled={processing}
                                             placeholder="email@example.com"
-                                            className="h-12 rounded-lg border-[#c7d8eb] pl-12 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
+                                            className="h-14 rounded-lg border-[#c7d8eb] pl-14 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
                                         />
                                     </div>
                                 </Field>
@@ -179,19 +179,19 @@ export default function Register() {
                                 <Field label="Account type" error={errors.role}>
                                     <div className="relative">
                                         <Users
-                                            className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-[#214877]"
+                                            className="pointer-events-none absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#214877]"
                                             strokeWidth={1.7}
                                         />
                                         <select
                                             id="role"
                                             value={data.role}
                                             onChange={(event) => setData('role', event.target.value as 'normal' | 'company')}
-                                            className="h-12 w-full appearance-none rounded-lg border border-[#c7d8eb] bg-white px-12 text-base font-medium text-[#405675] shadow-none transition outline-none focus:border-[#0b78ff] focus:ring-2 focus:ring-[#0b78ff]/25"
+                                            className="h-14 w-full appearance-none rounded-lg border border-[#c7d8eb] bg-white px-14 text-base font-medium text-[#405675] shadow-none transition outline-none focus:border-[#0b78ff] focus:ring-2 focus:ring-[#0b78ff]/25"
                                         >
                                             <option value="normal">Normal User</option>
                                             <option value="company">Company</option>
                                         </select>
-                                        <ChevronDown className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 text-[#214877]" />
+                                        <ChevronDown className="pointer-events-none absolute top-1/2 right-5 size-5 -translate-y-1/2 text-[#214877]" />
                                     </div>
                                 </Field>
 
@@ -199,7 +199,7 @@ export default function Register() {
                                     <Field label="Company name" error={errors.company_name}>
                                         <div className="relative">
                                             <Globe2
-                                                className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-[#214877]"
+                                                className="pointer-events-none absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#214877]"
                                                 strokeWidth={1.7}
                                             />
                                             <Input
@@ -211,7 +211,7 @@ export default function Register() {
                                                 onChange={(event) => setData('company_name', event.target.value)}
                                                 disabled={processing}
                                                 placeholder="Blue Harbour Foods"
-                                                className="h-12 rounded-lg border-[#c7d8eb] pl-12 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
+                                                className="h-14 rounded-lg border-[#c7d8eb] pl-14 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
                                             />
                                         </div>
                                     </Field>
@@ -220,7 +220,7 @@ export default function Register() {
                                 <Field label="Password" error={errors.password}>
                                     <div className="relative">
                                         <Lock
-                                            className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-[#214877]"
+                                            className="pointer-events-none absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#214877]"
                                             strokeWidth={1.7}
                                         />
                                         <Input
@@ -233,10 +233,10 @@ export default function Register() {
                                             onChange={(e) => setData('password', e.target.value)}
                                             disabled={processing}
                                             placeholder="Password"
-                                            className="h-12 rounded-lg border-[#c7d8eb] px-12 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
+                                            className="h-14 rounded-lg border-[#c7d8eb] px-14 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
                                         />
                                         <Eye
-                                            className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 text-[#214877]"
+                                            className="pointer-events-none absolute top-1/2 right-5 size-5 -translate-y-1/2 text-[#214877]"
                                             strokeWidth={1.7}
                                         />
                                     </div>
@@ -245,7 +245,7 @@ export default function Register() {
                                 <Field label="Confirm password" error={errors.password_confirmation}>
                                     <div className="relative">
                                         <Lock
-                                            className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-[#214877]"
+                                            className="pointer-events-none absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#214877]"
                                             strokeWidth={1.7}
                                         />
                                         <Input
@@ -258,35 +258,35 @@ export default function Register() {
                                             onChange={(e) => setData('password_confirmation', e.target.value)}
                                             disabled={processing}
                                             placeholder="Confirm password"
-                                            className="h-12 rounded-lg border-[#c7d8eb] px-12 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
+                                            className="h-14 rounded-lg border-[#c7d8eb] px-14 text-base shadow-none placeholder:text-[#7b8daa] focus-visible:ring-[#0b78ff]"
                                         />
                                         <Eye
-                                            className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 text-[#214877]"
+                                            className="pointer-events-none absolute top-1/2 right-5 size-5 -translate-y-1/2 text-[#214877]"
                                             strokeWidth={1.7}
                                         />
                                     </div>
                                 </Field>
 
-                                <div className="flex items-center gap-3 rounded-lg bg-[#edf5ff] px-3 py-3 text-[#405675]">
-                                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-[#073d91] shadow-inner">
-                                        <Lock className="size-5" />
+                                <div className="flex items-center gap-4 rounded-lg bg-[#edf5ff] px-4 py-4 text-[#405675]">
+                                    <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-white text-[#073d91] shadow-inner">
+                                        <Lock className="size-6" />
                                     </div>
-                                    <p className="text-xs leading-5 font-medium">
+                                    <p className="text-sm leading-5 font-medium">
                                         We use industry-standard encryption to keep your information secure.
                                     </p>
                                 </div>
 
                                 <Button
                                     type="submit"
-                                    className="h-12 w-full rounded-lg bg-[#075bd8] text-base font-extrabold text-white shadow-[0_14px_30px_rgba(7,91,216,0.22)] hover:bg-[#064db8]"
+                                    className="h-14 w-full rounded-lg bg-[#075bd8] text-base font-extrabold text-white shadow-[0_16px_35px_rgba(7,91,216,0.26)] hover:bg-[#064db8]"
                                     tabIndex={6}
                                     disabled={processing}
                                 >
-                                    {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                    {processing && <LoaderCircle className="h-5 w-5 animate-spin" />}
                                     Create account
                                 </Button>
 
-                                <div className="flex items-center gap-4 text-xs font-medium text-[#6b7d99]">
+                                <div className="flex items-center gap-5 text-sm font-medium text-[#6b7d99]">
                                     <div className="h-px flex-1 bg-[#d8e6f6]" />
                                     <span>or sign up with</span>
                                     <div className="h-px flex-1 bg-[#d8e6f6]" />
@@ -296,7 +296,7 @@ export default function Register() {
                                     <Button
                                         type="button"
                                         variant="outline"
-                                        className="h-11 rounded-lg border-[#c7d8eb] text-sm font-semibold text-[#405675]"
+                                        className="h-12 rounded-lg border-[#c7d8eb] text-sm font-semibold text-[#405675]"
                                     >
                                         <span className="text-lg font-extrabold text-[#4285f4]">G</span>
                                         Continue with Google
@@ -304,7 +304,7 @@ export default function Register() {
                                     <Button
                                         type="button"
                                         variant="outline"
-                                        className="h-11 rounded-lg border-[#c7d8eb] text-sm font-semibold text-[#405675]"
+                                        className="h-12 rounded-lg border-[#c7d8eb] text-sm font-semibold text-[#405675]"
                                     >
                                         <span className="grid size-4 grid-cols-2 gap-0.5">
                                             <span className="bg-[#f25022]" />
@@ -316,7 +316,7 @@ export default function Register() {
                                     </Button>
                                 </div>
 
-                                <div className="text-center text-sm font-medium text-[#526b90]">
+                                <div className="text-center text-base font-medium text-[#526b90]">
                                     Already have an account?{' '}
                                     <Link href={route('login')} className="font-semibold text-[#075bd8] underline underline-offset-2" tabIndex={7}>
                                         Log in
@@ -327,22 +327,22 @@ export default function Register() {
                     </section>
                 </main>
 
-                <footer className="border-t border-[#dbe8f6] bg-white px-5 py-5 sm:px-8">
-                    <div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <footer className="border-t border-[#dbe8f6] bg-white px-7 py-8 sm:px-10">
+                    <div className="mx-auto grid max-w-7xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {trustItems.map((item, index) => {
                             const Icon = item.icon;
 
                             return (
                                 <div
                                     key={item.title}
-                                    className={`flex items-center gap-3 lg:border-r lg:border-[#dbe8f6] ${index === trustItems.length - 1 ? 'lg:border-r-0' : ''}`}
+                                    className={`flex items-center gap-5 lg:border-r lg:border-[#dbe8f6] ${index === trustItems.length - 1 ? 'lg:border-r-0' : ''}`}
                                 >
-                                    <div className="flex size-11 shrink-0 items-center justify-center rounded-full border border-[#c7d8eb] bg-[#f6fbff] text-[#073d91]">
-                                        <Icon className="size-5" strokeWidth={1.7} />
+                                    <div className="flex size-14 shrink-0 items-center justify-center rounded-full border border-[#c7d8eb] bg-[#f6fbff] text-[#073d91]">
+                                        <Icon className="size-7" strokeWidth={1.7} />
                                     </div>
                                     <div>
-                                        <h3 className="text-sm font-extrabold text-[#071a3d]">{item.title}</h3>
-                                        <p className="mt-0.5 text-xs font-medium text-[#526b90]">{item.copy}</p>
+                                        <h3 className="text-base font-extrabold text-[#071a3d]">{item.title}</h3>
+                                        <p className="mt-1 text-sm font-medium text-[#526b90]">{item.copy}</p>
                                     </div>
                                 </div>
                             );
@@ -356,8 +356,8 @@ export default function Register() {
 
 function Field({ label, error, children }: { label: string; error?: string; children: ReactNode }) {
     return (
-        <div className="grid gap-2">
-            <Label className="text-sm font-extrabold text-[#071a3d]">{label}</Label>
+        <div className="grid gap-3">
+            <Label className="text-base font-extrabold text-[#071a3d]">{label}</Label>
             {children}
             <InputError message={error} />
         </div>
