@@ -79,9 +79,6 @@ export default function DirectoryIndex({ filters, categories, companies }: Direc
                         <Link href={route('directory.index')} className="border-b-2 border-[#075ccc] py-7 text-[#075ccc]">
                             Directory
                         </Link>
-                        <Link href={route('directory.index')} className="transition hover:text-[#075ccc]">
-                            Categories
-                        </Link>
                         <a href="#buyers" className="transition hover:text-[#075ccc]">
                             For Buyers
                         </a>
