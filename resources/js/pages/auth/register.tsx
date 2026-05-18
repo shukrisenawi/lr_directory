@@ -33,13 +33,6 @@ const benefits = [
     },
 ];
 
-const trustItems = [
-    { title: 'Verified & Trusted', copy: 'Quality you can rely on', icon: ShieldCheck },
-    { title: 'Secure Platform', copy: 'Your data is protected', icon: Lock },
-    { title: 'Global Community', copy: 'Join professionals worldwide', icon: Users },
-    { title: 'Built for Fisheries', copy: 'Industry-focused solutions', icon: Anchor },
-];
-
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm<RegisterForm>({
         name: '',
@@ -58,27 +51,43 @@ export default function Register() {
     };
 
     return (
-        <div className="min-h-screen bg-[#eef7ff] text-[#071a3d]">
+        <div className="min-h-screen bg-white text-[#071a3d]">
             <Head title="Register" />
 
-            <div className="min-h-screen overflow-hidden border-t-0 bg-white shadow-[0_24px_70px_rgba(7,26,61,0.12)]">
-                <header className="flex h-20 items-center justify-between gap-5 border-b border-[#dbe8f6] bg-white px-4 sm:px-6 lg:px-8">
+            <header className="border-b border-[#dce8f6] bg-white/95">
+                <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
                     <Link href={route('home')} className="flex items-center gap-3">
-                        <img src="/logo.svg" alt="IDXI Fisheries Directory" className="h-12 w-auto" />
+                        <img src="/assets/logo.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
                     </Link>
 
-                    <div className="hidden items-center gap-3 sm:flex">
-                        <div className="flex size-11 items-center justify-center rounded-full bg-[#eaf4ff] text-[#073d91] shadow-inner">
-                            <ShieldCheck className="size-6" strokeWidth={1.8} />
-                        </div>
-                        <div>
-                            <p className="text-sm font-extrabold text-[#071a3d]">Secure. Trusted. Connected.</p>
-                            <p className="mt-0.5 text-xs font-medium text-[#526b90]">Your data is safe with IDXI.</p>
-                        </div>
-                    </div>
-                </header>
+                    <nav className="hidden items-center gap-10 text-sm font-semibold text-[#071a3d] lg:flex">
+                        <Link href={route('categories.index')} className="transition hover:text-[#075ccc]">
+                            Categories
+                        </Link>
+                        <Link href={route('directory.index')} className="transition hover:text-[#075ccc]">
+                            Directory
+                        </Link>
+                        <Link href={route('register')} className="border-b-2 border-[#075ccc] py-7 text-[#075ccc]">
+                            Register
+                        </Link>
+                    </nav>
 
-                <main className="grid min-h-[calc(100vh-9rem)] lg:grid-cols-[0.42fr_0.58fr]">
+                    <div className="flex items-center gap-3">
+                        <Button
+                            asChild
+                            variant="outline"
+                            className="hidden h-11 rounded-md border-[#071a3d]/40 bg-white px-5 text-[#071a3d] sm:inline-flex"
+                        >
+                            <Link href={route('login')}>Sign In</Link>
+                        </Button>
+                        <Button asChild className="h-11 rounded-md bg-[#073d91] px-5 text-white shadow-lg shadow-blue-900/20 hover:bg-[#082f6f]">
+                            <Link href={route('register')}>Get Started</Link>
+                        </Button>
+                    </div>
+                </div>
+            </header>
+
+            <main className="mx-auto grid min-h-[calc(100vh-9rem)] max-w-7xl lg:grid-cols-[0.42fr_0.58fr]">
                     <section className="relative isolate hidden overflow-hidden bg-[#eaf6ff] lg:block">
                         <img
                             src="/assets/hero.png"
@@ -125,10 +134,7 @@ export default function Register() {
                     <section className="flex items-center justify-center bg-[radial-gradient(circle_at_50%_10%,rgba(11,120,255,0.08),transparent_22rem),linear-gradient(180deg,#f6fbff_0%,#ffffff_52%,#f6fbff_100%)] px-5 py-7 sm:px-8 lg:px-10">
                         <div className="w-full max-w-2xl rounded-2xl border border-[#d8e6f6] bg-white p-6 shadow-[0_20px_60px_rgba(7,26,61,0.1)] sm:p-7 lg:p-8">
                             <div className="text-center">
-                                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-[#073d91] text-white shadow-lg shadow-blue-900/20">
-                                    <Fish className="size-8" strokeWidth={1.7} />
-                                </div>
-                                <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-[#071a3d] sm:text-3xl">Create an account</h2>
+                                <h2 className="text-2xl font-extrabold tracking-tight text-[#071a3d] sm:text-3xl">Create an account</h2>
                                 <p className="mt-2 text-sm font-medium text-[#526b90]">Enter your details below to create your account</p>
                             </div>
 
@@ -278,43 +284,12 @@ export default function Register() {
 
                                 <Button
                                     type="submit"
-                                    className="h-11 w-full rounded-md bg-[#075bd8] text-sm font-extrabold text-white shadow-[0_12px_28px_rgba(7,91,216,0.2)] hover:bg-[#064db8]"
-                                    tabIndex={6}
-                                    disabled={processing}
+                                    className="h-11 w-full rounded-md bg-[#075bd8]/60 text-sm font-extrabold text-white shadow-none"
+                                    tabIndex={-1}
+                                    disabled={true}
                                 >
-                                    {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                                     Create account
                                 </Button>
-
-                                <div className="flex items-center gap-4 text-xs font-medium text-[#6b7d99]">
-                                    <div className="h-px flex-1 bg-[#d8e6f6]" />
-                                    <span>or sign up with</span>
-                                    <div className="h-px flex-1 bg-[#d8e6f6]" />
-                                </div>
-
-                                <div className="grid gap-4 sm:grid-cols-2">
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        className="h-10 rounded-md border-[#c7d8eb] text-xs font-semibold text-[#405675]"
-                                    >
-                                        <span className="text-lg font-extrabold text-[#4285f4]">G</span>
-                                        Continue with Google
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        className="h-10 rounded-md border-[#c7d8eb] text-xs font-semibold text-[#405675]"
-                                    >
-                                        <span className="grid size-4 grid-cols-2 gap-0.5">
-                                            <span className="bg-[#f25022]" />
-                                            <span className="bg-[#7fba00]" />
-                                            <span className="bg-[#00a4ef]" />
-                                            <span className="bg-[#ffb900]" />
-                                        </span>
-                                        Continue with Microsoft
-                                    </Button>
-                                </div>
 
                                 <div className="text-center text-sm font-medium text-[#526b90]">
                                     Already have an account?{' '}
@@ -327,29 +302,7 @@ export default function Register() {
                     </section>
                 </main>
 
-                <footer className="border-t border-[#dbe8f6] bg-white px-4 py-5 sm:px-6 lg:px-8">
-                    <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                        {trustItems.map((item, index) => {
-                            const Icon = item.icon;
-
-                            return (
-                                <div
-                                    key={item.title}
-                                    className={`flex items-center gap-3 lg:border-r lg:border-[#dbe8f6] ${index === trustItems.length - 1 ? 'lg:border-r-0' : ''}`}
-                                >
-                                    <div className="flex size-11 shrink-0 items-center justify-center rounded-full border border-[#c7d8eb] bg-[#f6fbff] text-[#073d91]">
-                                        <Icon className="size-5" strokeWidth={1.7} />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-sm font-extrabold text-[#071a3d]">{item.title}</h3>
-                                        <p className="mt-0.5 text-xs font-medium text-[#526b90]">{item.copy}</p>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </footer>
-            </div>
+            <Footer />
         </div>
     );
 }
@@ -360,6 +313,53 @@ function Field({ label, error, children }: { label: string; error?: string; chil
             <Label className="text-sm font-extrabold text-[#071a3d]">{label}</Label>
             {children}
             <InputError message={error} />
+        </div>
+    );
+}
+
+function Footer() {
+    return (
+        <footer className="bg-[#051936] text-white">
+            <div className="mx-auto grid max-w-7xl gap-8 px-4 py-9 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr] lg:px-8">
+                <div>
+                    <img src="/assets/logo_full_white.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
+                    <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
+                        Malaysia&apos;s largest fishery directory platform connecting buyers and suppliers digitally.
+                    </p>
+                </div>
+                <FooterLinks title="Platform" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers']} />
+                <FooterLinks title="Resources" links={['Articles & News', 'Events', 'Guides', 'FAQ']} />
+                <FooterLinks title="About IDXI" links={['About Us', 'Contact Us', 'Terms & Conditions', 'Privacy Policy']} />
+                <div>
+                    <h3 className="text-sm font-extrabold">Contact Us</h3>
+                    <div className="mt-4 space-y-2 text-sm text-white/75">
+                        <p>+603 1234 5678</p>
+                        <p>support@idxi.com.my</p>
+                        <p>Kuala Lumpur, Malaysia</p>
+                    </div>
+                </div>
+            </div>
+            <div className="border-t border-white/10">
+                <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+                    <p>&copy; {new Date().getFullYear()} IDXI Fisheries Directory. All Rights Reserved.</p>
+                    <p>Built in Malaysia</p>
+                </div>
+            </div>
+        </footer>
+    );
+}
+
+function FooterLinks({ title, links }: { title: string; links: string[] }) {
+    return (
+        <div>
+            <h3 className="text-sm font-extrabold">{title}</h3>
+            <div className="mt-4 flex flex-col gap-2 text-sm text-white/75">
+                {links.map((link) => (
+                    <Link key={link} href={route('directory.index')} className="transition hover:text-white">
+                        {link}
+                    </Link>
+                ))}
+            </div>
         </div>
     );
 }
