@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\DTOs\MessageDto;
-use App\Events\MessageSent;
 use App\Models\Company;
 use App\Models\Conversation;
 use App\Models\User;
@@ -51,10 +50,6 @@ class ConversationService
         ]);
 
         $conversation->update(['last_message_at' => now()]);
-
-        if (! app()->environment('testing')) {
-            broadcast(new MessageSent($message))->toOthers();
-        }
 
         return $message;
     }
