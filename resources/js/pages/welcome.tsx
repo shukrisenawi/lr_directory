@@ -120,25 +120,19 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <header className="flex h-20 items-center justify-between gap-5">
                             <Link href={route('home')} className="flex items-center gap-3">
-                                <img src="/logo.svg" alt="IDXI Fisheries Directory" className="h-12 w-auto" />
+                                <img src="/assets/logo.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
                             </Link>
 
                             <nav className="hidden items-center gap-10 text-sm font-semibold text-[#071a3d] lg:flex">
-                                <Link href={route('directory.index')} className="transition hover:text-[#0b63ce]">
-                                    Directory
-                                </Link>
                                 <Link href={route('categories.index')} className="transition hover:text-[#0b63ce]">
                                     Categories
                                 </Link>
-                                <a href="#how-it-works" className="transition hover:text-[#0b63ce]">
-                                    For Buyers
-                                </a>
-                                <Link href={route('register')} className="transition hover:text-[#0b63ce]">
-                                    For Suppliers
+                                <Link href={route('directory.index')} className="transition hover:text-[#0b63ce]">
+                                    Directory
                                 </Link>
-                                <button className="inline-flex items-center gap-1 transition hover:text-[#0b63ce]" type="button">
-                                    Resources <ChevronDown className="size-3.5" />
-                                </button>
+                                <Link href={route('register')} className="transition hover:text-[#0b63ce]">
+                                    Register
+                                </Link>
                             </nav>
 
                             <div className="flex items-center gap-3">
@@ -255,7 +249,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                             <div className="flex items-center justify-between gap-4">
                                 <h2 className="text-2xl font-extrabold tracking-tight text-[#071a3d]">Browse Popular Categories</h2>
                                 <Link
-                                    href={route('directory.index')}
+                                    href={route('categories.index')}
                                     className="inline-flex items-center gap-2 text-sm font-bold text-[#075ccc] hover:text-[#073d91]"
                                 >
                                     View all categories <ArrowRight className="size-4" />
@@ -424,7 +418,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                 <footer className="bg-[#051936] text-white">
                     <div className="mx-auto grid max-w-7xl gap-8 px-4 py-9 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr] lg:px-8">
                         <div>
-                            <img src="/logo_white.png" alt="IDXI Fisheries Directory" className="h-12 w-auto" />
+                            <img src="/assets/logo_full_white.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
                             <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
                                 Malaysia's leading fishery directory platform connecting buyers with trusted suppliers.
                             </p>

@@ -67,25 +67,19 @@ export default function CompanyShow({ company, similarCompanies }: CompanyShowPr
             <header className="border-b border-[#dce8f6] bg-white/95">
                 <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
                     <Link href={route('home')} className="flex items-center gap-3">
-                        <img src="/logo.svg" alt="IDXI Fisheries Directory" className="h-12 w-auto" />
+                        <img src="/assets/logo.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
                     </Link>
 
                     <nav className="hidden items-center gap-10 text-sm font-semibold text-[#071a3d] lg:flex">
-                        <Link href={route('directory.index')} className="transition hover:text-[#075ccc]">
-                            Directory
-                        </Link>
                         <Link href={route('categories.index')} className="transition hover:text-[#075ccc]">
                             Categories
                         </Link>
-                        <a href="#contact" className="transition hover:text-[#075ccc]">
-                            For Buyers
-                        </a>
-                        <Link href={route('register')} className="transition hover:text-[#075ccc]">
-                            For Suppliers
+                        <Link href={route('directory.index')} className="border-b-2 border-[#075ccc] py-7 text-[#075ccc]">
+                            Directory
                         </Link>
-                        <button type="button" className="inline-flex items-center gap-1 transition hover:text-[#075ccc]">
-                            Resources <ChevronDown className="size-3.5" />
-                        </button>
+                        <Link href={route('register')} className="transition hover:text-[#075ccc]">
+                            Register
+                        </Link>
                     </nav>
 
                     <div className="flex items-center gap-3">
@@ -499,9 +493,9 @@ export default function CompanyShow({ company, similarCompanies }: CompanyShowPr
             <footer className="bg-[#051936] text-white">
                 <div className="mx-auto grid max-w-7xl gap-8 px-4 py-9 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr] lg:px-8">
                     <div>
-                        <img src="/logo_white.png" alt="IDXI Fisheries Directory" className="h-12 w-auto" />
-                        <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
-                            Malaysia&apos;s largest fishery directory platform connecting buyers and suppliers digitally.
+<img src="/assets/logo_full_white.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
+                    <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
+                        Malaysia&apos;s largest fishery directory platform connecting buyers and suppliers digitally.
                         </p>
                     </div>
                     <FooterLinks title="Platform" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers', 'Resources']} />
