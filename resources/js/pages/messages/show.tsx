@@ -5,7 +5,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { Send } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface MessageShowProps {
     conversation: {
@@ -22,35 +22,7 @@ export default function MessageShowPage({ conversation }: MessageShowProps) {
     ];
 
     const { data, setData, post, processing } = useForm({ body: '' });
-    const [messages, setMessages] = useState(conversation.messages);
-
-    useEffect(() => {
-        const channel = window.Echo.private(`conversation.${conversation.id}`).listen(
-            '.message.sent',
-            (event: { message: { id: number; body: string; created_at: string; user_id: number } }) => {
-                setMessages((current) => {
-                    if (current.some((message) => message.id === event.message.id)) {
-                        return current;
-                    }
-
-                    return [
-                        ...current,
-                        {
-                            id: event.message.id,
-                            body: event.message.body,
-                            created_at: event.message.created_at,
-                            user: { name: 'New message', role: 'company' },
-                        },
-                    ];
-                });
-            },
-        );
-
-        return () => {
-            channel.stopListening('.message.sent');
-            window.Echo.leave(`private-conversation.${conversation.id}`);
-        };
-    }, [conversation.id]);
+    const [messages] = useState(conversation.messages);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
