@@ -24,7 +24,7 @@ export default function CategoryShow({ category }: CategoryPageProps) {
                             Categories
                         </Link>
                         <Link href={route('directory.index')} className="transition hover:text-[#075ccc]">
-                            Directory
+                            Database
                         </Link>
                         <Link href={route('register')} className="transition hover:text-[#075ccc]">
                             Register

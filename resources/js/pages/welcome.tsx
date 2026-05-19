@@ -128,7 +128,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                     Categories
                                 </Link>
                                 <Link href={route('directory.index')} className="transition hover:text-[#0b63ce]">
-                                    Directory
+                                    Database
                                 </Link>
                                 <Link href={route('register')} className="transition hover:text-[#0b63ce]">
                                     Register

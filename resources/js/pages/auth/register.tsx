@@ -65,7 +65,7 @@ export default function Register() {
                             Categories
                         </Link>
                         <Link href={route('directory.index')} className="transition hover:text-[#075ccc]">
-                            Directory
+                            Database
                         </Link>
                         <Link href={route('register')} className="border-b-2 border-[#075ccc] py-7 text-[#075ccc]">
                             Register
