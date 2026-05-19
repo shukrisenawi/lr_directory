@@ -54,7 +54,7 @@ export default function PlansIndex({ plans }: PlansIndexProps) {
                             </CardHeader>
                             <CardContent className="flex-1 space-y-4">
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-4xl font-semibold text-[var(--idxi-abyss)]">RM{plan.price}</span>
+                                    <span className="text-4xl font-semibold text-[var(--idxi-abyss)]">${plan.price}</span>
                                     <span className="text-sm text-[var(--idxi-tide)]">/{plan.duration_days} days</span>
                                 </div>
                                 {plan.features && plan.features.length > 0 && (

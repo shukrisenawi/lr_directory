@@ -71,7 +71,7 @@ export default function CategoryShow({ category }: CategoryPageProps) {
                                 {category.name}
                             </h1>
                             <p className="mt-3 max-w-2xl text-base leading-7 font-medium text-[#31517f]">
-                                {category.description || `${category.name} suppliers and service providers in Malaysia.`}
+                                {category.description || `${category.name} suppliers and service providers worldwide.`}
                             </p>
                             <div className="mt-4 flex flex-wrap gap-3 text-sm font-bold text-[#405675]">
                                 <span>{category.companies?.length ?? 0} companies listed</span>
@@ -118,7 +118,7 @@ function Footer() {
                 <div>
                     <img src="/assets/logo_full_white.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
                     <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
-                        Malaysia&apos;s largest fishery directory platform connecting buyers and suppliers digitally.
+                        The global fishery directory platform connecting buyers and suppliers digitally.
                     </p>
                 </div>
                 <FooterLinks title="Platform" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers']} />
@@ -127,16 +127,16 @@ function Footer() {
                 <div>
                     <h3 className="text-sm font-extrabold">Contact Us</h3>
                     <div className="mt-4 space-y-2 text-sm text-white/75">
-                        <p>+603 1234 5678</p>
-                        <p>support@idxi.com.my</p>
-                        <p>Kuala Lumpur, Malaysia</p>
+                        <p>+1 (555) 123-4567</p>
+                        <p>support@idxi.directory</p>
+                        <p>Global Headquarters</p>
                     </div>
                 </div>
             </div>
             <div className="border-t border-white/10">
                 <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
                     <p>&copy; {new Date().getFullYear()} IDXI Fisheries Directory. All Rights Reserved.</p>
-                    <p>Built in Malaysia</p>
+                    <p>Built for the World</p>
                 </div>
             </div>
         </footer>

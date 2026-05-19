@@ -121,7 +121,7 @@ export default function CompanyProfilePage({ activeTab, company }: { activeTab: 
                                             {product.fish_type ? <span>{product.fish_type}</span> : null}
                                             {product.price ? (
                                                 <span>
-                                                    RM{product.price}/{product.price_unit || 'unit'}
+                                                    ${product.price}/{product.price_unit || 'unit'}
                                                 </span>
                                             ) : null}
                                             {product.minimum_order ? <span>MOQ: {product.minimum_order}</span> : null}

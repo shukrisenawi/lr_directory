@@ -140,7 +140,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'blue-harbour-foods',
             'summary' => 'Processor and exporter for chilled tuna, frozen fillets, and regional seafood sourcing.',
             'description' => 'Blue Harbour Foods connects processors, cold-chain operators, and buyers across regional fish markets.',
-            'location' => 'Penang, Malaysia',
+            'location' => 'Seattle, USA',
             'company_type' => 'Processor',
             'is_featured' => true,
         ]);
@@ -150,7 +150,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'oceannav-systems',
             'summary' => 'Navigation systems, radar, sonar, and bridge electronics for modern fishing vessels.',
             'description' => 'OceanNav Systems supplies electronics and communications equipment for long-haul fleets.',
-            'location' => 'Johor Bahru, Malaysia',
+            'location' => 'Rotterdam, Netherlands',
             'company_type' => 'Equipment Supplier',
             'is_featured' => true,
         ]);
@@ -160,7 +160,7 @@ class DatabaseSeeder extends Seeder
             'slug' => 'harvest-cold-chain',
             'summary' => 'Ice storage, blast freezing, and refrigerated transport for landing-to-market continuity.',
             'description' => 'Harvest Cold Chain focuses on reliable fish handling and refrigerated logistics for exporters.',
-            'location' => 'Kota Kinabalu, Malaysia',
+            'location' => 'Busan, South Korea',
             'company_type' => 'Distributor',
         ]);
 

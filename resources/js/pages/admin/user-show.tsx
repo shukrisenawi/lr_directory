@@ -27,7 +27,7 @@ export default function AdminUserShow({ userData: user, companies }: UserShowPro
             <AdminPage>
                 <AdminHero
                     title={user.name}
-                    description={`Member since ${new Date(user.created_at).toLocaleDateString('en-MY', { year: 'numeric', month: 'long', day: 'numeric' })}`}
+                    description={`Member since ${new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`}
                     icon={Users}
                     tone="blue"
                     action={
@@ -80,7 +80,7 @@ export default function AdminUserShow({ userData: user, companies }: UserShowPro
                             <div>
                                 <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Registered</div>
                                 <div className="mt-0.5 text-slate-600">
-                                    {new Date(user.created_at).toLocaleDateString('en-MY', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                    {new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                                 </div>
                             </div>
                         </div>

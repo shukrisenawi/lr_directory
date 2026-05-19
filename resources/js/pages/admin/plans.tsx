@@ -49,7 +49,7 @@ export default function AdminPlans({ plans }: AdminPlansProps) {
                             </div>
                             <CardContent className="grid gap-2 p-4 text-sm text-slate-500">
                                 <p>
-                                    <span className="font-semibold text-slate-800">Price:</span> RM{plan.price}
+                                    <span className="font-semibold text-slate-800">Price:</span> ${plan.price}
                                 </p>
                                 <p>
                                     <span className="font-semibold text-slate-800">Duration:</span> {plan.duration_days} days

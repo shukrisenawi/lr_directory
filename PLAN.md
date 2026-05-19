@@ -172,17 +172,17 @@ Search and filters should include:
 Example filters:
 
 * Ikan kembung
-* Ikan selayang
-* Ikan merah
-* Udang
-* Sotong
-* Ketam
+* Mackerel
+* Red snapper
+* Shrimp
+* Squid
+* Crab
 * Fresh fish
 * Frozen seafood
-* Sabah
-* Kedah
-* Sik
-* Kota Kinabalu
+* Tuna
+* Salmon
+* Cod
+* Global fisheries
 * Local fisherman
 * Wholesaler
 * Retail supplier

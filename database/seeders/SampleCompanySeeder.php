@@ -22,11 +22,11 @@ class SampleCompanySeeder extends Seeder
 
         $companyTypes = ['Exporter', 'Processor', 'Equipment Supplier', 'Distributor', 'Manufacturer'];
         $locations = [
-            'Kuala Lumpur, Malaysia', 'Penang, Malaysia', 'Johor Bahru, Malaysia',
-            'Kota Kinabalu, Malaysia', 'Kuching, Malaysia', 'Shah Alam, Malaysia',
-            'Ipoh, Malaysia', 'Melaka, Malaysia', 'Langkawi, Malaysia',
-            'Terengganu, Malaysia', 'Kelantan, Malaysia', 'Sabah, Malaysia',
-            'Sarawak, Malaysia', 'Selangor, Malaysia', 'Perak, Malaysia',
+            'Seattle, USA', 'Rotterdam, Netherlands', 'Busan, South Korea',
+            'Tokyo, Japan', 'Oslo, Norway', 'Vancouver, Canada',
+            'Auckland, New Zealand', 'Sydney, Australia', 'Lisbon, Portugal',
+            'Bangkok, Thailand', 'Jakarta, Indonesia', 'Manila, Philippines',
+            'Hanoi, Vietnam', 'Mumbai, India', 'Istanbul, Turkey',
         ];
 
         Company::factory()

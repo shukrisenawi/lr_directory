@@ -81,7 +81,7 @@ export default function SupplierSubscription({ activeSubscription, subscriptionH
                                     <div>
                                         <div className="font-medium text-[var(--idxi-abyss)]">{plan.name}</div>
                                         <div className="mt-1 text-sm text-[var(--idxi-tide)]">
-                                            RM{plan.price} / {plan.duration_days} days
+                                            ${plan.price} / {plan.duration_days} days
                                         </div>
                                     </div>
                                     <Badge className="rounded-lg bg-amber-100 px-3 py-1.5 text-xs font-medium text-amber-700">

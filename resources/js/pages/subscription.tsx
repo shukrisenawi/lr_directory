@@ -58,7 +58,7 @@ export default function SubscriptionPage({ activeSubscription, subscriptionHisto
                             </CardHeader>
                             <CardContent className="space-y-2 text-sm text-[var(--idxi-tide)]">
                                 <p>
-                                    RM{plan.price} / {plan.duration_days} days
+                                    ${plan.price} / {plan.duration_days} days
                                 </p>
                                 <p>{plan.features?.join(', ')}</p>
                                 <button

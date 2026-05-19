@@ -25,7 +25,7 @@ class CompanyFactory extends Factory
             'name' => $name,
             'slug' => str($name)->slug()->value(),
             'status' => 'approved',
-            'location' => fake()->city().', Malaysia',
+            'location' => fake()->city().', '.fake()->country(),
             'company_type' => fake()->randomElement(['Exporter', 'Processor', 'Equipment Supplier']),
             'contact_email' => fake()->companyEmail(),
             'contact_phone' => fake()->phoneNumber(),

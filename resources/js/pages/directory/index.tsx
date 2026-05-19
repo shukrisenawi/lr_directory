@@ -39,7 +39,7 @@ interface DirectoryIndexProps {
 }
 
 const supplierImages = ['/assets/hero-reference.jpeg', '/assets/hero-market.jpg', '/assets/hero.png', '/assets/picture2.png'];
-const states = ['Johor', 'Selangor', 'Pulau Pinang', 'Sabah', 'Kedah'];
+const states = ['California', 'Texas', 'Florida', 'New York', 'Washington'];
 const supplierTypes = ['Wholesaler', 'Fisherman', 'Importer', 'Producer'];
 const productTypes = ['Marine Fish', 'Freshwater Fish', 'Local Fish', 'Imported Fish'];
 const priceRanges = ['< 10', '10 - 20', '20 - 30', '> 30'];
@@ -124,7 +124,7 @@ export default function DirectoryIndex({ filters, categories, companies }: Direc
                     <div className="mt-5">
                         <h1 className="text-4xl font-extrabold tracking-tight text-[#071a3d] sm:text-5xl">{pageTitle}</h1>
                         <p className="mt-3 max-w-3xl text-base font-medium text-[#233f68]">
-                            Explore verified fishery suppliers across Malaysia and connect directly with trusted businesses.
+                            Explore verified fishery suppliers worldwide and connect directly with trusted businesses.
                         </p>
                     </div>
 
@@ -186,7 +186,7 @@ export default function DirectoryIndex({ filters, categories, companies }: Direc
                             <CheckRow label="Premium Supplier" count={Math.min(34, supplierTotal)} />
                         </FilterGroup>
 
-                        <FilterGroup title="Price Range (RM / kg)" icon={CircleDollarSign}>
+                        <FilterGroup title="Price Range (USD / kg)" icon={CircleDollarSign}>
                             <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
                                 <Input placeholder="Min" className="h-10 border-[#d6e3f2] text-sm" />
                                 <span className="text-[#62738f]">-</span>
@@ -351,7 +351,7 @@ function SupplierCard({ company, index }: { company: Company; index: number }) {
                     </p>
                     <p className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-[#405675]">
                         <MapPin className="size-4 text-[#075ccc]" />
-                        {company.location || 'Malaysia'}
+                        {company.location || 'Global'}
                     </p>
 
                     <div className="mt-4 flex flex-wrap gap-2">
@@ -401,7 +401,7 @@ function SupplierCard({ company, index }: { company: Company; index: number }) {
 
             <div className="border-t border-[#e5edf7] bg-[#fbfdff] px-4 py-3 text-xs font-semibold text-[#62738f]">
                 <Truck className="mr-2 inline size-4 text-[#7d91ad]" />
-                Delivery: {company.delivery_coverage || 'Malaysia'}
+                Delivery: {company.delivery_coverage || 'Worldwide'}
             </div>
         </article>
     );
@@ -482,7 +482,7 @@ function Footer() {
                 <div>
                     <img src="/assets/logo_full_white.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
                     <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
-                        Malaysia&apos;s largest fishery directory platform connecting buyers and suppliers digitally.
+                        The global fishery directory platform connecting buyers and suppliers digitally.
                     </p>
                 </div>
                 <FooterLinks title="Platform" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers']} />
@@ -491,16 +491,16 @@ function Footer() {
                 <div>
                     <h3 className="text-sm font-extrabold">Contact Us</h3>
                     <div className="mt-4 space-y-2 text-sm text-white/75">
-                        <p>+603 1234 5678</p>
-                        <p>support@idxi.com.my</p>
-                        <p>Kuala Lumpur, Malaysia</p>
+                        <p>+1 (555) 123-4567</p>
+                        <p>support@idxi.directory</p>
+                        <p>Global Headquarters</p>
                     </div>
                 </div>
             </div>
             <div className="border-t border-white/10">
                 <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
                     <p>© {new Date().getFullYear()} IDXI Fisheries Directory. All Rights Reserved.</p>
-                    <p>Built in Malaysia</p>
+                    <p>Built for the World</p>
                 </div>
             </div>
         </footer>

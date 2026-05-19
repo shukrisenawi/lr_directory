@@ -47,7 +47,7 @@ export default function AdminSubscriptions({ subscriptions }: AdminSubscriptions
                                     <div>
                                         <div className="font-semibold text-slate-950">{sub.plan.name}</div>
                                         <div className="mt-1 text-xs text-slate-500">
-                                            RM{sub.plan.price} &middot; {sub.subscribable_type}
+                                            ${sub.plan.price} &middot; {sub.subscribable_type}
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">

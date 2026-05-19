@@ -169,7 +169,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                     Find Fishery Suppliers With Ease
                                 </h1>
                                 <p className="mt-6 max-w-2xl text-xl leading-8 font-medium text-[#12294f]">
-                                    Discover trusted fishermen, wholesalers, and seafood suppliers across Malaysia.
+                                    Discover trusted fishermen, wholesalers, and seafood suppliers worldwide.
                                 </p>
 
                                 <form onSubmit={submit} className="mt-7 max-w-4xl rounded-lg bg-white p-3 shadow-[0_22px_60px_rgba(7,26,61,0.16)]">
@@ -327,7 +327,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                                                 </p>
                                                 <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-[#5f708a]">
                                                     <MapPin className="size-3.5" />
-                                                    {company.location ?? 'Malaysia'}
+                                                    {company.location ?? 'Global'}
                                                 </p>
                                                 <div className="mt-4 flex flex-wrap gap-1.5">
                                                     {(company.categories ?? []).slice(0, 3).map((category) => (
@@ -420,7 +420,7 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                         <div>
                             <img src="/assets/logo_full_white.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
                             <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
-                                Malaysia's leading fishery directory platform connecting buyers with trusted suppliers.
+                                The global fishery directory platform connecting buyers with trusted suppliers.
                             </p>
                         </div>
                         <FooterLinks title="Quick Links" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers', 'Resources']} />
@@ -429,9 +429,9 @@ export default function Welcome({ featuredCategories, newListings, featuredCompa
                         <div>
                             <h3 className="text-sm font-extrabold">Contact Us</h3>
                             <div className="mt-4 space-y-2 text-sm text-white/75">
-                                <p>+60 12-345 6789</p>
-                                <p>support@idxi.com.my</p>
-                                <p>Kuala Lumpur, Malaysia</p>
+                                <p>+1 (555) 123-4567</p>
+                                <p>support@idxi.directory</p>
+                                <p>Global Headquarters</p>
                             </div>
                         </div>
                     </div>

@@ -58,7 +58,7 @@ export default function CompanyShow({ company, similarCompanies }: CompanyShowPr
     const newsItems = [...(company.campaigns ?? []).map(campaignToNewsItem), ...(company.news_events ?? []).map(newsEventToNewsItem)];
     const heroImage = company.hero_image || '/assets/hero.png';
     const companyType = company.company_type || 'Seafood Supplier & Exporter';
-    const location = company.location || 'Malaysia';
+    const location = company.location || 'Global';
 
     return (
         <div className="min-h-screen bg-white text-[#071a3d]">
@@ -195,7 +195,7 @@ export default function CompanyShow({ company, similarCompanies }: CompanyShowPr
                 <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     <div className="grid rounded-lg border border-[#d6e3f2] bg-white shadow-sm md:grid-cols-2 lg:grid-cols-5">
                         <InfoTile icon={Truck} title="Business Type" value={companyType} />
-                        <InfoTile icon={Anchor} title="Delivery Area" value={company.delivery_coverage || 'Malaysia & International Export'} />
+                        <InfoTile icon={Anchor} title="Delivery Area" value={company.delivery_coverage || 'Worldwide & International Export'} />
                         <InfoTile icon={CalendarDays} title="Listing Status" value={company.status} />
                         <InfoTile
                             icon={ShieldCheck}
@@ -467,7 +467,7 @@ export default function CompanyShow({ company, similarCompanies }: CompanyShowPr
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-extrabold text-[#071a3d]">{supplier.name}</h3>
-                                            <p className="mt-1 text-xs font-medium text-[#62738f]">{supplier.location || 'Malaysia'}</p>
+                                            <p className="mt-1 text-xs font-medium text-[#62738f]">{supplier.location || 'Global'}</p>
                                             <p className="mt-1 text-xs font-medium text-[#405675]">{supplier.company_type || 'Supplier'}</p>
                                         </div>
                                     </div>
@@ -495,7 +495,7 @@ export default function CompanyShow({ company, similarCompanies }: CompanyShowPr
                     <div>
 <img src="/assets/logo_full_white.png" alt="IDXI Fisheries Directory" className="h-16 w-auto" />
                     <p className="mt-4 max-w-xs text-sm leading-6 text-white/75">
-                        Malaysia&apos;s largest fishery directory platform connecting buyers and suppliers digitally.
+                        The global fishery directory platform connecting buyers and suppliers digitally.
                         </p>
                     </div>
                     <FooterLinks title="Platform" links={['Directory', 'Categories', 'For Buyers', 'For Suppliers', 'Resources']} />
@@ -504,16 +504,16 @@ export default function CompanyShow({ company, similarCompanies }: CompanyShowPr
                     <div>
                         <h3 className="text-sm font-extrabold">Contact Us</h3>
                         <div className="mt-4 space-y-2 text-sm text-white/75">
-                            <p>+603 1234 5678</p>
-                            <p>support@idxi.com.my</p>
-                            <p>Kuala Lumpur, Malaysia</p>
+                            <p>+1 (555) 123-4567</p>
+                            <p>support@idxi.directory</p>
+                            <p>Global Headquarters</p>
                         </div>
                     </div>
                 </div>
                 <div className="border-t border-white/10">
                     <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
                         <p>© {new Date().getFullYear()} IDXI Fisheries Directory. All Rights Reserved.</p>
-                        <p>Built in Malaysia</p>
+                        <p>Built for the World</p>
                     </div>
                 </div>
             </footer>
@@ -620,7 +620,7 @@ function newsEventToNewsItem(newsEvent: NewsEvent) {
 function formatDate(value?: string | null) {
     if (!value) return 'Date not set';
 
-    return new Intl.DateTimeFormat('en-MY', {
+    return new Intl.DateTimeFormat('en-US', {
         day: '2-digit',
         month: 'short',
         year: 'numeric',
